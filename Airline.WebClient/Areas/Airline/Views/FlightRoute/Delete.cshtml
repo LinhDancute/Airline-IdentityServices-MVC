@@ -1,0 +1,25 @@
+@model App.Models.Airline.FlightRoute
+
+@{
+    ViewData["Title"] = "Xóa tuyến bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h3>Có chắc chắn xóa?</h3>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.FlightSector)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.FlightSector)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="FlightRouteId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Danh sách tuyến bay</a>
+    </form>
+</div>

@@ -1,0 +1,61 @@
+@model App.Models.Airline.FlightRoute
+
+@{
+    ViewData["Title"] = "Chi tiết sân bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Flight Route</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DepartureAddress)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DepartureAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ArrivalAddress)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ArrivalAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FlightSector)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FlightSector)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FlightSectorName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FlightSectorName)
+            </dd>
+        
+            <dt>
+                @Html.DisplayNameFor(model => model.Gate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.FlightRouteId">Chỉnh sửa</a> |
+    <a asp-action="Index">Danh sách tuyến bay</a>
+</div>

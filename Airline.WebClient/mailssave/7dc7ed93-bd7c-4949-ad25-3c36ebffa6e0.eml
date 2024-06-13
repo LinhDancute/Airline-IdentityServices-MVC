@@ -1,0 +1,11 @@
+From: LinhDanAspnet <dannguyen11003@gmail.com>
+Date: Fri, 01 Dec 2023 12:12:46 +0700
+Subject: Reset Password
+Message-Id: <408DKILANLU4.CM6SBCBE1IOT3@dell>
+Sender: LinhDanAspnet <dannguyen11003@gmail.com>
+To: admin@example.com
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+Hãy bấm <a href='https://localhost:5001/Account/ResetPassword?code=Q2ZESjhIK0xXdU1TYVc5SW44MW1aUS8rbEtuM292MXZFOCtaNnd3c3llZ0tjSzlhMVNvRExRcHE1eVZOTDk3bzZod3BCWmlnMTlEc1U2VXBOOEdFVmlzNlhlY1BLUFVmVGtGMHV1cFpNanBKV1BHWkxJdGtzTFdlZ3Bwdm9aMzJob1cvYTVBeEhRRTNvOFN6UEExeERqb1k2bm4zY1BMRzZ3dmExcnFabDZaS3FaYnpGMjVCbHpKL3JtbU1DWmMxN2ZzRExPb0VCTTRNelk2a05XbFk1c08yd0ZVZnUyK2tiS1kyc2xMNjNSRVBTT2h5'>vào đây</a> để đặt lại mật khẩu.

@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{F8B580CB-078B-45E0-B36C-D8A50AA8968E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservice", "Microservice", "{9DA55822-E38D-4F88-83A2-1CED886A16C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Duende.IdentityServer", "Airline.Duende.IdentityServer\Airline.Duende.IdentityServer.csproj", "{7EAECBE7-8DCB-4407-A0A0-98CF043B6366}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.WebClient", "Airline.WebClient\Airline.WebClient.csproj", "{067BC01C-BEAC-4438-89C7-E7A201B1D3ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Services.AuthAPI", "Microservice-API\Airline.Services.AuthAPI\Airline.Services.AuthAPI.csproj", "{8D6F981E-25F4-4FFC-8509-C60635145551}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Services.ScheduleAPI", "Microservice-API\Airline.Services.ScheduleAPI\Airline.Services.ScheduleAPI.csproj", "{021B3219-116A-4A36-8144-3EBA7BA943C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EAECBE7-8DCB-4407-A0A0-98CF043B6366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EAECBE7-8DCB-4407-A0A0-98CF043B6366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EAECBE7-8DCB-4407-A0A0-98CF043B6366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EAECBE7-8DCB-4407-A0A0-98CF043B6366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{067BC01C-BEAC-4438-89C7-E7A201B1D3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{067BC01C-BEAC-4438-89C7-E7A201B1D3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{067BC01C-BEAC-4438-89C7-E7A201B1D3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{067BC01C-BEAC-4438-89C7-E7A201B1D3ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D6F981E-25F4-4FFC-8509-C60635145551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D6F981E-25F4-4FFC-8509-C60635145551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D6F981E-25F4-4FFC-8509-C60635145551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D6F981E-25F4-4FFC-8509-C60635145551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021B3219-116A-4A36-8144-3EBA7BA943C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021B3219-116A-4A36-8144-3EBA7BA943C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021B3219-116A-4A36-8144-3EBA7BA943C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021B3219-116A-4A36-8144-3EBA7BA943C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{067BC01C-BEAC-4438-89C7-E7A201B1D3ED} = {F8B580CB-078B-45E0-B36C-D8A50AA8968E}
+		{8D6F981E-25F4-4FFC-8509-C60635145551} = {9DA55822-E38D-4F88-83A2-1CED886A16C2}
+		{021B3219-116A-4A36-8144-3EBA7BA943C3} = {9DA55822-E38D-4F88-83A2-1CED886A16C2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04C187C7-F597-4295-BAA1-2DD64BEA8E58}
+	EndGlobalSection
+EndGlobal

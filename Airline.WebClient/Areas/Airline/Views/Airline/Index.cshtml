@@ -1,0 +1,98 @@
+@model IEnumerable<App.Models.Airline.Airline>
+@using App.Models.Airline
+
+@{
+    ViewData["Title"] = "Danh sách máy bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tạo máy bay mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().AirlineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ICAOcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().IATAcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParentAirline)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            await RenderAirline(item, 0);
+        }
+
+    </tbody>
+    
+</table>
+
+@{
+    async Task RenderAirline(Airline item, int level)
+    {
+        if (item is null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        string prefix = string.Concat(Enumerable.Repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", level));
+        <tr>
+            <td>
+                @Html.Raw(prefix)
+                <a asp-action="Edit" asp-route-id="@item.AirlineId">
+                    @Html.DisplayFor(modelItem => item.AirlineName)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ICAOcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IATAcode)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            
+            <td>
+                @if (item.ParentAirline != null)
+
+                {
+                    @Html.DisplayFor(modelItem => item.ParentAirline.AirlineName)
+                }
+            </td>
+
+            <td>
+                <a asp-action="Details" asp-route-id="@item.AirlineId">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.AirlineId">Xóa</a>
+            </td>
+        </tr>
+        if (item.AirlineChildren?.Count > 0)
+        {
+            foreach (var airline in item.AirlineChildren)
+            {
+
+                await RenderAirline(airline, level + 1);
+            }
+        }
+    }
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

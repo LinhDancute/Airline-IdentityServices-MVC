@@ -1,0 +1,94 @@
+@model IEnumerable<App.Models.Airline.FlightRoute>
+@using App.Models.Airline
+
+@{
+    ViewData["Title"] = "Danh sách tuyến bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tạo tuyến bay mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().DepartureAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ArrivalAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().FlightSector)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().FlightSectorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            await RenderFlightRoute(item, 0);
+        }
+
+    </tbody>
+    
+</table>
+
+@{
+    async Task RenderFlightRoute(FlightRoute item, int level)
+    {
+        if (item is null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        string prefix = string.Concat(Enumerable.Repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", level));
+        <tr>
+            <td>
+                @Html.Raw(prefix)
+                <a asp-action="Edit" asp-route-id="@item.FlightRouteId">
+                    @Html.DisplayFor(modelItem => item.DepartureAddress)
+                </a>
+            </td>
+            <td>
+                @Html.Raw(prefix)
+                <a asp-action="Edit" asp-route-id="@item.FlightRouteId">
+                    @Html.DisplayFor(modelItem => item.ArrivalAddress)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightSector)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightSectorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+            <td>
+                <a asp-action="Details" asp-route-id="@item.FlightRouteId">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.FlightRouteId">Xóa</a>
+            </td>
+        </tr>
+    }
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

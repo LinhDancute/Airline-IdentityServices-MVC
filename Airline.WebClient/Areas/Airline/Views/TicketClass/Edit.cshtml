@@ -1,0 +1,41 @@
+@model App.Models.Airline.TicketClass
+
+@{
+    ViewData["Title"] = "Chỉnh sửa hạng vé";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>TicketClass</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Model.TicketId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TicketId" />
+
+            <div class="form-group">
+                <label asp-for="TicketName" class="control-label"></label>
+                <input asp-for="TicketName" class="form-control" />
+                <span asp-validation-for="TicketName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Danh sách hạng vé</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

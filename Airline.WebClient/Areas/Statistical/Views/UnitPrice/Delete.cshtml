@@ -1,0 +1,25 @@
+@model App.Models.Statistical.UnitPrice
+
+@{
+    ViewData["Title"] = "Xóa đơn giá";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h3>Có chắc chắn xóa?</h3>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.VND)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.VND)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PriceId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Danh sách đơn giá</a>
+    </form>
+</div>

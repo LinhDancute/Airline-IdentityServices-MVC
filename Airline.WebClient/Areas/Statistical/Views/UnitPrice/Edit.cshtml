@@ -1,0 +1,43 @@
+@model App.Models.Statistical.UnitPrice
+
+@{
+    ViewData["Title"] = "Chỉnh sửa đơn giá";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>UnitPrice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Model.PriceId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PriceId" />
+
+            <div class="form-group">
+                <label asp-for="USD"></label>
+                <input asp-for="USD" class="form-control" />
+                <span asp-validation-for="USD" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="VND"></label>
+                <input asp-for="VND" class="form-control" />
+                <span asp-validation-for="VND" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Danh sách đơn giá</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

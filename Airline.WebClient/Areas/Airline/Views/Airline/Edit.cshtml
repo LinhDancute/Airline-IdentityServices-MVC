@@ -1,0 +1,62 @@
+@model App.Models.Airline.Airline
+
+@{
+    ViewData["Title"] = "Chỉnh sửa máy bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Airline</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Model.AirlineId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AirlineId" />
+
+            <div class="form-group">
+                <label asp-for="ParentAirlineId" class="control-label"></label>
+                <select asp-for="ParentAirlineId" class="form-control" asp-items="ViewBag.ParentAirlineId"></select>
+                <span asp-validation-for="ParentAirlineId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AirlineName" class="control-label"></label>
+                <input asp-for="AirlineName" class="form-control" />
+                <span asp-validation-for="AirlineName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ICAOcode" class="control-label"></label>
+                <input asp-for="ICAOcode" class="form-control" />
+                <span asp-validation-for="ICAOcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IATAcode" class="control-label"></label>
+                <input asp-for="IATAcode" class="form-control" />
+                <span asp-validation-for="IATAcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Slug" class="control-label"></label>
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Danh sách máy bay</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

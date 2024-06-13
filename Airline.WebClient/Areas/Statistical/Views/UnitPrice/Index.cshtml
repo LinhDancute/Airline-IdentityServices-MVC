@@ -1,0 +1,70 @@
+@model IEnumerable<App.Models.Statistical.UnitPrice>
+@using App.Models.Statistical
+
+@{
+    ViewData["Title"] = "Danh sách đơn giá";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm đơn giá mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().USD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().VND)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            await RenderUnitPrice(item, 0);
+        }
+
+    </tbody>
+    
+</table>
+
+@{
+    async Task RenderUnitPrice(UnitPrice item, int level)
+    {
+        if (item is null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        string prefix = string.Concat(Enumerable.Repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", level));
+        <tr>
+            <td>
+                @Html.Raw(prefix)
+                <a asp-action="Edit" asp-route-id="@item.PriceId">
+                    @Html.DisplayFor(modelItem => item.USD)
+                </a>
+            </td>
+
+            <td>
+                @Html.Raw(prefix)
+                <a asp-action="Edit" asp-route-id="@item.PriceId">
+                    @Html.DisplayFor(modelItem => item.VND)
+                </a>
+            </td>
+
+            <td>
+                <a asp-action="Details" asp-route-id="@item.PriceId">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.PriceId">Xóa</a>
+            </td>
+        </tr>
+    }
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,33 @@
+@model App.Models.Airline.TicketClass
+
+@{
+    ViewData["Title"] = "Chi tiết hạng vé";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>TicketClass</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TicketName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TicketName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TicketId">Chỉnh sửa</a> |
+    <a asp-action="Index">Danh sách hạng vé</a>
+</div>

@@ -1,0 +1,111 @@
+@model App.Models.Airline.Flight
+
+@{
+    ViewData["Title"] = "Chi tiết chuyến bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Flight</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <dl class="dl-vertical">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AirlineId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AirlineId)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aircraft)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aircraft)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FlightNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FlightNumber)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FlightSector)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FlightSector)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FlightTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FlightTime)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DepartureTime)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ArrivalTime)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EcoSeat)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EcoSeat)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DeluxeSeat)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DeluxeSeat)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SkyBossSeat)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SkyBossSeat)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.SkyBossBusinessSeat)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SkyBossBusinessSeat)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.FlightId">Chỉnh sửa</a> |
+    <a asp-action="Index">Danh sách chuyến bay</a>
+</div>

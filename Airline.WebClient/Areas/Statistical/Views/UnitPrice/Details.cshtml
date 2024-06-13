@@ -1,0 +1,33 @@
+@model App.Models.Statistical.UnitPrice
+
+@{
+    ViewData["Title"] = "Chi tiết đơn giá";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>UnitPrice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.USD)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.USD)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.VND)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.VND)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PriceId">Chỉnh sửa</a> |
+    <a asp-action="Index">Danh sách đơn giá</a>
+</div>

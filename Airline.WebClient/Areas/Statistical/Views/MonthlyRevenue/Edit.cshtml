@@ -1,0 +1,43 @@
+@model App.Models.Statistical.MonthlyRevenue
+
+@{
+    ViewData["Title"] = "Chỉnh sửa doanh thu tháng";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>MonthlyRevenue</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Model.MonthlyRevenueId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MonthlyRevenueId" />
+
+            <div class="form-group">
+                <label asp-for="TicketByMonth"></label>
+                <input asp-for="TicketByMonth" class="form-control" />
+                <span asp-validation-for="TicketByMonth" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Revenue"></label>
+                <input asp-for="Revenue" class="form-control" />
+                <span asp-validation-for="Revenue" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Danh sách doanh thu tháng</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

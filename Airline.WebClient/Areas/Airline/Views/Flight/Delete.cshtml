@@ -1,0 +1,17 @@
+@model App.Models.Airline.Flight
+
+@{
+    ViewData["Title"] = "Xóa chuyến bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h3>Có chắc chắn xóa?</h3>
+<hr />
+<div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="FlightId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Danh sách chuyến bay</a>
+    </form>
+</div>

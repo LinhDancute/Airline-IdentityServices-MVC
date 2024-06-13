@@ -1,0 +1,60 @@
+@model IEnumerable<App.Models.Airline.Ticket>
+@using App.Models.Airline
+
+@{
+    ViewData["Title"] = "Danh sách vé máy bay";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm vé máy bay mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().CMND)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().FlightId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Published)
+            </th>
+            <th>Ngày</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.TicketId">
+                        @Html.DisplayFor(modelItem => item.CMND)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FlightId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Published)
+                </td>
+                <td>15/02/2024</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TicketId">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.TicketId">Chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TicketId">Xóa</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
