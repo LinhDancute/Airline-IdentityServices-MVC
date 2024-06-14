@@ -125,7 +125,7 @@ namespace Airline.Services.AuthAPI.Repositories
         {
             var users = new List<AccountDTO>();
 
-            var aacounts = await _userManager.GetUsersInRoleAsync("User");
+            var aacounts = await _userManager.GetUsersInRoleAsync("Member");
             foreach (var aacount in aacounts)
             {
                 var roles = await _userManager.GetRolesAsync(aacount);
@@ -156,7 +156,7 @@ namespace Airline.Services.AuthAPI.Repositories
         {
             var admins = new List<AccountDTO>();
 
-            var aacounts = await _userManager.GetUsersInRoleAsync("Admin");
+            var aacounts = await _userManager.GetUsersInRoleAsync("Administrator");
             foreach (var aacount in aacounts)
             {
                 var roles = await _userManager.GetRolesAsync(aacount);
