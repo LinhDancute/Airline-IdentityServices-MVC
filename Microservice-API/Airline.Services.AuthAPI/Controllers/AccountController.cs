@@ -19,7 +19,7 @@ namespace Airline.Services.AuthAPI.Controllers
         }
 
         [HttpGet("user")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")] 
         public async Task<IActionResult> GetUser()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -38,7 +38,7 @@ namespace Airline.Services.AuthAPI.Controllers
         }
 
         [HttpGet("admin")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> GetAdmin()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
