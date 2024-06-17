@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Airline.Services.ScheduleAPI.Models
 {
-
+    [Table("FlightRoutes")]
     public class FlightRoute
     {
         [Key]
@@ -25,12 +26,12 @@ namespace Airline.Services.ScheduleAPI.Models
         public string? FlightSectorName { get; set; }
 
         [Display(Name = "Cổng quốc tế/nội địa")]
-        public GateType Gate { get; set; }
+        public GateStatusType Gate { get; set; }
         
         [Display(Name = "Trạng thái")]
         public FlightRouteStatusType Status { get; set; }
 
-        public enum GateType
+        public enum GateStatusType
         {
             DomesticGate,
             InternationalGate
@@ -42,10 +43,10 @@ namespace Airline.Services.ScheduleAPI.Models
             Inactive
         }
         // N-N relationship with Airport
-        public ICollection<FlightRoute_Airport>? FlightRoute_Airports { get; set; }
+        public ICollection<FlightRoute_Airport> FlightRoute_Airports { get; set; } = new List<FlightRoute_Airport>();
 
         // N-N relationship with Flight
-        public ICollection<FlightRoute_Flight>? FlightRoute_Flights { get; set; }
+        public ICollection<FlightRoute_Flight>? FlightRoute_Flights { get; set; } = new List<FlightRoute_Flight>();
 
     }
 }

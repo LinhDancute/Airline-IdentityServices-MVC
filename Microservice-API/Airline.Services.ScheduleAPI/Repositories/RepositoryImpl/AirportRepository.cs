@@ -43,8 +43,6 @@ namespace Airline.Services.ScheduleAPI.Repositories.RepositoryImpl
             await _context.SaveChangesAsync();
         }
 
-        
-
         public async Task DeleteAsync(int id)
         {
             var airport = await _context.Airports.FindAsync(id);

@@ -1,6 +1,7 @@
 ﻿using Airline.Services.ScheduleAPI.Models;
 using Airline.Services.ScheduleAPI.Models.DTOs;
 using Airline.Services.ScheduleAPI.Services;
+using Airline.Services.ScheduleAPI.Services.ServiceImpl;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // GET: api/airport/{id}
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AirportDTO>> GetAirportById(int id)
         {
             try
@@ -88,14 +89,40 @@ namespace Airline.Services.ScheduleAPI.Controllers
             }
         }
 
-        // PUT: api/airport/{id}
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> UpdateAirport(int id, [FromBody] AirportDTO airportDTO)
+        // POST: api/airport/bulk
+        [HttpPost("bulk")]
+        public async Task<ActionResult> CreateAirports([FromBody] List<AirportCreateDTO> airportDTOs)
         {
             try
             {
-                if (airportDTO == null || id != airportDTO.AirportId)
+                if (airportDTOs == null || airportDTOs.Count == 0)
+                {
+                    return BadRequest(new ResponsesDTO { Success = false, Message = "Airport data is null or empty" });
+                }
+
+                await _airportService.CreateAirportsAsync(airportDTOs);
+
+                return Ok(new ResponsesDTO { Success = true, Message = "Airports created successfully" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new ResponsesDTO { Success = false, Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponsesDTO { Success = false, Message = ex.Message });
+            }
+        }
+
+
+        // PUT: api/airport/{id}
+        [HttpPut("{id}")]
+        //[Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> UpdateAirport(int id, [FromBody] AirportCreateDTO airportDTO)
+        {
+            try
+            {
+                if (airportDTO == null)
                     return BadRequest(new ResponsesDTO { Success = false, Message = "Invalid airport data or ID mismatch" });
 
                 await _airportService.UpdateAirportAsync(id, airportDTO);
@@ -109,7 +136,7 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // DELETE: api/airport/{id}
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteAirport(int id)
         {
             try
@@ -122,5 +149,28 @@ namespace Airline.Services.ScheduleAPI.Controllers
                 return StatusCode(500, new ResponsesDTO { Success = false, Message = ex.Message });
             }
         }
+
+        [HttpPut("close/{id}")]
+        public async Task<IActionResult> CloseAirport(int id, [FromBody] AirportCreateDTO airportCreateDTO)
+        {
+            try
+            {
+                // Map AirportCreateDTO to AirportDTO
+                var airportDTO = _mapper.Map<AirportDTO>(airportCreateDTO);
+
+                await _airportService.CloseAirportAsync(id, airportDTO);
+
+                return Ok(new { Success = true, Message = "Airport closed successfully" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
+        }
     }
 }
+

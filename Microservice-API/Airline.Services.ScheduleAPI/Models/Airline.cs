@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Airline.Services.ScheduleAPI.Models
 {
     [Table("Airline")]
-
     public class Airline
     {
         [Key]

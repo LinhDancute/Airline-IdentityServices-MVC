@@ -85,6 +85,10 @@ builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
 builder.Services.AddScoped<IAirlineService, AirlineService>();
 builder.Services.AddScoped<IAirportRepository, AirportRepository>();
 builder.Services.AddScoped<IAirportService, AirportService>();
+builder.Services.AddScoped<IFlightRouteRepository, FlightRouteRepository>();
+builder.Services.AddScoped<IFlightRouteService, FlightRouteService>();
+builder.Services.AddScoped<IFlightRoute_AirportRepository, FlightRoute_AirportRepository>();
+builder.Services.AddScoped<IFlightRoute_AirportService, FlightRoute_AirportService>();
 
 // Register AutoMapper
 builder.Services.ConfigureAutoMapper();
