@@ -10,9 +10,10 @@ namespace Airline.Services.ScheduleAPI.Repositories
         Task AddAsync(FlightRoute flightRoute); //add single
         Task AddRangeAsync(IEnumerable<FlightRoute> flightRoutes); //add list
         Task<FlightRoute> GetByIdAsync(int id);
-        
+        Task<IEnumerable<FlightRoute>> GetByIdsAsync(IEnumerable<int> ids);
         Task UpdateAsync(FlightRoute flightRoute);
         Task DeleteAsync(int id);
         Task<bool> FlightRouteExistsAsync(int id);
+        Task<IEnumerable<FlightRoute>> GetBySectorAsync(string flightSector);
     }
 }

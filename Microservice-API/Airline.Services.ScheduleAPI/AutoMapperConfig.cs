@@ -30,19 +30,21 @@ namespace Airline.Services.ScheduleAPI
                 config.CreateMap<FlightRouteDTO, FlightRoute>();
                 config.CreateMap<FlightRoute, FlightRouteDTO>();
 
-                //FlightRouteCreateDTO
-                config.CreateMap<FlightRouteCreateDTO, FlightRoute>()
-                    .ForMember(dest => dest.FlightRouteId, opt => opt.Ignore()) 
-                    .ForMember(dest => dest.FlightRoute_Flights, opt => opt.Ignore()); // Ignore mapping FlightRoute_Flights
-
                 //FlightRoute_Airport
                 config.CreateMap<FlightRoute_AirportDTO, FlightRoute_Airport>();
                 config.CreateMap<FlightRoute_Airport,  FlightRoute_AirportDTO>();
+
+                //Flight
+                config.CreateMap<FlightCreateDTO, Flight>();
+                config.CreateMap<Flight, FlightCreateDTO>();
+                config.CreateMap<Flight, FlightDTO>()
+                    .ForMember(dest => dest.FlightRouteIds, opt => opt.MapFrom(src => src.FlightRoute_Flights.Select(fr => fr.FlightRouteID).ToList()));
 
                 // Reverse mappings
                 config.CreateMap<AirportCreateDTO, Airport>().ReverseMap();
                 config.CreateMap<FlightRouteCreateDTO, FlightRoute>().ReverseMap();
                 config.CreateMap<FlightRoute_AirportDTO, FlightRoute_Airport>().ReverseMap();
+                config.CreateMap<FlightDTO, Flight>().ReverseMap();
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
