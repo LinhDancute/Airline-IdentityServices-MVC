@@ -12,5 +12,6 @@ namespace Airline.Services.ScheduleAPI.Repositories
         Task DeleteAsync(int id);
         Task<bool> AirlineExistsAsync(int id);
         Task<Airline.Services.ScheduleAPI.Models.Airline> FindAsync(Expression<Func<Airline.Services.ScheduleAPI.Models.Airline, bool>> predicate);
+        Task<Airline.Services.ScheduleAPI.Models.Airline> FindByIATACodeAsync(string iataCode);
     }
 }

@@ -74,7 +74,7 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             await _airportRepository.AddRangeAsync(airportsToAdd);
         }
 
-        public async Task UpdateAirportAsync(int id, AirportDTO airportDTO)
+        public async Task UpdateAirportAsync(int id, AirportCreateDTO airportDTO)
         {
             var existingAirport = await _airportRepository.GetByIdAsync(id);
             if (existingAirport == null)

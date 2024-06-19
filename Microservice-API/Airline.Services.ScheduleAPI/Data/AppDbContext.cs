@@ -11,22 +11,21 @@ namespace Airline.Services.ScheduleAPI.Data
         {
 
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new FlightRoute_AirportConfiguration());
-            modelBuilder.ApplyConfiguration(new FlightRoute_FlightConfiguration());
-            modelBuilder.ApplyConfiguration(new FlightConfiguration()); //flight
-            modelBuilder.ApplyConfiguration(new FlightRouteConfiguration()); //flight route
-            modelBuilder.ApplyConfiguration(new AirportConfiguration()); //airport
-            modelBuilder.ApplyConfiguration(new AirlineConfiguration()); //airline
-        }
-
         public DbSet<Airline.Services.ScheduleAPI.Models.Airline> Airlines { get; set; }
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<FlightRoute> FlightsRoute { get; set; }
-        public DbSet<FlightRoute_Airport> FlightsRoute_Airports { get;set; }
-        public DbSet<FlightRoute_Flight> FlightsRoute_Flights { get;set; }
+        public DbSet<FlightRoute_Airport> FlightsRoute_Airports { get; set; }
+        public DbSet<FlightRoute_Flight> FlightsRoute_Flights { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new AirportConfiguration());            //airport
+            modelBuilder.ApplyConfiguration(new AirlineConfiguration());            //airline
+            modelBuilder.ApplyConfiguration(new FlightRouteConfiguration());        //flight route
+            modelBuilder.ApplyConfiguration(new FlightRoute_AirportConfiguration());
+            modelBuilder.ApplyConfiguration(new FlightConfiguration());             //flight
+            modelBuilder.ApplyConfiguration(new FlightRoute_FlightConfiguration());
+        }
     }
 }

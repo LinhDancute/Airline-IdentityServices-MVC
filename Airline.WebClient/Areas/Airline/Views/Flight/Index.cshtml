@@ -45,12 +45,12 @@
         string prefix = string.Concat(Enumerable.Repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", level));
         <tr>
             <td>
-                @(++ViewBag.flightIndex ?? 1)
+                @(++ViewBag.flightIndex ?? 1)           
             </td>
 
-            <td>@item.Date.ToShortDateString()</td>
+            <td>@item.Date.ToShortDateString()</td>     
 
-            <td>
+            <td>                                        
                 @Html.Raw(prefix)
                 <a asp-action="Edit" asp-route-id="@item.FlightId">
                     @Html.DisplayFor(modelItem => item.FlightSector)
@@ -59,7 +59,7 @@
             </td>
 
 
-            <td>
+            <td>                                        
                 @Html.Raw(prefix)
                 <a asp-action="Edit" asp-route-id="@item.FlightId">
                     @Html.DisplayFor(modelItem => item.Aircraft)

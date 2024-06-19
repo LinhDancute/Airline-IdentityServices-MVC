@@ -61,5 +61,10 @@ namespace Airline.Services.ScheduleAPI.Repositories.RepositoryImpl
         {
             return await _context.Airlines.FirstOrDefaultAsync(predicate);
         }
+
+        public async Task<Airline.Services.ScheduleAPI.Models.Airline> FindByIATACodeAsync(string iataCode)
+        {
+            return await _context.Airlines.FirstOrDefaultAsync(a => a.IATAcode == iataCode);
+        }
     }
 }

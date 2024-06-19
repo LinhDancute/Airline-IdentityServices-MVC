@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Services.AuthAPI", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.Services.ScheduleAPI", "Microservice-API\Airline.Services.ScheduleAPI\Airline.Services.ScheduleAPI.csproj", "{021B3219-116A-4A36-8144-3EBA7BA943C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{3C5341EE-117D-4437-9F30-BFCB79F5D75B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{021B3219-116A-4A36-8144-3EBA7BA943C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021B3219-116A-4A36-8144-3EBA7BA943C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021B3219-116A-4A36-8144-3EBA7BA943C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C5341EE-117D-4437-9F30-BFCB79F5D75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C5341EE-117D-4437-9F30-BFCB79F5D75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C5341EE-117D-4437-9F30-BFCB79F5D75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C5341EE-117D-4437-9F30-BFCB79F5D75B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Airline.Services.ScheduleAPI.Models
 {
 
-    [Table("FlightRoute_Airport")]
+    [Table("FlightRoute_Airports")]
     public class FlightRoute_Airport
     {
         public int FlightRouteID { set; get; }
