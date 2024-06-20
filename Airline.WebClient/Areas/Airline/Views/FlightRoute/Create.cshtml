@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label asp-for="Gate"></label>
-                <select asp-for="Gate" asp-items="@Html.GetEnumSelectList<App.Models.Airline.FlightRoute.GateType>()"
+                <select asp-for="Gate" asp-items="@Html.GetEnumSelectList<App.Models.Airline.FlightRoute.GateStatusType>()"
                     class="form-control"></select>
                 <span asp-validation-for="Gate" class="text-danger"></span>
             </div>
@@ -54,7 +54,7 @@
             <div class="form-group">
                 <label asp-for="Status"></label>
                 <select asp-for="Status"
-                    asp-items="@Html.GetEnumSelectList<App.Models.Airline.FlightRoute.StatusType>()"
+                    asp-items="@Html.GetEnumSelectList<App.Models.Airline.FlightRoute.FlightRouteStatusType>()"
                     class="form-control"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>

@@ -1,4 +1,4 @@
-﻿using Airline.Services.ScheduleAPI.Data;
+﻿using App.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -11,32 +11,32 @@ namespace Airline.Services.ScheduleAPI.Repositories.RepositoryImpl
         {
             _context = appDbContext;
         }
-        public async Task<IEnumerable<Airline.Services.ScheduleAPI.Models.Airline>> GetAllAsync()
+        public async Task<IEnumerable<App.Models.Airline.Airline>> GetAllAsync()
         {
             return await _context.Airlines.Include(a => a.AirlineChildren).ToListAsync();
         }
 
-        public async Task<Airline.Services.ScheduleAPI.Models.Airline> GetByIdAsync(int id)
+        public async Task<App.Models.Airline.Airline> GetByIdAsync(int id)
         {
             return await _context.Airlines.Include(a => a.AirlineChildren)
                                           .SingleOrDefaultAsync(a => a.AirlineId == id);
         }
 
         //Add signle
-        public async Task AddAsync(Airline.Services.ScheduleAPI.Models.Airline airline)
+        public async Task AddAsync(App.Models.Airline.Airline airline)
         {
             _context.Airlines.Add(airline);
             await _context.SaveChangesAsync();
         }
 
         //Add list
-        public async Task AddRangeAsync(IEnumerable<Airline.Services.ScheduleAPI.Models.Airline> airlines) 
+        public async Task AddRangeAsync(IEnumerable<App.Models.Airline.Airline> airlines) 
         {
             await _context.Airlines.AddRangeAsync(airlines);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Airline.Services.ScheduleAPI.Models.Airline airline)
+        public async Task UpdateAsync(App.Models.Airline.Airline airline)
         {
             _context.Entry(airline).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -57,12 +57,12 @@ namespace Airline.Services.ScheduleAPI.Repositories.RepositoryImpl
             return await _context.Airlines.AnyAsync(e => e.AirlineId == id);
         }
 
-        public async Task<Airline.Services.ScheduleAPI.Models.Airline> FindAsync(Expression<Func<Airline.Services.ScheduleAPI.Models.Airline, bool>> predicate)
+        public async Task<App.Models.Airline.Airline> FindAsync(Expression<Func<App.Models.Airline.Airline, bool>> predicate)
         {
             return await _context.Airlines.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<Airline.Services.ScheduleAPI.Models.Airline> FindByIATACodeAsync(string iataCode)
+        public async Task<App.Models.Airline.Airline> FindByIATACodeAsync(string iataCode)
         {
             return await _context.Airlines.FirstOrDefaultAsync(a => a.IATAcode == iataCode);
         }

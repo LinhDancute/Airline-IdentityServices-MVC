@@ -1,5 +1,5 @@
-﻿using Airline.Services.ScheduleAPI.Models.DTOs;
-using Airline.Services.ScheduleAPI.Repositories;
+﻿using Airline.Services.ScheduleAPI.Repositories;
+using Airline.WebClient.Models.DTOs.Schedule;
 using AutoMapper;
 
 namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
@@ -39,7 +39,7 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
                 throw new InvalidOperationException("An airline with the same name, IATA code, or ICAO code already exists.");
             }
 
-            var airline = _mapper.Map<Models.Airline>(airlineDto);
+            var airline = _mapper.Map<App.Models.Airline.Airline>(airlineDto);
             await _airlineRepository.AddAsync(airline);
         }
         
@@ -59,7 +59,7 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
                     throw new InvalidOperationException($"An airline with the name '{airlineDTO.AirlineName}', IATA code '{airlineDTO.IATACode}', or ICAO code '{airlineDTO.ICAOCode}' already exists.");
                 }
             }
-            var airlines = _mapper.Map<List<Models.Airline>>(airlineDTOs);
+            var airlines = _mapper.Map<List<App.Models.Airline.Airline>>(airlineDTOs);
             await _airlineRepository.AddRangeAsync(airlines); 
         }
 

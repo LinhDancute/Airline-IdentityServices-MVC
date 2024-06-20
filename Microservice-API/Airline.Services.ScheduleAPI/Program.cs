@@ -1,11 +1,11 @@
 using System.Reflection;
 using System.Text;
 using Airline.Services.ScheduleAPI;
-using Airline.Services.ScheduleAPI.Data;
 using Airline.Services.ScheduleAPI.Repositories;
 using Airline.Services.ScheduleAPI.Repositories.RepositoryImpl;
 using Airline.Services.ScheduleAPI.Services;
 using Airline.Services.ScheduleAPI.Services.ServiceImpl;
+using App.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     );
 //Add Identity & JWT authentication
 //Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddSignInManager()
     .AddRoles<IdentityRole>();

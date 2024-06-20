@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace App.Models.Airline
 {
-
     public class FlightRoute
     {
         [Key]
@@ -25,26 +24,26 @@ namespace App.Models.Airline
         public string? FlightSectorName { get; set; }
 
         [Display(Name = "Cổng quốc tế/nội địa")]
-        public GateType Gate { get; set; }
+        public GateStatusType Gate { get; set; }
         
         [Display(Name = "Trạng thái")]
-        public StatusType Status { get; set; }
+        public FlightRouteStatusType Status { get; set; }
 
-        public enum GateType
+        public enum GateStatusType
         {
             DomesticGate,
             InternationalGate
         }
 
-        public enum StatusType
+        public enum FlightRouteStatusType
         {
             Active,
             Inactive
         }
-        // N-N relationship with SanBay
+        // N-N relationship with Airport
         public ICollection<FlightRoute_Airport>? FlightRoute_Airports { get; set; }
 
-        // N-N relationship with ChuyenBay
+        // N-N relationship with Flight
         public ICollection<FlightRoute_Flight>? FlightRoute_Flights { get; set; }
 
     }

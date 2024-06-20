@@ -1,5 +1,4 @@
-﻿using Airline.Services.ScheduleAPI.Models;
-using Airline.Services.ScheduleAPI.Models.DTOs;
+﻿using App.Models.Airline;
 using System.Linq.Expressions;
 
 namespace Airline.Services.ScheduleAPI.Repositories

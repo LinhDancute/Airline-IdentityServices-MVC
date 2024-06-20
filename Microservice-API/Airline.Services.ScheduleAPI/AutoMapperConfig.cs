@@ -1,5 +1,5 @@
-﻿using Airline.Services.ScheduleAPI.Models;
-using Airline.Services.ScheduleAPI.Models.DTOs;
+﻿using Airline.WebClient.Models.DTOs.Schedule;
+using App.Models.Airline;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,8 +14,8 @@ namespace Airline.Services.ScheduleAPI
             {
                 // Mapping
                 // Airline
-                config.CreateMap<AirlineDTO, Airline.Services.ScheduleAPI.Models.Airline>();
-                config.CreateMap<Airline.Services.ScheduleAPI.Models.Airline, AirlineDTO>();
+                config.CreateMap<AirlineDTO, App.Models.Airline.Airline>();
+                config.CreateMap<App.Models.Airline.Airline, AirlineDTO>();
 
                 //Airport
                 config.CreateMap<AirportDTO, Airport>();

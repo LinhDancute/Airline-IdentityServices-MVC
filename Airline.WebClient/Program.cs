@@ -21,9 +21,9 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 // Register the MyBlogContext with the dependency injection container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AirlineReservationDb"),
-    builder => builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)));
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
+        throw new InvalidOperationException("Connection string not found"))
+    );
 builder.Services.AddIdentity<AppUser, IdentityRole>()
                     .AddEntityFrameworkStores<AppDbContext>()
                     .AddDefaultUI()

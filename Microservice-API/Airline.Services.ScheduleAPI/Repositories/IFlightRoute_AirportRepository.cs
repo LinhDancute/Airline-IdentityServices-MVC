@@ -1,4 +1,4 @@
-﻿using Airline.Services.ScheduleAPI.Models;
+﻿using App.Models.Airline;
 using System.Linq.Expressions;
 
 namespace Airline.Services.ScheduleAPI.Repositories

@@ -25,4 +25,8 @@
     <ItemGroup>
       <Folder Include="Properties\Services\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Airline.WebClient\Airline.WebClient.csproj" />
+    </ItemGroup>
 </Project>

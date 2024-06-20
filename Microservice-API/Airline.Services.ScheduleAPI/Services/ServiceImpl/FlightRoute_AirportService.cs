@@ -1,7 +1,7 @@
-﻿using Airline.Services.ScheduleAPI.Models;
-using Airline.Services.ScheduleAPI.Models.DTOs;
-using Airline.Services.ScheduleAPI.Repositories;
+﻿using Airline.Services.ScheduleAPI.Repositories;
 using Airline.Services.ScheduleAPI.Repositories.RepositoryImpl;
+using Airline.WebClient.Models.DTOs.Schedule;
+using App.Models.Airline;
 using AutoMapper;
 using System.Linq.Expressions;
 

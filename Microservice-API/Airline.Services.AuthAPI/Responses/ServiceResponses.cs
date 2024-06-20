@@ -1,4 +1,4 @@
-﻿using Airline.Services.AuthAPI.Models.DTOs;
+﻿using Airline.WebClient.Models.DTOs.Auth;
 
 namespace Airline.Services.AuthAPI.Responses
 {

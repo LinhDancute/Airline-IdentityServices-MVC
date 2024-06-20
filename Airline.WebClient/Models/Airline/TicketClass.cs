@@ -19,5 +19,6 @@ namespace App.Models.Airline
         [DataType(DataType.Text)]
         [Display(Name = "Nội dung mô tả hạng vé")]
         public string? Description { set; get; }
+        public ICollection<BoardingPass_TicketClass>? BoardingPass_TicketClasses { get; set; }
     }
 }
