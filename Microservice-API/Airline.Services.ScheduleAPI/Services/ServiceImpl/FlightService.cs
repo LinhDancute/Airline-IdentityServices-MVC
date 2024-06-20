@@ -1,7 +1,7 @@
-﻿using Airline.Services.ScheduleAPI.Models;
-using Airline.Services.ScheduleAPI.Models.DTOs;
-using Airline.Services.ScheduleAPI.Repositories;
+﻿using Airline.Services.ScheduleAPI.Repositories;
 using Airline.Services.ScheduleAPI.Repositories.RepositoryImpl;
+using Airline.WebClient.Models.DTOs.Schedule;
+using App.Models.Airline;
 using AutoMapper;
 
 namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
@@ -67,7 +67,7 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             {
                 flight.Aircraft = airline.IATAcode;
                 flight.AirlineId = airline.AirlineId;
-                flight.Airlines = airline;
+                flight.Airline = airline;
             }
 
             // Set other properties
@@ -135,7 +135,7 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
                 {
                     flight.Aircraft = airline.IATAcode;
                     flight.AirlineId = airline.AirlineId;
-                    flight.Airlines = airline;
+                    flight.Airline = airline;
                 }
 
                 // Set other properties
@@ -202,7 +202,7 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             {
                 flight.Aircraft = airline.IATAcode;
                 flight.AirlineId = airline.AirlineId;
-                flight.Airlines = airline;
+                flight.Airline = airline;
             }
 
             // Update flight properties

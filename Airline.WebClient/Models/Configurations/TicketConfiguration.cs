@@ -8,22 +8,23 @@ namespace App.Models.Configurations {
     {
         public void Configure(EntityTypeBuilder<Ticket> builder)
         {
-            // ChuyenBay - VeMayBay : n-1
-            builder.HasOne(bp => bp.Flight)
-                .WithMany(f => f.Tickets)
-                .HasForeignKey(bp => bp.FlightId)
+            // Flight - Ticket : n-1
+            // UnitPrice - Ticket : n-1
+            // User - Ticket : n-1
+
+            builder.HasOne(f => f.Flight)
+                .WithMany(t => t.Tickets)
+                .HasForeignKey(f => f.FlightId)
                 .IsRequired();
 
-            // DonGia - VeMayBay : n-1
-            builder.HasOne(pdc => pdc.UnitPrice)
-                .WithMany()
+            builder.HasOne(u => u.UnitPrice)
+                .WithMany(t => t.Tickets)
                 .HasForeignKey(pdc => pdc.PriceId)
                 .IsRequired();
 
-            // KhachHang - VeMayBay : n-1
-            builder.HasOne(pdc => pdc.Passenger)
-                .WithMany()
-                .HasForeignKey(pdc => pdc.PassengerId)
+            builder.HasOne(p => p.Passenger)
+                .WithMany(t => t.Tickets)
+                .HasForeignKey(p => p.PassengerId)
                 .IsRequired();
         }
     }

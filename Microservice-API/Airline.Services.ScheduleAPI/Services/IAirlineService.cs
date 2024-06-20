@@ -1,4 +1,4 @@
-﻿using Airline.Services.ScheduleAPI.Models.DTOs;
+﻿using Airline.WebClient.Models.DTOs.Schedule;
 
 namespace Airline.Services.ScheduleAPI.Services
 {

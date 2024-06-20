@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace App.Models.Airline
 {
-
-    [Table("FlightRoute_Airport")]
     public class FlightRoute_Airport
     {
         public int FlightRouteID { set; get; }

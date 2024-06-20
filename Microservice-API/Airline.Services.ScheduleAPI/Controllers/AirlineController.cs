@@ -1,6 +1,5 @@
-﻿using Airline.Services.ScheduleAPI.Data;
-using Airline.Services.ScheduleAPI.Models.DTOs;
-using Airline.Services.ScheduleAPI.Services;
+﻿using Airline.Services.ScheduleAPI.Services;
+using Airline.WebClient.Models.DTOs.Schedule;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // GET: api/airline
         [HttpGet]
-        //[Authorize]
         public async Task<ActionResult<IEnumerable<AirlineDTO>>> GetAirlines()
         {
             try
@@ -36,7 +34,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // GET: api/airline/{id}
         [HttpGet("{id}")]
-        //[Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AirlineDTO>> GetAirlineById(int id)
         {
             try
@@ -55,7 +52,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // POST: api/airline
         [HttpPost]
-        //[Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AirlineDTO>> CreateAirline([FromBody] AirlineDTO airlineDTO)
         {
             try
@@ -80,7 +76,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // PUT: api/airline/{id}
         [HttpPut("{id}")]
-        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> UpdateAirline(int id, [FromBody] AirlineDTO airlineDTO)
         {
             try
@@ -99,7 +94,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // DELETE: api/airline/{id}
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteAirline(int id)
         {
             try

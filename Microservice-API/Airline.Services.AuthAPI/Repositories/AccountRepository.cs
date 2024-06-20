@@ -1,23 +1,22 @@
-﻿using Airline.Services.AuthAPI.Data;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Airline.Services.AuthAPI.Services;
-using Airline.Services.AuthAPI.Models.DTOs;
 using Airline.Services.AuthAPI.Responses;
 using static Airline.Services.AuthAPI.Responses.ServiceResponses;
-using Airline.Services.AuthAPI.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using App.Models;
+using Airline.WebClient.Models.DTOs.Auth;
 
 namespace Airline.Services.AuthAPI.Repositories
 {
     public class AccountRepository : IAccountService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        public AccountRepository(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AccountRepository(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -79,7 +78,7 @@ namespace Airline.Services.AuthAPI.Repositories
                 return new GeneralResponse(false, "Model is empty");
             }
 
-            var newUser = new ApplicationUser
+            var newUser = new AppUser
             {
                 UserName = users.UserName,
                 Email = users.Email,

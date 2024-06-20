@@ -1,7 +1,6 @@
-﻿using Airline.Services.ScheduleAPI.Models;
-using Airline.Services.ScheduleAPI.Models.DTOs;
-using Airline.Services.ScheduleAPI.Services;
+﻿using Airline.Services.ScheduleAPI.Services;
 using Airline.Services.ScheduleAPI.Services.ServiceImpl;
+using Airline.WebClient.Models.DTOs.Schedule;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

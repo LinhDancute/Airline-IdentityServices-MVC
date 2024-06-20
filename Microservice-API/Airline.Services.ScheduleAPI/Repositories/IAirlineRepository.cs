@@ -4,14 +4,14 @@ namespace Airline.Services.ScheduleAPI.Repositories
 {
     public interface IAirlineRepository
     {
-        Task<IEnumerable<Airline.Services.ScheduleAPI.Models.Airline>> GetAllAsync();
-        Task<Airline.Services.ScheduleAPI.Models.Airline> GetByIdAsync(int id);
-        Task AddAsync(Airline.Services.ScheduleAPI.Models.Airline airline); //add single
-        Task AddRangeAsync(IEnumerable<Airline.Services.ScheduleAPI.Models.Airline> airlines); //add list
-        Task UpdateAsync(Airline.Services.ScheduleAPI.Models.Airline airline);
+        Task<IEnumerable<App.Models.Airline.Airline>> GetAllAsync();
+        Task<App.Models.Airline.Airline> GetByIdAsync(int id);
+        Task AddAsync(App.Models.Airline.Airline airline); //add single
+        Task AddRangeAsync(IEnumerable<App.Models.Airline.Airline> airlines); //add list
+        Task UpdateAsync(App.Models.Airline.Airline airline);
         Task DeleteAsync(int id);
         Task<bool> AirlineExistsAsync(int id);
-        Task<Airline.Services.ScheduleAPI.Models.Airline> FindAsync(Expression<Func<Airline.Services.ScheduleAPI.Models.Airline, bool>> predicate);
-        Task<Airline.Services.ScheduleAPI.Models.Airline> FindByIATACodeAsync(string iataCode);
+        Task<App.Models.Airline.Airline> FindAsync(Expression<Func<App.Models.Airline.Airline, bool>> predicate);
+        Task<App.Models.Airline.Airline> FindByIATACodeAsync(string iataCode);
     }
 }

@@ -1,6 +1,6 @@
-﻿using Airline.Services.ScheduleAPI.Data;
-using Airline.Services.ScheduleAPI.Models;
-using Airline.Services.ScheduleAPI.Models.DTOs;
+﻿using Airline.WebClient.Models.DTOs.Schedule;
+using App.Models;
+using App.Models.Airline;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

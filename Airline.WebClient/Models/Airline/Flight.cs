@@ -52,18 +52,21 @@ namespace App.Models.Airline
         
         [Column("Status")]
         [Display(Name = "Trạng thái hoạt động")]
-        public StatusType Status { get; set; }
+        public FlightStatusType Status { get; set; }
 
-        public enum StatusType
+        public enum FlightStatusType
         {
             Active,
             Inactive
         }
 
+        //Flight - Airline: 1-n
         public Airline? Airline { get; set; }
 
-        // ChuyenBay - PhieuDatCho : n-1
-        // ChuyenBay - VeMayBay : n-1
+        // Flight - BoardingPass : n-1
+        // Flight - Ticket : n-1
+        //Flight - FlightRoute: n-n
+        //Flight - FlightRoute_Flight: n-1
         public ICollection<BoardingPass>? BoardingPasses { get; } = new List<BoardingPass>();
         public ICollection<Ticket>? Tickets { get; } = new List<Ticket>();
         public ICollection<FlightRoute_Flight>? FlightRoute_Flights { get; set; } = new List<FlightRoute_Flight>();

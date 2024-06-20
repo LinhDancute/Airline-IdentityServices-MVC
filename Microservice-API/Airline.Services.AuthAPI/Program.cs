@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Airline.Services.AuthAPI.Services;
-using Airline.Services.AuthAPI.Data;
 using Airline.Services.AuthAPI.Repositories;
 using Microsoft.OpenApi.Models;
+using App.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +23,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     );
 //Add Identity & JWT authentication
 //Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddSignInManager()
     .AddRoles<IdentityRole>();

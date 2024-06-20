@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Airline.Services.AuthAPI.Services;
-using Airline.Services.AuthAPI.Models.DTOs;
 using System.Security.Claims;
+using Airline.WebClient.Models.DTOs.Auth;
 
 namespace Airline.Services.AuthAPI.Controllers
 {

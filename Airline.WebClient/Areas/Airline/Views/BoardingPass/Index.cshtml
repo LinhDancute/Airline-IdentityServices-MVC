@@ -38,15 +38,7 @@
 
         string prefix = string.Concat(Enumerable.Repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", level));
         <tr>
-            <td>@item.BookingDate.ToShortDateString()</td>
-
-            <td>
-                @Html.Raw(prefix)
-                <a asp-action="Edit" asp-route-id="@item.BoardingPassId">
-                    @Html.DisplayFor(modelItem => item.CMND)
-                </a>
-            </td>
-
+            <td>@item.Date</td>
             <td>
                 @Html.Raw(prefix)
                 <a asp-action="Edit" asp-route-id="@item.BoardingPassId">
