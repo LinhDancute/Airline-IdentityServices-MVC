@@ -9,6 +9,10 @@ namespace App.Models.Configurations
         {
             builder.HasKey(a => a.AirlineId);
 
+            builder.HasOne(a => a.ParentAirline)
+                .WithMany(a => a.AirlineChildren)
+                .HasForeignKey(a => a.ParentAirlineId);
+
             builder.HasMany(f => f.Flights)
                 .WithOne(a => a.Airline)
                 .HasForeignKey(f => f.AirlineId)

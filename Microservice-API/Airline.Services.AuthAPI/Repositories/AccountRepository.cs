@@ -98,7 +98,7 @@ namespace Airline.Services.AuthAPI.Repositories
             }
 
             // Role assignment
-            var role = isAdmin ? "Admin" : "User";
+            var role = isAdmin ? "Administrator" : "Member";
             var roleExists = await _roleManager.RoleExistsAsync(role);
             if (!roleExists)
             {

@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().CMND)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.First().FlightId)
             </th>
             <th>
@@ -30,11 +27,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.TicketId">
-                        @Html.DisplayFor(modelItem => item.CMND)
-                    </a>
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FlightId)
                 </td>

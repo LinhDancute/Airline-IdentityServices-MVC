@@ -6,6 +6,7 @@ using App.Models.Airline;
 using App.Models.Configurations;
 using App.Models.Statistical;
 using Airline.WebClient.Models.Configurations;
+using Airline.WebClient.Models.Airline;
 
 namespace App.Models
 {
@@ -34,8 +35,10 @@ namespace App.Models
             modelBuilder.ApplyConfiguration(new TicketConfiguration());                     //ticket
             modelBuilder.ApplyConfiguration(new TicketClassConfiguration());                //ticket class
             modelBuilder.ApplyConfiguration(new InvoiceConfiguration());                    //invoice
-            modelBuilder.ApplyConfiguration(new BoardingPass_TicketClassConfiguration());   //boardingpass_ticketclass
+            modelBuilder.ApplyConfiguration(new TicketClass_BaggageConfiguration());        //ticketclass_baggage
             modelBuilder.ApplyConfiguration(new UserConfiguration());                       //user
+            modelBuilder.ApplyConfiguration(new MealConfiguration());                       //meal
+            modelBuilder.ApplyConfiguration(new BaggageConfiguration());                    //baggage
         }
 
         public DbSet<App.Models.Contacts.Contact> Contacts { get; set; }
@@ -52,7 +55,9 @@ namespace App.Models
         public DbSet<UnitPrice> UnitPrices { get; set; }
         public DbSet<FlightRoute_Airport> FlightRoute_Airports { get; set; }
         public DbSet<FlightRoute_Flight> FlightRoute_Flights { get; set; }
-        public DbSet<BoardingPass_TicketClass> BoardingPass_TicketClasses { get; set; }
+        public DbSet<TicketClass_Baggage> TicketClass_Baggages { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<Baggage> Baggages { get; set; }
 
     }
 }

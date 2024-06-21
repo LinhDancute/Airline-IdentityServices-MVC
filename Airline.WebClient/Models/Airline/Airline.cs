@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace App.Models.Airline
 {
-    [Table("Airline")]
-
     public class Airline
     {
         [Key]

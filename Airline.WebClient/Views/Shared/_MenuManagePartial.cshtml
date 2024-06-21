@@ -5,7 +5,6 @@
     var result = await authorizationService.AuthorizeAsync(this.User, "ViewManageMenu");
 
 }
-
 @if(result.Succeeded) {
     <div class="dropdown">
         <a class="btn btn-outline-danger dropdown-toggle" href="#" id="managedropdownmenu" data-toggle="dropdown">

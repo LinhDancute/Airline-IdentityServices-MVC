@@ -1,3 +1,4 @@
+using Airline.WebClient.Models.Airline;
 using Bogus.DataSets;
 using Org.BouncyCastle.Asn1.Cms;
 using System;
@@ -12,7 +13,14 @@ namespace App.Models.Airline
         public int BoardingPassId { get; set; }
         public int FlightId { get; set; }
         public string? PassengerId { set; get; }
+        public int ClassId { get; set; }
+        public int TicketId { get; set; }
+        public int BaggageId { get; set; }
+        public int MealId { get; set; }
+        public string PNR { get; set; }
 
+        [Display(Name = "Mã vé điện tử")]
+        public string ETicket { set; get; }
         [Display(Name = "Ngày bay")]
         public DateTime Date { get; set; }
         [Display(Name = "Thời gian bay")]
@@ -27,8 +35,18 @@ namespace App.Models.Airline
 
         [Display(Name = "Tên hành khách")]
         public string? PassengerName { get; set; }
+        [Display(Name = "Hạng vé")]
+        public string Class { get; set; }
+        [Display(Name = "Hành lý")]
+        public string BaggageType { get; set; }
+        [Display(Name = "Yêu cầu dịch vụ đặc biệt")]
+        public string SSR { get; set; }
+
         public AppUser? Passenger { set; get; }
         public Flight Flight { get; set; }
-        public ICollection<BoardingPass_TicketClass>? BoardingPass_TicketClasses { get; set; }
+        public TicketClass TicketClass { get; set; }
+        public Baggage Baggage { get; set; }
+        public Meal Meal { get; set; }
+        public Ticket Ticket { get; set; }
     }
 }

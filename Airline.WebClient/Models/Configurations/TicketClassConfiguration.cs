@@ -11,9 +11,23 @@ namespace Airline.WebClient.Models.Configurations
         {
             builder.HasKey(tc => tc.TicketId);
 
-            builder.HasMany(bpt => bpt.BoardingPass_TicketClasses)
+            //TicketClass - TicketClass_Baggage: n-1
+            //TicketClass - Ticket: n-1
+            //TicketClass - BoardingPass: n-1
+
+            builder.HasMany(bpt => bpt.TicketClass_Baggages)
                 .WithOne(tc => tc.TicketClass)
                 .HasForeignKey(bpt => bpt.TicketClassID)
+                .IsRequired();
+
+            builder.HasMany(bpt => bpt.Tickets)
+                .WithOne(tc => tc.TicketClass)
+                .HasForeignKey(bpt => bpt.TicketId)
+                .IsRequired();
+
+            builder.HasMany(bpt => bpt.BoardingPasses)
+                .WithOne(tc => tc.TicketClass)
+                .HasForeignKey(bpt => bpt.TicketId)
                 .IsRequired();
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AirlineReservationVietjet.Migrations
+namespace Airline.WebClient.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -21,6 +21,63 @@ namespace AirlineReservationVietjet.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Airline.WebClient.Models.Airline.Baggage", b =>
+                {
+                    b.Property<int>("BaggageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BaggageId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BaggageId");
+
+                    b.ToTable("Baggages");
+                });
+
+            modelBuilder.Entity("Airline.WebClient.Models.Airline.Meal", b =>
+                {
+                    b.Property<int>("MealId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MealId"));
+
+                    b.Property<string>("Desciption")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MealCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MealId");
+
+                    b.ToTable("Meals");
+                });
+
+            modelBuilder.Entity("Airline.WebClient.Models.Airline.TicketClass_Baggage", b =>
+                {
+                    b.Property<int>("TicketClassID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BaggageID")
+                        .HasColumnType("int");
+
+                    b.HasKey("TicketClassID", "BaggageID");
+
+                    b.HasIndex("BaggageID");
+
+                    b.ToTable("TicketClass_Baggages");
+                });
 
             modelBuilder.Entity("App.Models.Airline.Airline", b =>
                 {
@@ -56,7 +113,7 @@ namespace AirlineReservationVietjet.Migrations
 
                     b.HasIndex("ParentAirlineId");
 
-                    b.ToTable("Airline");
+                    b.ToTable("Airlines");
                 });
 
             modelBuilder.Entity("App.Models.Airline.Airport", b =>
@@ -99,14 +156,32 @@ namespace AirlineReservationVietjet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BoardingPassId"));
 
+                    b.Property<int>("BaggageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BaggageType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<TimeSpan>("BoardingTime")
                         .HasColumnType("time");
+
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<TimeSpan>("DepartureTime")
                         .HasColumnType("time");
+
+                    b.Property<string>("ETicket")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
@@ -119,6 +194,13 @@ namespace AirlineReservationVietjet.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PNR")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PassengerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -126,32 +208,30 @@ namespace AirlineReservationVietjet.Migrations
                     b.Property<string>("PassengerName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SSR")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Seat")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TicketId")
+                        .HasColumnType("int");
+
                     b.HasKey("BoardingPassId");
+
+                    b.HasIndex("BaggageId");
 
                     b.HasIndex("FlightId");
 
+                    b.HasIndex("MealId");
+
                     b.HasIndex("PassengerId");
 
+                    b.HasIndex("TicketId");
+
                     b.ToTable("BoardingPasses");
-                });
-
-            modelBuilder.Entity("App.Models.Airline.BoardingPass_TicketClass", b =>
-                {
-                    b.Property<int>("BoardingPassID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TicketClassID")
-                        .HasColumnType("int");
-
-                    b.HasKey("BoardingPassID", "TicketClassID");
-
-                    b.HasIndex("TicketClassID");
-
-                    b.ToTable("BoardingPass_TicketClasses");
                 });
 
             modelBuilder.Entity("App.Models.Airline.Flight", b =>
@@ -282,22 +362,53 @@ namespace AirlineReservationVietjet.Migrations
             modelBuilder.Entity("App.Models.Airline.Ticket", b =>
                 {
                     b.Property<int>("TicketId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
+                    b.Property<int>("BaggageId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("CMND")
+                    b.Property<string>("Class")
                         .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("DepartureTime")
+                        .HasColumnType("time");
 
                     b.Property<int>("FlightId")
                         .HasColumnType("int");
 
+                    b.Property<string>("FlightNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Itinerary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MealRequest")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PNR")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PassengerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PassengerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PriceId")
                         .HasColumnType("int");
@@ -305,9 +416,17 @@ namespace AirlineReservationVietjet.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Seat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("TicketId");
 
+                    b.HasIndex("BaggageId");
+
                     b.HasIndex("FlightId");
+
+                    b.HasIndex("MealId");
 
                     b.HasIndex("PassengerId");
 
@@ -677,6 +796,25 @@ namespace AirlineReservationVietjet.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Airline.WebClient.Models.Airline.TicketClass_Baggage", b =>
+                {
+                    b.HasOne("Airline.WebClient.Models.Airline.Baggage", "Baggage")
+                        .WithMany("TicketClass_Baggages")
+                        .HasForeignKey("BaggageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("App.Models.Airline.TicketClass", "TicketClass")
+                        .WithMany("TicketClass_Baggages")
+                        .HasForeignKey("TicketClassID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Baggage");
+
+                    b.Navigation("TicketClass");
+                });
+
             modelBuilder.Entity("App.Models.Airline.Airline", b =>
                 {
                     b.HasOne("App.Models.Airline.Airline", "ParentAirline")
@@ -688,38 +826,51 @@ namespace AirlineReservationVietjet.Migrations
 
             modelBuilder.Entity("App.Models.Airline.BoardingPass", b =>
                 {
+                    b.HasOne("Airline.WebClient.Models.Airline.Baggage", "Baggage")
+                        .WithMany("BoardingPasses")
+                        .HasForeignKey("BaggageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("App.Models.Airline.Flight", "Flight")
                         .WithMany("BoardingPasses")
                         .HasForeignKey("FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Airline.WebClient.Models.Airline.Meal", "Meal")
+                        .WithMany("BoardingPasses")
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("App.Models.AppUser", "Passenger")
                         .WithMany("BoardingPasses")
                         .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Flight");
-
-                    b.Navigation("Passenger");
-                });
-
-            modelBuilder.Entity("App.Models.Airline.BoardingPass_TicketClass", b =>
-                {
-                    b.HasOne("App.Models.Airline.BoardingPass", "BoardingPass")
-                        .WithMany("BoardingPass_TicketClasses")
-                        .HasForeignKey("BoardingPassID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("App.Models.Airline.Ticket", "Ticket")
+                        .WithMany("BoardingPasses")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("App.Models.Airline.TicketClass", "TicketClass")
-                        .WithMany("BoardingPass_TicketClasses")
-                        .HasForeignKey("TicketClassID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("BoardingPasses")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("BoardingPass");
+                    b.Navigation("Baggage");
+
+                    b.Navigation("Flight");
+
+                    b.Navigation("Meal");
+
+                    b.Navigation("Passenger");
+
+                    b.Navigation("Ticket");
 
                     b.Navigation("TicketClass");
                 });
@@ -775,27 +926,51 @@ namespace AirlineReservationVietjet.Migrations
 
             modelBuilder.Entity("App.Models.Airline.Ticket", b =>
                 {
+                    b.HasOne("Airline.WebClient.Models.Airline.Baggage", "Baggage")
+                        .WithMany("Tickets")
+                        .HasForeignKey("BaggageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("App.Models.Airline.Flight", "Flight")
                         .WithMany("Tickets")
                         .HasForeignKey("FlightId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Airline.WebClient.Models.Airline.Meal", "Meal")
+                        .WithMany("Tickets")
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("App.Models.AppUser", "Passenger")
                         .WithMany("Tickets")
                         .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("App.Models.Statistical.UnitPrice", "UnitPrice")
                         .WithMany("Tickets")
                         .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("App.Models.Airline.TicketClass", "TicketClass")
+                        .WithMany("Tickets")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Baggage");
 
                     b.Navigation("Flight");
 
+                    b.Navigation("Meal");
+
                     b.Navigation("Passenger");
+
+                    b.Navigation("TicketClass");
 
                     b.Navigation("UnitPrice");
                 });
@@ -870,6 +1045,22 @@ namespace AirlineReservationVietjet.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Airline.WebClient.Models.Airline.Baggage", b =>
+                {
+                    b.Navigation("BoardingPasses");
+
+                    b.Navigation("TicketClass_Baggages");
+
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("Airline.WebClient.Models.Airline.Meal", b =>
+                {
+                    b.Navigation("BoardingPasses");
+
+                    b.Navigation("Tickets");
+                });
+
             modelBuilder.Entity("App.Models.Airline.Airline", b =>
                 {
                     b.Navigation("AirlineChildren");
@@ -880,11 +1071,6 @@ namespace AirlineReservationVietjet.Migrations
             modelBuilder.Entity("App.Models.Airline.Airport", b =>
                 {
                     b.Navigation("FlightRoute_Airports");
-                });
-
-            modelBuilder.Entity("App.Models.Airline.BoardingPass", b =>
-                {
-                    b.Navigation("BoardingPass_TicketClasses");
                 });
 
             modelBuilder.Entity("App.Models.Airline.Flight", b =>
@@ -903,9 +1089,18 @@ namespace AirlineReservationVietjet.Migrations
                     b.Navigation("FlightRoute_Flights");
                 });
 
+            modelBuilder.Entity("App.Models.Airline.Ticket", b =>
+                {
+                    b.Navigation("BoardingPasses");
+                });
+
             modelBuilder.Entity("App.Models.Airline.TicketClass", b =>
                 {
-                    b.Navigation("BoardingPass_TicketClasses");
+                    b.Navigation("BoardingPasses");
+
+                    b.Navigation("TicketClass_Baggages");
+
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("App.Models.AppUser", b =>
