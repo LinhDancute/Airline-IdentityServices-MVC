@@ -1,24 +1,16 @@
-<<<<<<< HEAD
 using Airline.ModelsService;
 using Airline.ModelsService.Models;
-=======
->>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 using Airline.Services.CouponAPI.Repositories;
 using Airline.Services.CouponAPI.Repositories.Implements;
 using Airline.Services.CouponAPI.Services;
 using Airline.Services.CouponAPI.Services.Implements;
-<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
-=======
-using Airline.WebClient;
-using App.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
->>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +26,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         throw new InvalidOperationException("Connection string not found"))
 );
 
-<<<<<<< HEAD
 =======
 // Add Identity & JWT authentication
 builder.Services.AddIdentity<AppUser, IdentityRole>()
@@ -42,53 +33,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddSignInManager()
     .AddRoles<IdentityRole>();
 
-// JWT authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.Authority = "https://localhost:7002"; // Update to match AuthAPI's Issuer
-        options.RequireHttpsMetadata = false; // Only for development
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
-    });
-
-//Add authentication to Swagger UI
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
-});
-
->>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 // Register repositories and services
 builder.Services.AddScoped<ITicketClassRepository, TicketClassRepository>();
 builder.Services.AddScoped<ITicketClassService, TicketClassService>();
@@ -96,10 +40,7 @@ builder.Services.AddScoped<ITicketClassService, TicketClassService>();
 // Register AutoMapper
 builder.Services.ConfigureAutoMapper();
 
-<<<<<<< HEAD
-=======
-// Build the app
->>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
