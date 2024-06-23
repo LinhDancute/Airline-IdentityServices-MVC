@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+﻿using Airline.ModelsService;
+using Airline.ModelsService.Models.Airline;
+=======
 ﻿using App.Models;
 using App.Models.Airline;
+>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Services.CouponAPI.Repositories.Implements

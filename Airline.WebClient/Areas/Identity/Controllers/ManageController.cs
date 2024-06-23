@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Airline.ModelsService.Models;
 using App.Areas.Identity.Models.ManageViewModels;
 using App.ExtendMethods;
 using App.Models;

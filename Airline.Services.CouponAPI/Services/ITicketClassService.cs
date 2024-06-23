@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿using Airline.ModelsService.Models.DTOs.Coupon;
+=======
 ﻿using Airline.WebClient.Models.DTOs.Coupon;
+>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 
 namespace Airline.Services.CouponAPI.Services
 {

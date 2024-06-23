@@ -1,4 +1,4 @@
-namespace Airline.WebClient.Models;
+namespace Airline.Duende.IdentityServer.Models;
 
 public class ErrorViewModel
 {

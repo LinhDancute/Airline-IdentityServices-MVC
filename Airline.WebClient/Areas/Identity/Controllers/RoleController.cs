@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Airline.ModelsService;
+using Airline.ModelsService.Models;
 using App.Areas.Identity.Models.ManageViewModels;
 using App.Areas.Identity.Models.RoleViewModels;
 using App.Data;

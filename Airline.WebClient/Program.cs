@@ -5,7 +5,16 @@ using App.Services;
 using App.Data;
 using Microsoft.AspNetCore.Builder;
 using App.ExtendMethods;
+<<<<<<< HEAD
+using Airline.WebClient.Utility;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Airline.WebClient.Services.IServices;
+using Airline.WebClient.Services;
+using Airline.ModelsService;
+using Airline.ModelsService.Models;
+=======
 using Airline.WebClient;
+>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 
 var builder = WebApplication.CreateBuilder(args);
 // var connectionString = builder.Configuration.GetConnectionString("AirlineReservationDb") ?? throw new InvalidOperationException("Connection string 'AirlineReservationDb' not found.");
@@ -107,6 +116,26 @@ builder.Services.AddMvc().AddViewOptions(options =>
     options.HtmlHelperOptions.ClientValidationEnabled = false;
 });
 
+<<<<<<< HEAD
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+
+// Register services
+builder.Services.AddScoped<IBaseService, BaseService>();
+//builder.Services.AddScoped<ITicketClassService, TicketClassService>();
+
+// Configure the named HttpClient
+//builder.Services.AddHttpClient("Airline.Services.CouponAPI", client =>
+//{
+//    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CouponAPI"]);
+//});
+
+//SD.TicketClassAPIBase = builder.Configuration["ServiceUrls:CouponAPI"];
+
+=======
+>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -136,18 +165,24 @@ app.Run();
 
 app.UseEndpoints(endpoints =>
 {
+<<<<<<< HEAD
+=======
     endpoints.MapGet("/sayhi", async (context) =>
     {
         await context.Response.WriteAsync($"Hello ASP.NET MVC {DateTime.Now}");
     });
 
     // Controller khong co Area
+>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
     endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "/{controller=Home}/{action=Index}/{id?}"
+        name: "areaRoute",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 
-    endpoints.MapRazorPages();
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 });
 
 /*

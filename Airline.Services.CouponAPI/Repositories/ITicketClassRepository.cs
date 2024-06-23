@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+﻿
+using Airline.ModelsService.Models.Airline;
+=======
 ﻿using App.Models.Airline;
+>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 
 namespace Airline.Services.CouponAPI.Repositories
 {
