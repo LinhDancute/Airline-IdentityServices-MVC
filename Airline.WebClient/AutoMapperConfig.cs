@@ -1,21 +1,13 @@
-<<<<<<<< HEAD:ModelsService/AutoMapperConfig.cs
 ﻿using Airline.ModelsService.Models.Airline;
 using Airline.ModelsService.Models.DTOs.Coupon;
 using Airline.ModelsService.Models.DTOs.Schedule;
-========
-﻿using Airline.WebClient.Models.DTOs.Coupon;
-using Airline.WebClient.Models.DTOs.Schedule;
-using App.Models.Airline;
->>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9:Airline.WebClient/AutoMapperConfig.cs
+
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-<<<<<<<< HEAD:ModelsService/AutoMapperConfig.cs
 namespace Airline.ModelsService
-========
-namespace Airline.WebClient
->>>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9:Airline.WebClient/AutoMapperConfig.cs
+
 {
     public static class AutoMapperConfig
     {

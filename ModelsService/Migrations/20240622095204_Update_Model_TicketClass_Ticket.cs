@@ -2,11 +2,7 @@
 
 #nullable disable
 
-<<<<<<< HEAD:ModelsService/Migrations/20240622095204_Update_Model_TicketClass_Ticket.cs
 namespace Airline.ModelsService.Migrations
-=======
-namespace Airline.WebClient.Migrations
->>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9:Airline.WebClient/Migrations/20240622095204_Update_Model_TicketClass_Ticket.cs
 {
     /// <inheritdoc />
     public partial class Update_Model_TicketClass_Ticket : Migration

@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 ﻿using Airline.ModelsService.Models.Airline;
 using Airline.ModelsService.Models.DTOs.Coupon;
 using Airline.Services.CouponAPI.Repositories;
-=======
 ﻿using Airline.Services.CouponAPI.Repositories;
 using Airline.WebClient.Models.DTOs.Coupon;
 using App.Models.Airline;
->>>>>>> 015933b5a74e5f2f345a2bfbb51871285fa0aac9
 using AutoMapper;
 
 namespace Airline.Services.CouponAPI.Services.Implements
