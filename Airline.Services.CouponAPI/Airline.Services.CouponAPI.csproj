@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Microservice-API\Airline.Services.ScheduleAPI\Airline.Services.ScheduleAPI.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\DTOs\" />
-  </ItemGroup>
-
 </Project>

@@ -33,7 +33,7 @@ namespace App.Models.Airline
         public string Class { get; set; }
         public string PNR { get; set; }
         public string MealRequest { get; set; }
-
+        public TicketStatusType Status { get; set; }
         public AppUser? Passenger { set; get; }
         public Flight Flight { get; set; }
         public UnitPrice UnitPrice { get; set; }
@@ -43,4 +43,12 @@ namespace App.Models.Airline
         public ICollection<BoardingPass>? BoardingPasses { get; } = new List<BoardingPass>();
     }
 
+    public enum TicketStatusType
+    {
+        Confirmed,
+        Pending,
+        Refundable,
+        Nonrefundable,
+        Cancelled
+    }
 }

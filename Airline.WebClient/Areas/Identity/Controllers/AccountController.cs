@@ -42,6 +42,7 @@ namespace App.Areas.Identity.Controllers
             _logger = logger;
         }
 
+
         // GET: /Account/Login
         [HttpGet("/login/")]
         [AllowAnonymous]
@@ -105,8 +106,9 @@ namespace App.Areas.Identity.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User đăng xuất");
-            return RedirectToAction("Index", "Home", new {area = ""});
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
+
         //
         // GET: /Account/Register
         [HttpGet]
@@ -489,37 +491,6 @@ namespace App.Areas.Identity.Controllers
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
 
         }
-        // [HttpGet]
-        // [AllowAnonymous]
-        // public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
-        // {
-        //     var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-        //     if (user == null)
-        //     {
-        //         return View("Error");
-        //     }
-
-        //     // Ensure you populate the Providers property
-        //     var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
-        //     var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-
-        //     // Initialize and populate the ViewModel
-        //     var model = new SendCodeViewModel
-        //     {
-        //         Providers = factorOptions,
-        //         ReturnUrl = returnUrl,
-        //         RememberMe = rememberMe
-        //     };
-
-        //     // Log model information
-        //     _logger.LogInformation($"ModelState.IsValid: {ModelState.IsValid}");
-        //     _logger.LogInformation($"Model is not null: {model != null}");
-        //     _logger.LogInformation($"Model.Providers is not null: {model != null && model.Providers != null}");
-        //     _logger.LogInformation($"SelectedProvider (from model): {model.SelectedProvider}");
-
-        //     // Return the view with the model
-        //     return View(model);
-        // }
 
         [HttpPost]
         [AllowAnonymous]
@@ -734,13 +705,10 @@ namespace App.Areas.Identity.Controllers
 
         [Route("/khongduoctruycap.html")]
         [AllowAnonymous]
+        [HttpGet]
         public IActionResult AccessDenied()
         {
             return View();
         }
-
-
-
-    
   }
 }
