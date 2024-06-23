@@ -17,6 +17,8 @@ namespace App.Areas.Statistical.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<Invoice> invoices = await _context.Invoices

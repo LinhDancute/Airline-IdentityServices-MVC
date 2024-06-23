@@ -1,10 +1,11 @@
-﻿using Airline.WebClient.Models.DTOs.Schedule;
+﻿using Airline.WebClient.Models.DTOs.Coupon;
+using Airline.WebClient.Models.DTOs.Schedule;
 using App.Models.Airline;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Airline.Services.ScheduleAPI
+namespace Airline.WebClient
 {
     public static class AutoMapperConfig
     {
@@ -39,6 +40,10 @@ namespace Airline.Services.ScheduleAPI
                 config.CreateMap<Flight, FlightCreateDTO>();
                 config.CreateMap<Flight, FlightDTO>()
                     .ForMember(dest => dest.FlightRouteIds, opt => opt.MapFrom(src => src.FlightRoute_Flights.Select(fr => fr.FlightRouteID).ToList()));
+
+                //TicketClass
+                config.CreateMap<TicketClass, TicketClassDTO>();
+                config.CreateMap<TicketClassCreateDTO, TicketClass>();
 
                 // Reverse mappings
                 config.CreateMap<AirportCreateDTO, Airport>().ReverseMap();

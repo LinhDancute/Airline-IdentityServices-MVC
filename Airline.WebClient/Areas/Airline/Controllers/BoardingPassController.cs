@@ -17,6 +17,7 @@ namespace App.Areas.Airline.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             var boardingPasses = await _context.BoardingPasses.ToListAsync();

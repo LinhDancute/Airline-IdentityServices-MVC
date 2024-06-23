@@ -21,6 +21,7 @@ namespace App.Areas.Airline.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             var ticketClass = await _context.TicketClasses.ToListAsync();
@@ -28,6 +29,7 @@ namespace App.Areas.Airline.Controllers
         }
 
         // GET: /Ticketclass/Details/{id}
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,13 +44,6 @@ namespace App.Areas.Airline.Controllers
             }
 
             return View(ticketclass);
-        }
-
-
-        // GET: /TicketClass/Create
-        public IActionResult Create()
-        {
-            return View();
         }
 
         // POST: /TicketClass/Create
@@ -75,9 +70,8 @@ namespace App.Areas.Airline.Controllers
             return View(ticketClass);
         }
 
-
-
         // GET: /ticketClass/Edit/1
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
 
@@ -128,7 +122,9 @@ namespace App.Areas.Airline.Controllers
             }
             return View(ticketClass);
         }
+
         // GET: /ticketClass/Delete/1
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

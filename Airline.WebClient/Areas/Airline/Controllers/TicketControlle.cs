@@ -21,6 +21,7 @@ namespace App.Areas.Airline.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<Ticket> tickets = await _context.Tickets

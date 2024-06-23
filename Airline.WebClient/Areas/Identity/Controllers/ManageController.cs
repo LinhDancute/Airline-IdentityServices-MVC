@@ -82,6 +82,8 @@ namespace App.Areas.Identity.Controllers
             RemovePhoneSuccess,
             Error
         }
+
+        [HttpGet]
         private Task<AppUser> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
@@ -234,6 +236,7 @@ namespace App.Areas.Identity.Controllers
         }
         //
         // GET: /Manage/AddPhoneNumber
+        [HttpGet]
         public IActionResult AddPhoneNumber()
         {
             return View();

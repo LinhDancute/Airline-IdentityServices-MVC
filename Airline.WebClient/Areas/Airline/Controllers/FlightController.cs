@@ -28,6 +28,7 @@ namespace App.Areas.Airline.Controllers
         public string StatusMessage { get; set; }
 
         // GET: FlightRoute
+        [HttpGet]
         public async Task<IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pageSize = 10)
         {
             var flightsQuery = _context.Flights
@@ -64,6 +65,7 @@ namespace App.Areas.Airline.Controllers
             return View(flightsInPage);
         }
 
+        [HttpGet]
         public async Task<IActionResult> DetailsAsync(int? id)
         {
             if (id == null)
@@ -86,6 +88,7 @@ namespace App.Areas.Airline.Controllers
 
 
         // GET: Flight/Create
+        [HttpGet]
         public async Task<IActionResult> CreateAsync()
         {
             var aircraft = await _context.Airlines.ToListAsync();
@@ -189,6 +192,7 @@ namespace App.Areas.Airline.Controllers
 
 
         // GET: Flight/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -332,13 +336,8 @@ namespace App.Areas.Airline.Controllers
             return View(editFlightModel);
         }
 
-
-
-    
-
-
-
         // GET: FlightRoute/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -367,7 +366,6 @@ namespace App.Areas.Airline.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
 
         private bool FlightExists(int id)
         {

@@ -21,6 +21,7 @@ namespace App.Areas.Airline.Controllers
         }
 
         // GET: Airline/Airline/Index
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var qr = (from a in _context.Airlines select a)
@@ -35,6 +36,7 @@ namespace App.Areas.Airline.Controllers
         }
 
         // GET: /Airline/Details/{id}
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -75,6 +77,7 @@ namespace App.Areas.Airline.Controllers
             }
         }
         // GET: /Airline/Create
+        [HttpGet]
         public async Task<IActionResult> CreateAsync()
         {
             var qr = (from a in _context.Airlines select a)
@@ -156,6 +159,7 @@ namespace App.Areas.Airline.Controllers
         }
 
         // GET: /Airline/Edit/{id}
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -290,6 +294,7 @@ namespace App.Areas.Airline.Controllers
         }
 
         // GET: /Airline/Delete/{id}
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             if (id == null)

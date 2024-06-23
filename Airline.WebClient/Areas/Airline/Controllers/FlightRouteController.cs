@@ -23,7 +23,9 @@ namespace App.Areas.Airline.Controllers
         {
             _context = context;
         }
+
         // GET: FlightRoute
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var flightRoutes = await _context.FlightRoutes.ToListAsync();
@@ -31,6 +33,7 @@ namespace App.Areas.Airline.Controllers
         }
 
         // GET: FlightRoute/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,6 +53,7 @@ namespace App.Areas.Airline.Controllers
         }
 
         // GET: FlightRoute/Create
+        [HttpGet]
         public IActionResult Create()
         {
             ViewBag.Airports = _context.Airports.ToList();
@@ -132,8 +136,9 @@ namespace App.Areas.Airline.Controllers
             ViewBag.Airports = _context.Airports.ToList();
             return View(flightRoute);
         }
-        
+
         // GET: FlightRoute/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -234,6 +239,7 @@ namespace App.Areas.Airline.Controllers
 
 
         // GET: FlightRoute/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

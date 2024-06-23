@@ -26,10 +26,11 @@ namespace App.Areas.Database.Controllers
             _roleManager = roleManager;
         }
 
-    public IActionResult Index()
-        {
-            return View();
-        }
+        [HttpGet]
+        public IActionResult Index()
+            {
+                return View();
+            }
 
         [HttpGet]
         public IActionResult DeleteDb()
@@ -59,6 +60,7 @@ namespace App.Areas.Database.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
         public async Task<IActionResult> SeedDataAsync() 
         {
             var rolenames = typeof(RoleName).GetFields().ToList();

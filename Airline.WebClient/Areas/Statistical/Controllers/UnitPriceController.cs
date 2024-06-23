@@ -15,6 +15,8 @@ namespace App.Areas.Statistical.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             var unitPrices = await _context.UnitPrices.ToListAsync();

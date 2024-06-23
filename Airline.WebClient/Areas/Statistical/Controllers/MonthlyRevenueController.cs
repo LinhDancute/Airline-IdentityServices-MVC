@@ -20,6 +20,8 @@ namespace App.Areas.Statistical.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             var monthlyRevenues = await _context.MonthlyRevenues.ToListAsync();
