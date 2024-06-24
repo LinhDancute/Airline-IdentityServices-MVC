@@ -1,4 +1,4 @@
-using Airline.WebClient.Models.Airline;
+using Airline.ModelsService.Models.Airline;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

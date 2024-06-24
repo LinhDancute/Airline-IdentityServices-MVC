@@ -6,6 +6,9 @@ using App.ExtendMethods;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Airline.ModelsService;
 using Airline.ModelsService.Models;
+using App.Data;
+using Airline.WebClient.Services.IServices;
+using Airline.WebClient.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // var connectionString = builder.Configuration.GetConnectionString("AirlineReservationDb") ?? throw new InvalidOperationException("Connection string 'AirlineReservationDb' not found.");

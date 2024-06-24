@@ -1,10 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Airline\Models\**" />
+    <Content Remove="Areas\Airline\Models\**" />
+    <EmbeddedResource Remove="Areas\Airline\Models\**" />
+    <None Remove="Areas\Airline\Models\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
@@ -28,10 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ModelsService\Airline.ModelsService.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Airline\Models\" />
   </ItemGroup>
 
 </Project>
