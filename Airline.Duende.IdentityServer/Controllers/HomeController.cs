@@ -1,6 +1,6 @@
 using System.Diagnostics;
+using Airline.Duende.IdentityServer.Models;
 using Microsoft.AspNetCore.Mvc;
-using Airline.WebClient.Models;
 
 namespace Airline.WebClient.Controllers;
 

@@ -1,10 +1,14 @@
-﻿using App.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using App.Services;
-using App.Data;
 using Microsoft.AspNetCore.Builder;
 using App.ExtendMethods;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Airline.ModelsService;
+using Airline.ModelsService.Models;
+using App.Data;
+using Airline.WebClient.Services.IServices;
+using Airline.WebClient.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // var connectionString = builder.Configuration.GetConnectionString("AirlineReservationDb") ?? throw new InvalidOperationException("Connection string 'AirlineReservationDb' not found.");
@@ -106,6 +110,22 @@ builder.Services.AddMvc().AddViewOptions(options =>
     options.HtmlHelperOptions.ClientValidationEnabled = false;
 });
 
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
+
+// Register services
+builder.Services.AddScoped<IBaseService, BaseService>();
+//builder.Services.AddScoped<ITicketClassService, TicketClassService>();
+
+// Configure the named HttpClient
+//builder.Services.AddHttpClient("Airline.Services.CouponAPI", client =>
+//{
+//    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CouponAPI"]);
+//});
+
+//SD.TicketClassAPIBase = builder.Configuration["ServiceUrls:CouponAPI"];
 
 var app = builder.Build();
 
@@ -113,10 +133,8 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -138,35 +156,22 @@ app.Run();
 
 app.UseEndpoints(endpoints =>
 {
-    // /sayhi
+
     endpoints.MapGet("/sayhi", async (context) =>
     {
         await context.Response.WriteAsync($"Hello ASP.NET MVC {DateTime.Now}");
     });
 
-    // endpoints.MapControllers
-    // endpoints.MapControllerRoute
-    // endpoints.MapDefaultControllerRoute
-    // endpoints.MapAreaControllerRoute
-
-    // [AcceptVerbs]
-
-    // [Route]
-
-    // [HttpGet]
-    // [HttpPost]
-    // [HttpPut]
-    // [HttpDelete]
-    // [HttpHead]
-    // [HttpPatch]
-
     // Controller khong co Area
     endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "/{controller=Home}/{action=Index}/{id?}"
+        name: "areaRoute",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 
-    endpoints.MapRazorPages();
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 });
 
 /*

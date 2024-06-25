@@ -1,4 +1,4 @@
-@model App.Models.Airline.Airport
+@model Airline.ModelsService.Models.Airline.Airport
 
 @{
     ViewData["Title"] = "Chỉnh sửa sân bay";
@@ -34,14 +34,14 @@
             <div class="form-group">
                 <label asp-for="Classification"></label>
                 <select asp-for="Classification"
-                    asp-items="@Html.GetEnumSelectList<App.Models.Airline.Airport.AirportClassification>()"
+                        asp-items="@Html.GetEnumSelectList<Airline.ModelsService.Models.Airline.Airport.AirportClassification>()"
                     class="form-control"></select>
                 <span asp-validation-for="Classification" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Status"></label>
-                <select asp-for="Status" asp-items="@Html.GetEnumSelectList<App.Models.Airline.Airport.AirportStatus>()"
+                <select asp-for="Status" asp-items="@Html.GetEnumSelectList<Airline.ModelsService.Models.Airline.Airport.AirportStatus>()"
                     class="form-control"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>

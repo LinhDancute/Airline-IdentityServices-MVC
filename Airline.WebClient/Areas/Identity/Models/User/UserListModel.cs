@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Airline.ModelsService.Models;
 using App.Models;
 
 namespace App.Areas.Identity.Models.UserViewModels

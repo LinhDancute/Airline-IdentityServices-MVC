@@ -25,5 +25,9 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ModelsService\Airline.ModelsService.csproj" />
+    </ItemGroup>
+
 
 </Project>

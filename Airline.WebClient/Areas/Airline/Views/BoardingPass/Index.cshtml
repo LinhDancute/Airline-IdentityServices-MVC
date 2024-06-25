@@ -1,6 +1,5 @@
-@model IEnumerable<App.Models.Airline.BoardingPass>
+@model IEnumerable<Airline.ModelsService.Models.Airline.BoardingPass>
 
-@using App.Models.Airline
 
 @{
     ViewData["Title"] = "Danh sách phiếu đặt chỗ";
@@ -29,7 +28,7 @@
     </tbody>  
 </table>
 @{
-    async Task RenderBoardingPass(BoardingPass item, int level)
+    async Task RenderBoardingPass(Airline.ModelsService.Models.Airline.BoardingPass item, int level)
     {
         if (item is null)
         {
