@@ -1,6 +1,4 @@
-@model IEnumerable<App.Models.Airline.Flight>
-
-@using App.Models.Airline
+@model IEnumerable<Airline.ModelsService.Models.Airline.Flight>
 
 @{
     ViewData["Title"] = "Danh sách chuyến bay";
@@ -35,7 +33,7 @@
     </tbody>  
 </table>
 @{
-    async Task RenderFlight(Flight item, int level)
+    async Task RenderFlight(Airline.ModelsService.Models.Airline.Flight item, int level)
     {
         if (item is null)
         {

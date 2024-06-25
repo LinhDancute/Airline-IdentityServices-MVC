@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Airline.ModelsService;
+using Airline.ModelsService.Models;
 using App.Data;
 using App.Models;
-using App.Models.Airline;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,10 +27,11 @@ namespace App.Areas.Database.Controllers
             _roleManager = roleManager;
         }
 
-    public IActionResult Index()
-        {
-            return View();
-        }
+        [HttpGet]
+        public IActionResult Index()
+            {
+                return View();
+            }
 
         [HttpGet]
         public IActionResult DeleteDb()
@@ -59,6 +61,7 @@ namespace App.Areas.Database.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
         public async Task<IActionResult> SeedDataAsync() 
         {
             var rolenames = typeof(RoleName).GetFields().ToList();

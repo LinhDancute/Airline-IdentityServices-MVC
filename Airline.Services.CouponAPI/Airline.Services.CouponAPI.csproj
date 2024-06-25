@@ -7,17 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Bogus" Version="35.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microservice-API\Airline.Services.ScheduleAPI\Airline.Services.ScheduleAPI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\DTOs\" />
+    <ProjectReference Include="..\ModelsService\Airline.ModelsService.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Test;
 
-namespace Airline.WebClient;
+namespace Airline.Duende.IdentityServer;
 
 public static class Config
 {
@@ -47,8 +47,8 @@ public static class Config
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email
                 },
-                RedirectUris = { "https://localhost:7139/signin-oidc" },
-                PostLogoutRedirectUris = { "https://localhost:7139/signout-callback-oidc" }
+                RedirectUris = { "https://localhost:7006/signin-oidc" },
+                PostLogoutRedirectUris = { "https://localhost:7006/signout-callback-oidc" }
             }
         };
 }

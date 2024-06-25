@@ -1,4 +1,4 @@
-@model App.Models.Airline.TicketClass
+@model Airline.ModelsService.Models.Airline.TicketClass
 
 @{
     ViewData["Title"] = "Xóa hạng vé";
@@ -14,6 +14,12 @@
         </dt>
         <dd class="col-sm-8">
             @Html.DisplayFor(model => model.TicketName)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.FareClass)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.FareClass)
         </dd>
     </dl>
 

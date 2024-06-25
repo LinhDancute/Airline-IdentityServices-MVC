@@ -1,5 +1,6 @@
-@model IEnumerable<App.Models.Airline.TicketClass>
-@using App.Models.Airline
+@page "/ticketclasses"
+@model IEnumerable<Airline.ModelsService.Models.Airline.TicketClass>
+
 
 @{
     ViewData["Title"] = "Danh sách hạng vé";
@@ -14,6 +15,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.TicketName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FareClass)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -33,7 +37,7 @@
 </table>
 
 @{
-    async Task RenderTicketClass(TicketClass item, int level)
+    async Task RenderTicketClass(Airline.ModelsService.Models.Airline.TicketClass item, int level)
     {
         if (item is null)
         {
@@ -48,6 +52,9 @@
                     @Html.DisplayFor(modelItem => item.TicketName)
                 </a>
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FareClass)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
@@ -58,8 +65,10 @@
         </tr>
     }
 }
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+

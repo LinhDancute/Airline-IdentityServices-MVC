@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using App.Models;
-using ContactModel = App.Models.Contacts.Contact;
+using ContactModel = Airline.ModelsService.Models.Contacts.Contact;
 using Microsoft.AspNetCore.Authorization;
 using App.Data;
+using Airline.ModelsService;
 
 namespace App.Areas.Contact.Controllers
 {
