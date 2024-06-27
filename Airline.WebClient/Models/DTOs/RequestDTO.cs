@@ -1,4 +1,4 @@
-﻿using static Airline.WebClient.Utility.SD;
+﻿using static Airline.WebClient.Utilities.SD;
 
 namespace Airline.WebClient.Models.DTOs
 {

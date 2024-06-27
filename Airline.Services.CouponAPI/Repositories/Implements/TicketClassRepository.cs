@@ -1,8 +1,5 @@
 ﻿using Airline.ModelsService;
 using Airline.ModelsService.Models.Airline;
-
-﻿using App.Models;
-using App.Models.Airline;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Services.CouponAPI.Repositories.Implements

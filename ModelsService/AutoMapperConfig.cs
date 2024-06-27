@@ -48,6 +48,9 @@ namespace Airline.ModelsService
                 config.CreateMap<FlightRouteCreateDTO, FlightRoute>().ReverseMap();
                 config.CreateMap<FlightRoute_AirportDTO, FlightRoute_Airport>().ReverseMap();
                 config.CreateMap<FlightDTO, Flight>().ReverseMap();
+                config.CreateMap<TicketClassDTO, TicketClass>().ReverseMap();
+
+
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

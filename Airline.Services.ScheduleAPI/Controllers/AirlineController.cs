@@ -72,6 +72,30 @@ namespace Airline.Services.ScheduleAPI.Controllers
             }
         }
 
+        [HttpPost("bulk")]
+        public async Task<IActionResult> CreateAirlines([FromBody] List<AirlineDTO> airlineDTOs)
+        {
+            try
+            {
+                if (airlineDTOs == null || !airlineDTOs.Any())
+                {
+                    return BadRequest(new ResponsesDTO { Success = false, Message = "Airline data is null or empty" });
+                }
+
+                await _airlineService.CreateAirlinesAsync(airlineDTOs);
+                return CreatedAtAction(nameof(GetAirlines), new ResponsesDTO { Success = true, Message = "Airlines created successfully" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new ResponsesDTO { Success = false, Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponsesDTO { Success = false, Message = ex.Message });
+            }
+        }
+
+
 
 
         // PUT: api/airline/{id}

@@ -1,4 +1,5 @@
-@model IEnumerable< Airline.ModelsService.Models.Airline.Airport>
+@using Airline.WebClient.Models.Airline
+@model List<Airport>
 
 @{
     ViewData["Title"] = "Danh sách sân bay";
@@ -18,10 +19,10 @@
                 @Html.DisplayNameFor(model => model.First().Abbreviation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Classification)
+                @Html.DisplayNameFor(model => model.First().Classification)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.First().Status)
             </th>
             <th></th>
         </tr>
@@ -38,7 +39,7 @@
 </table>
 
 @{
-    async Task RenderAirport(Airline.ModelsService.Models.Airline.Airport item, int level)
+    async Task RenderAirport(Airport item, int level)
     {
         if (item is null)
         {

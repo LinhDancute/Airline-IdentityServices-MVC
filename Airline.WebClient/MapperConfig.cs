@@ -1,24 +1,20 @@
-﻿using Airline.ModelsService.Models.Airline;
-using Airline.ModelsService.Models.DTOs.Coupon;
-using Airline.ModelsService.Models.DTOs.Schedule;
-
+using Airline.WebClient.Models.Airline;
+using Airline.WebClient.Models.DTOs.Coupon;
+using Airline.WebClient.Models.DTOs.Schedule;
 using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 
-namespace Airline.ModelsService
-
+namespace Airline.WebClient
 {
-    public static class AutoMapperConfig
+    public static class MapperConfig
     {
-        public static void ConfigureAutoMapper(this IServiceCollection services)
+        public static void ConfigureMapper(this IServiceCollection services)
         {
             var mapperConfig = new MapperConfiguration(config =>
             {
                 // Mapping
                 // Airline
-                config.CreateMap<AirlineDTO, Airline.ModelsService.Models.Airline.Airline>();
-                config.CreateMap<Airline.ModelsService.Models.Airline.Airline, AirlineDTO>();
+                config.CreateMap<AirlineDTO, Models.Airline.Airline>();
+                config.CreateMap<Models.Airline.Airline, AirlineDTO>();
 
                 //Airport
                 config.CreateMap<AirportDTO, Airport>();
@@ -48,10 +44,14 @@ namespace Airline.ModelsService
                 config.CreateMap<TicketClassCreateDTO, TicketClass>();
 
                 // Reverse mappings
+                config.CreateMap<Models.DTOs.Schedule.AirlineDTO, Models.Airline.Airline>().ReverseMap();
                 config.CreateMap<AirportCreateDTO, Airport>().ReverseMap();
                 config.CreateMap<FlightRouteCreateDTO, FlightRoute>().ReverseMap();
                 config.CreateMap<FlightRoute_AirportDTO, FlightRoute_Airport>().ReverseMap();
                 config.CreateMap<FlightDTO, Flight>().ReverseMap();
+                config.CreateMap<TicketClassDTO, TicketClass>().ReverseMap();
+
+
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

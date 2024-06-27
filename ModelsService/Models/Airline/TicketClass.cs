@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Airline.ModelsService.Models.Airline
 {
-
     public class TicketClass
     {
         [Key]

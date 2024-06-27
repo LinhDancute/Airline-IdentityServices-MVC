@@ -4,6 +4,8 @@ namespace Airline.WebClient.Services.IServices
 {
     public interface IBaseService
     {
-        Task<ResponseDTO?> SendAsync(RequestDTO requestDTO);
+        Task<ResponseDTO> SendAsyncCouponAPI(RequestDTO requestDTO);
+        Task<ResponseDTO> SendAsyncScheduleAPI(RequestDTO requestDTO);
+
     }
 }

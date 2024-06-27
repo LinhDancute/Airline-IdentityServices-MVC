@@ -1,13 +1,10 @@
 ﻿using Airline.ModelsService.Models.DTOs.Coupon;
 using Airline.Services.CouponAPI.Services;
-
 ﻿using Airline.Services.CouponAPI.Services;
-using Airline.WebClient.Models.DTOs.Coupon;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airline.Services.CouponAPI.Controllers
 {
-    [Area("Airline")]
     [Route("api/[controller]")]
     [ApiController]
     public class TicketClassController : ControllerBase

@@ -259,6 +259,12 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             await _flightRepository.DeleteAsync(flight.FlightId);
         }
 
+        public async Task<Flight> GetFlightByIdAsync(int id)
+        {
+            return await _flightRepository.FindAsync(fr => fr.FlightId == id);
+        }
+
+
         public async Task CloseFlightAsync(int flightId)
         {
             // Retrieve existing flight

@@ -1,4 +1,5 @@
-@model IEnumerable< Airline.ModelsService.Models.Airline.FlightRoute>
+@using Airline.WebClient.Models.Airline
+@model List<FlightRoute>
 
 @{
     ViewData["Title"] = "Danh sách tuyến bay";
@@ -24,10 +25,10 @@
                 @Html.DisplayNameFor(model => model.First().FlightSectorName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gate)
+                @Html.DisplayNameFor(model => model.First().Gate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.First().Status)
             </th>
             <th>Tác vụ</th>
         </tr>
@@ -44,7 +45,7 @@
 </table>
 
 @{
-    async Task RenderFlightRoute(Airline.ModelsService.Models.Airline.FlightRoute item, int level)
+    async Task RenderFlightRoute(FlightRoute item, int level)
     {
         if (item is null)
         {

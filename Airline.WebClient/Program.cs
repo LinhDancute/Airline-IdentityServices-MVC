@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Builder;
 using App.ExtendMethods;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Airline.ModelsService;
-using Airline.ModelsService.Models;
+using Airline.WebClient.Models;
 using App.Data;
-using Airline.WebClient.Services.IServices;
 using Airline.WebClient.Services;
+using Airline.WebClient.Utilities;
+using Airline.WebClient.Services.Airline;
+using Airline.WebClient;
+using Airline.ModelsService.Models;
+using Airline.WebClient.Services.IServices.Airline;
+using Airline.WebClient.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 // var connectionString = builder.Configuration.GetConnectionString("AirlineReservationDb") ?? throw new InvalidOperationException("Connection string 'AirlineReservationDb' not found.");
-
-// Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
 
 // Load appsettings.json configurations
 IConfiguration configuration = new ConfigurationBuilder()
@@ -111,21 +112,53 @@ builder.Services.AddMvc().AddViewOptions(options =>
 });
 
 // Add services to the container.
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
+
+builder.Services.AddControllers();
+
+// Register AutoMapper
+builder.Services.ConfigureMapper();
+
 // Register services
 builder.Services.AddScoped<IBaseService, BaseService>();
-//builder.Services.AddScoped<ITicketClassService, TicketClassService>();
+builder.Services.AddScoped<ITicketClassService, TicketClassService>();
+builder.Services.AddScoped<IAirlineService, AirlineService>();
+builder.Services.AddScoped<IAirportService, AirportService>();
+builder.Services.AddScoped<IFlightRouteService, FlightRouteService>();
+builder.Services.AddScoped<IFlightService, FlightService>();
+builder.Services.AddScoped<IFlightRoute_AirportService, FlightRoute_AirportService>();
+
 
 // Configure the named HttpClient
-//builder.Services.AddHttpClient("Airline.Services.CouponAPI", client =>
-//{
-//    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CouponAPI"]);
-//});
+builder.Services.AddHttpClient("Airline.Services.CouponAPI", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Airline.Services.CouponAPI"]);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
-//SD.TicketClassAPIBase = builder.Configuration["ServiceUrls:CouponAPI"];
+builder.Services.AddHttpClient("Airline.Services.ScheduleAPI", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Airline.Services.ScheduleAPI"]);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+SD.TicketClassAPIBase = builder.Configuration["ServiceUrls:Airline.Services.CouponAPI"];
+SD.AirlineAPIBase = builder.Configuration["ServiceUrls:Airline.Services.ScheduleAPI"];
 
 var app = builder.Build();
 
@@ -139,6 +172,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseCors("AllowAllOrigins");
 
 app.AddStatusCodePage(); // Tuy bien Response loi: 400 - 599
 
