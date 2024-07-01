@@ -1,5 +1,6 @@
 @using Airline.WebClient.Models.Airline
-@model FlightRoute
+@using Airline.WebClient.Models.DTOs.Schedule
+@model FlightRouteCreateDTO
 
 @{
     ViewData["Title"] = "Tạo tuyến bay";
@@ -32,12 +33,6 @@
                 </select>
                 <span asp-validation-for="ArrivalAddress" class="text-danger"></span>
             </div>
-
-            @* <div class="form-group">
-                <label asp-for="FlightSector"></label>
-                <input asp-for="FlightSector" class="form-control" />
-                <span asp-validation-for="FlightSector" class="text-danger"></span>
-            </div> *@
 
             @* <div class="form-group">
                 <label asp-for="FlightTime"></label>

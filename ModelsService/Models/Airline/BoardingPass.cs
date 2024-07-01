@@ -21,27 +21,37 @@ namespace Airline.ModelsService.Models.Airline
 
         [Display(Name = "Mã vé điện tử")]
         public string ETicket { set; get; }
+
         [Display(Name = "Ngày bay")]
         public DateTime Date { get; set; }
+
         [Display(Name = "Thời gian bay")]
         public TimeSpan DepartureTime { get; set; }
+
         [Display(Name = "Ghế đặt chỗ")]
         public string Seat { get; set; }
+
         [Display(Name = "Cổng")]
         public string Gate { get; set; }
+
         [Display(Name = "Giờ lên máy bay")]
         public TimeSpan BoardingTime { get; set; }
         public string FlightNumber { get; set; }
 
         [Display(Name = "Tên hành khách")]
         public string? PassengerName { get; set; }
+
         [Display(Name = "Hạng vé")]
         public string Class { get; set; }
+
         [Display(Name = "Hành lý")]
         public string BaggageType { get; set; }
+
         [Display(Name = "Yêu cầu dịch vụ đặc biệt")]
         public string SSR { get; set; }
 
+        [Display(Name = "Chặng bay")]
+        public string Itinerary { get; set; }
         public AppUser? Passenger { set; get; }
         public Flight Flight { get; set; }
         public TicketClass TicketClass { get; set; }

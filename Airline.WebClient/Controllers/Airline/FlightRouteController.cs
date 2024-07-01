@@ -15,14 +15,17 @@ namespace Airline.WebClient.Controllers.Airline
     public class FlightRouteController : Controller
     {
         private readonly IFlightRouteService _flightRouteService;
+        private readonly IAirportService _airportService;
         private IMapper _mapper;
 
         public FlightRouteController(
             IMapper mapper,
-            IFlightRouteService flightRouteService)
+            IFlightRouteService flightRouteService,
+            IAirportService airportService)
         {
             _mapper = mapper;
             _flightRouteService = flightRouteService;
+            _airportService = airportService;
         }
 
         public async Task<IActionResult> Index()
@@ -68,8 +71,13 @@ namespace Airline.WebClient.Controllers.Airline
                 TempData["success"] = "Flight route created successfully";
                 return RedirectToAction(nameof(Index));
             }
+
+            var airports = await _airportService.GetAllAirportsAsync();
+            ViewBag.Airports = airports.Select(a => new { Abbreviation = a.Abbreviation, Name = a.AirportName }).ToList();
+
             return View(model);
         }
+
 
         public async Task<IActionResult> Edit(int id)
         {
