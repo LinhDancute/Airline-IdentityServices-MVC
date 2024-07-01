@@ -2,6 +2,7 @@
 using Airline.WebClient.Models.DTOs.Schedule;
 using Airline.WebClient.Services.IServices.Airline;
 using App.Data;
+using App.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,26 +23,51 @@ namespace Airline.WebClient.Controllers.Airline
             _mapper = mapper;
         }
 
-        // GET: admin/airline/flightroute/Index
-        public async Task<IActionResult> Index()
+        // GET: admin/airline/flight/Index
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery(Name = "p")] int currentPage, int pageSize = 15)
         {
-            List<Flight> list = new List<Flight>();
-
             var dtoList = await _flightService.GetAllFlightsAsync();
 
-            if (dtoList != null)
-            {
-                list = dtoList.Select(dto => _mapper.Map<Flight>(dto)).ToList();
-            }
-            else
+            if (dtoList == null)
             {
                 TempData["error"] = "Failed to fetch flights.";
+                return View(new List<Flight>());
             }
 
-            return View(list);
+            List<Flight> allFlights = dtoList.Select(dto => _mapper.Map<Flight>(dto)).ToList();
+
+            int totalFlights = allFlights.Count;
+
+            if (pageSize <= 0) pageSize = 10;
+
+            int countPages = (int)Math.Ceiling((double)totalFlights / pageSize);
+
+            if (currentPage > countPages) currentPage = countPages;
+            if (currentPage < 1) currentPage = 1;
+
+            var pagingModel = new PagingModel()
+            {
+                countpages = countPages,
+                currentpage = currentPage,
+                generateUrl = (pageNumber) => Url.Action("Index", new { p = pageNumber, pageSize })
+            };
+
+            ViewBag.PagingModel = pagingModel;
+            ViewBag.TotalFlights = totalFlights;
+
+            ViewBag.flightIndex = (currentPage - 1) * pageSize;
+
+            var flightsInPage = allFlights
+                .Skip((currentPage - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return View(flightsInPage);
         }
 
-        // POST: admin/airline/flightroute/Create
+
+        // POST: admin/airline/flight/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FlightCreateDTO flightDTO)
@@ -64,7 +90,7 @@ namespace Airline.WebClient.Controllers.Airline
             }
         }
 
-        // GET: admin/airline/flightroute/Edit/5
+        // GET: admin/airline/flight/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             try
@@ -84,7 +110,7 @@ namespace Airline.WebClient.Controllers.Airline
             }
         }
 
-        // POST: admin/airline/flightroute/Edit/5
+        // POST: admin/airline/flight/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, FlightCreateDTO flightDTO)
@@ -107,7 +133,7 @@ namespace Airline.WebClient.Controllers.Airline
             }
         }
 
-        // POST: admin/airline/flightroute/Delete/5
+        // POST: admin/airline/flight/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)

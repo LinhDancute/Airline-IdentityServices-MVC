@@ -1,0 +1,49 @@
+@using Airline.WebClient.Models.Airline
+@model List<Meal>
+@{
+    ViewData["Title"] = "Danh sách bữa ăn";
+}
+
+<h2>Danh sách bữa ănx</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().MealCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Desciption)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MealCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Desciption)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MealId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.MealId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MealId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

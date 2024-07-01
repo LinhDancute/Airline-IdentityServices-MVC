@@ -35,6 +35,14 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 // Register repositories and services
 builder.Services.AddScoped<ITicketClassRepository, TicketClassRepository>();
 builder.Services.AddScoped<ITicketClassService, TicketClassService>();
+builder.Services.AddScoped<IMealRepository, MealRepository>();
+builder.Services.AddScoped<IMealService, MealService>();
+builder.Services.AddScoped<IBaggageRepository, BaggageRepository>();
+builder.Services.AddScoped<IBaggageService, BaggageService>();
+builder.Services.AddScoped<IUnitPriceRepository, UnitPriceRepository>();
+builder.Services.AddScoped<IUnitPriceService, UnitPriceService>();
+
+
 
 // Register AutoMapper
 builder.Services.ConfigureAutoMapper();

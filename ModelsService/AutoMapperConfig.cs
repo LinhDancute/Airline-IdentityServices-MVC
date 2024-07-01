@@ -1,6 +1,7 @@
 using Airline.ModelsService.Models.Airline;
 using Airline.ModelsService.Models.DTOs.Coupon;
 using Airline.ModelsService.Models.DTOs.Schedule;
+using Airline.ModelsService.Models.Statistical;
 using AutoMapper;
 
 namespace Airline.ModelsService
@@ -43,12 +44,27 @@ namespace Airline.ModelsService
                 config.CreateMap<TicketClass, TicketClassDTO>();
                 config.CreateMap<TicketClassCreateDTO, TicketClass>();
 
+                //Meal
+                config.CreateMap<Meal, MealDTO>();
+                config.CreateMap<MealCreateDTO, Meal>();
+
+                //Baggage
+                config.CreateMap<Baggage, BaggageDTO>();
+                config.CreateMap<BaggageCreateDTO, Baggage>();
+
+                //UnitPrice
+                config.CreateMap<UnitPrice, UnitPriceDTO>();
+                config.CreateMap<UnitPriceCreateDTO, UnitPrice>();
+
                 // Reverse mappings
                 config.CreateMap<AirportCreateDTO, Airport>().ReverseMap();
                 config.CreateMap<FlightRouteCreateDTO, FlightRoute>().ReverseMap();
                 config.CreateMap<FlightRoute_AirportDTO, FlightRoute_Airport>().ReverseMap();
                 config.CreateMap<FlightDTO, Flight>().ReverseMap();
                 config.CreateMap<TicketClassDTO, TicketClass>().ReverseMap();
+                config.CreateMap<MealDTO, Meal>().ReverseMap();
+                config.CreateMap<BaggageDTO,  Baggage>().ReverseMap();
+                config.CreateMap<UnitPriceDTO, UnitPrice>().ReverseMap();
 
 
             });

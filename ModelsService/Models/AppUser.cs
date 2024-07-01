@@ -19,8 +19,6 @@ namespace Airline.ModelsService.Models
         [StringLength(12)]
         [Display(Name = "CMND")]
         public string? CMND { get; set; }
-
-        public ICollection<BoardingPass> BoardingPasses { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
     }

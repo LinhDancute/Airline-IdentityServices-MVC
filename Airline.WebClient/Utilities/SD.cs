@@ -8,6 +8,9 @@
         public static string FlightAPIBase { get; set; }
         public static string FlightRouteAPIBase { get; set; }
         public static string FlightRoute_AirportAPIBase { get; set; }
+        public static string MealAPIBase { get; set; }
+        public static string BaggageAPIBase { get; set; }
+        public static string UnitPriceAPIBase { get; set; }
         public enum ApiType
         {
             GET, POST, PUT, PATCH, DELETE

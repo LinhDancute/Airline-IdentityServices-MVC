@@ -142,6 +142,9 @@ builder.Services.AddScoped<IAirportService, AirportService>();
 builder.Services.AddScoped<IFlightRouteService, FlightRouteService>();
 builder.Services.AddScoped<IFlightService, FlightService>();
 builder.Services.AddScoped<IFlightRoute_AirportService, FlightRoute_AirportService>();
+builder.Services.AddScoped<IBaggageService, BaggageService>();
+builder.Services.AddScoped<IMealService, MealService>();
+builder.Services.AddScoped<IUnitPriceService, UnitPriceService>();
 
 
 // Configure the named HttpClient

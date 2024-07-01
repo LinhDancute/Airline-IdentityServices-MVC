@@ -5,6 +5,7 @@ using App.Data;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Airline.WebClient.Controllers.Airline
 {
@@ -53,8 +54,10 @@ namespace Airline.WebClient.Controllers.Airline
             return View(ticketClass);
         }
 
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
+            await ParentAirlinesViewBag();
             return View();
         }
 
@@ -67,7 +70,15 @@ namespace Airline.WebClient.Controllers.Airline
                 TempData["success"] = "Airline created successfully";
                 return RedirectToAction(nameof(Index));
             }
+            await ParentAirlinesViewBag();
+            var airline = _mapper.Map<Models.Airline.Airline>(model);
             return View(model);
+        }
+
+        private async Task ParentAirlinesViewBag()
+        {
+            var airlines = await _airlineService.GetAllAirlinesAsync();
+            ViewBag.ParentAirlineId = new SelectList(airlines, "AirlineId", "AirlineName");
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -75,8 +86,8 @@ namespace Airline.WebClient.Controllers.Airline
             var model = await _airlineService.GetAirlineByIdAsync(id);
             if (model != null)
             {
-                var ticketClass = _mapper.Map<Models.Airline.Airline>(model);
-                return View(ticketClass);
+                var airline = _mapper.Map<Models.Airline.Airline>(model);
+                return View(airline);
             }
             TempData["error"] = "Airline not found";
             return NotFound();

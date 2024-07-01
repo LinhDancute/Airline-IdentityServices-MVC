@@ -1,0 +1,30 @@
+@model Airline.WebClient.Models.Airline.Meal
+
+@{
+    ViewData["Title"] = "Chi tiết bữa ăn";
+}
+
+<h2>Chi tiết bữa ăn</h2>
+
+<div>
+    <h4>Meal</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MealCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MealCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Desciption)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Desciption)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MealId">Sửa</a> |
+    <a asp-action="Index">Danh sách bữa ăn</a>
+</div>
