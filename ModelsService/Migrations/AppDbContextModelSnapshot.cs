@@ -120,47 +120,10 @@ namespace Airline.ModelsService.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BoardingPassId"));
 
-                    b.Property<string>("BaggageType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<TimeSpan>("BoardingTime")
-                        .HasColumnType("time");
-
-                    b.Property<string>("Class")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("BoardingTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("DepartureTime")
-                        .HasColumnType("time");
-
-                    b.Property<string>("ETicket")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FlightNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Gate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Itinerary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PNR")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PassengerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SSR")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -375,11 +338,12 @@ namespace Airline.ModelsService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PassengerPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PriceId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Published")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Seat")
                         .IsRequired()
@@ -993,9 +957,10 @@ namespace Airline.ModelsService.Migrations
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Airline", b =>
                 {
-                    b.Navigation("BoardingPasses");
+                    b.Navigation("AirlineChildren");
 
-                    b.Navigation("TicketClass_Baggages");
+                    b.Navigation("Flights");
+                });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Airport", b =>
                 {

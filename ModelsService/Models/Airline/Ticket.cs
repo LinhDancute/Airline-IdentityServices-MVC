@@ -15,11 +15,11 @@ namespace Airline.ModelsService.Models.Airline
         public int BaggageId { get; set; }
         public int ClassId { get; set; }
 
-        [Display(Name = "Phát hành")]
-        public bool Published { get; set; }
-
         [Display(Name = "Tên hành khách")]
         public string PassengerName { get; set; }
+
+        [Display(Name = "SDT hành khách")]
+        public string PassengerPhoneNumber { get; set; }
 
         [Display(Name = "Chặng bay")]
         public string Itinerary { get; set; }
