@@ -993,10 +993,9 @@ namespace Airline.ModelsService.Migrations
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Airline", b =>
                 {
-                    b.Navigation("AirlineChildren");
+                    b.Navigation("BoardingPasses");
 
-                    b.Navigation("Flights");
-                });
+                    b.Navigation("TicketClass_Baggages");
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Airport", b =>
                 {
