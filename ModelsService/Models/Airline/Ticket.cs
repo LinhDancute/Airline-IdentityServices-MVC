@@ -15,20 +15,27 @@ namespace Airline.ModelsService.Models.Airline
         public int BaggageId { get; set; }
         public int ClassId { get; set; }
 
-        [Display(Name = "Phát hành")]
-        public bool Published { get; set; }
         [Display(Name = "Tên hành khách")]
         public string PassengerName { get; set; }
+
+        [Display(Name = "SDT hành khách")]
+        public string PassengerPhoneNumber { get; set; }
+
         [Display(Name = "Chặng bay")]
         public string Itinerary { get; set; }
+
         [Display(Name = "Số hiệu máy bay")]
         public string FlightNumber { get; set; }
+
         [Display(Name = "Ngày bay")]
         public DateTime Date { get; set; }
+
         [Display(Name = "Thời gian bay")]
         public TimeSpan DepartureTime { get; set; }
+
         [Display(Name = "Ghế đặt chỗ")]
         public string Seat { get; set; }
+
         [Display(Name = "Hạng vé")]
         public string Class { get; set; }
         public string PNR { get; set; }

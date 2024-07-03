@@ -1,0 +1,39 @@
+@model Airline.WebClient.Models.DTOs.Coupon.MealCreateDTO
+
+@{
+    ViewData["Title"] = "Thêm mới bữa ăn";
+}
+
+<h2>Thêm mới bữa ăn</h2>
+
+<h4>Meal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="MealCode" class="control-label"></label>
+                <input asp-for="MealCode" class="form-control" />
+                <span asp-validation-for="MealCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Desciption" class="control-label"></label>
+                <input asp-for="Desciption" class="form-control" />
+                <span asp-validation-for="Desciption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Danh sách bữa ăn</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

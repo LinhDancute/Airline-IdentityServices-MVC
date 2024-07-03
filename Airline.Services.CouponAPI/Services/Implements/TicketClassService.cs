@@ -2,8 +2,6 @@
 using Airline.ModelsService.Models.DTOs.Coupon;
 using Airline.Services.CouponAPI.Repositories;
 ﻿using Airline.Services.CouponAPI.Repositories;
-using Airline.WebClient.Models.DTOs.Coupon;
-using App.Models.Airline;
 using AutoMapper;
 
 namespace Airline.Services.CouponAPI.Services.Implements

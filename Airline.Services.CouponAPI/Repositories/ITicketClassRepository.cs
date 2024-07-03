@@ -1,5 +1,4 @@
-﻿
-using Airline.ModelsService.Models.Airline;
+﻿using Airline.ModelsService.Models.Airline;
 
 namespace Airline.Services.CouponAPI.Repositories
 {

@@ -1,10 +1,9 @@
-using Airline.ModelsService.Models.Airline;
+using Airline.WebClient.Models.Airline;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace App.Models.Airline
+namespace Airline.WebClient.Models.Airline
 {
-
     public class TicketClass
     {
         [Key]

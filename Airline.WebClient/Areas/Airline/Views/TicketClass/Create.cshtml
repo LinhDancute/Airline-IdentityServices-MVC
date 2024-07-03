@@ -1,4 +1,5 @@
-@model Airline.ModelsService.Models.Airline.TicketClass
+@using Airline.WebClient.Models.Airline
+@model TicketClass
 
 @{
     ViewData["Title"] = "Tạo hạng vé";
@@ -32,7 +33,7 @@
             </div>
             
             <div class="form-group">
-                <input type="submit" value="Tạo mới" class="btn btn-primary" />
+                <input asp-action="Create" type="submit" value="Tạo mới" class="btn btn-primary" />
             </div>
         </form>
     </div>

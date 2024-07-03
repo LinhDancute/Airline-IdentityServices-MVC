@@ -1,4 +1,5 @@
-@model Airline.ModelsService.Models.Airline.TicketClass
+@using Airline.WebClient.Models.Airline
+@model TicketClass
 
 @{
     ViewData["Title"] = "Xóa hạng vé";
@@ -23,7 +24,7 @@
         </dd>
     </dl>
 
-    <form asp-action="Delete">
+    <form asp-action="DeleteConfirmed">
         <input type="hidden" asp-for="TicketId" />
         <input type="submit" value="Xóa" class="btn btn-danger" /> |
         <a asp-action="Index">Danh sách hạng vé</a>

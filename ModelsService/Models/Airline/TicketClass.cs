@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Airline.ModelsService.Models.Airline
 {
-
     public class TicketClass
     {
         [Key]
@@ -41,7 +40,6 @@ namespace Airline.ModelsService.Models.Airline
         }
 
         public ICollection<Ticket>? Tickets { get; } = new List<Ticket>();
-        public ICollection<BoardingPass>? BoardingPasses { get; } = new List<BoardingPass>();
         public ICollection<TicketClass_Baggage>? TicketClass_Baggages { get; set; } = new List<TicketClass_Baggage>();
     }
 }

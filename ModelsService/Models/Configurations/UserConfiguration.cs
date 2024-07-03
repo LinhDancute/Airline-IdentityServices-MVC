@@ -21,10 +21,6 @@ namespace Airline.ModelsService.Models.Configurations
                 .HasForeignKey(u => u.PassengerId)
                 .IsRequired();
 
-            builder.HasMany(bp => bp.BoardingPasses)
-                .WithOne(i => i.Passenger)
-                .HasForeignKey(u => u.PassengerId)
-                .IsRequired();
         }
     }
 }

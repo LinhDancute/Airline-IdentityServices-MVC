@@ -1,4 +1,6 @@
-@model Airline.ModelsService.Models.Airline.FlightRoute
+@using Airline.WebClient.Models.Airline
+@using Airline.WebClient.Models.DTOs.Schedule
+@model FlightRouteCreateDTO
 
 @{
     ViewData["Title"] = "Tạo tuyến bay";
@@ -33,12 +35,6 @@
             </div>
 
             @* <div class="form-group">
-                <label asp-for="FlightSector"></label>
-                <input asp-for="FlightSector" class="form-control" />
-                <span asp-validation-for="FlightSector" class="text-danger"></span>
-            </div> *@
-
-            @* <div class="form-group">
                 <label asp-for="FlightTime"></label>
                 <input asp-for="FlightTime" class="form-control" />
                 <span asp-validation-for="FlightTime" class="text-danger"></span>
@@ -46,7 +42,7 @@
 
             <div class="form-group">
                 <label asp-for="Gate"></label>
-                <select asp-for="Gate" asp-items="@Html.GetEnumSelectList<Airline.ModelsService.Models.Airline.FlightRoute.GateStatusType>()"
+                <select asp-for="Gate" asp-items="@Html.GetEnumSelectList<FlightRoute.GateStatusType>()"
                     class="form-control"></select>
                 <span asp-validation-for="Gate" class="text-danger"></span>
             </div>
@@ -54,7 +50,7 @@
             <div class="form-group">
                 <label asp-for="Status"></label>
                 <select asp-for="Status"
-                        asp-items="@Html.GetEnumSelectList<Airline.ModelsService.Models.Airline.FlightRoute.FlightRouteStatusType>()"
+                        asp-items="@Html.GetEnumSelectList<FlightRoute.FlightRouteStatusType>()"
                     class="form-control"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>

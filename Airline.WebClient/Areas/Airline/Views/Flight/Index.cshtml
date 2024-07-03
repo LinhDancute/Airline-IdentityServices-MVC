@@ -1,7 +1,9 @@
-@model IEnumerable<Airline.ModelsService.Models.Airline.Flight>
+@using Airline.WebClient.Models.Airline
+@model List<Flight>
 
 @{
     ViewData["Title"] = "Danh sách chuyến bay";
+    int flightIndex = ViewBag.flightIndex ?? 1;
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -33,7 +35,7 @@
     </tbody>  
 </table>
 @{
-    async Task RenderFlight(Airline.ModelsService.Models.Airline.Flight item, int level)
+    async Task RenderFlight(Flight item, int level)
     {
         if (item is null)
         {
@@ -53,7 +55,6 @@
                 <a asp-action="Edit" asp-route-id="@item.FlightId">
                     @Html.DisplayFor(modelItem => item.FlightSector)
                 </a>
-                @* <a asp-action="AddFlightRoute" asp-route-id="@item.FlightId">+Thêm tuyến bay</a> *@
             </td>
 
 

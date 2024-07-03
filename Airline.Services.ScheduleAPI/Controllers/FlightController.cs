@@ -76,6 +76,25 @@ namespace Airline.Services.ScheduleAPI.Controllers
             }
         }
 
+        // GET: api/flight/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FlightDTO>> GetFlightRById(int id)
+        {
+            try
+            {
+                var flight = await _flightService.GetFlightByIdAsync(id);
+                if (flight == null)
+                {
+                    return NotFound(new { Success = false, Message = "Flight not found." });
+                }
+                return Ok(flight);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
+        }
+
         [HttpPut("{flightId}")]
         public async Task<IActionResult> UpdateFlight(int flightId, [FromBody] FlightCreateDTO flightDTO)
         {

@@ -1,4 +1,5 @@
-@model IEnumerable<Airline.ModelsService.Models.Airline.BoardingPass>
+@using Airline.WebClient.Models.Airline
+@model List<BoardingPass>
 
 
 @{
@@ -28,7 +29,7 @@
     </tbody>  
 </table>
 @{
-    async Task RenderBoardingPass(Airline.ModelsService.Models.Airline.BoardingPass item, int level)
+    async Task RenderBoardingPass(BoardingPass item, int level)
     {
         if (item is null)
         {

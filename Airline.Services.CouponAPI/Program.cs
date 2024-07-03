@@ -26,7 +26,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         throw new InvalidOperationException("Connection string not found"))
 );
 
-=======
 // Add Identity & JWT authentication
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
@@ -36,19 +35,34 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 // Register repositories and services
 builder.Services.AddScoped<ITicketClassRepository, TicketClassRepository>();
 builder.Services.AddScoped<ITicketClassService, TicketClassService>();
+builder.Services.AddScoped<IMealRepository, MealRepository>();
+builder.Services.AddScoped<IMealService, MealService>();
+builder.Services.AddScoped<IBaggageRepository, BaggageRepository>();
+builder.Services.AddScoped<IBaggageService, BaggageService>();
+builder.Services.AddScoped<IUnitPriceRepository, UnitPriceRepository>();
+builder.Services.AddScoped<IUnitPriceService, UnitPriceService>();
+
+
 
 // Register AutoMapper
 builder.Services.ConfigureAutoMapper();
 
+// Add Swagger services
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ScheduleAPI", Version = "v1" });
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScheduleAPI V1");
+    });
 }
 else
 {

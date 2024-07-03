@@ -1,43 +1,31 @@
-@page "/ticketclasses"
-@model IEnumerable<Airline.ModelsService.Models.Airline.TicketClass>
+@using Airline.WebClient.Models.Airline
+@model List<TicketClass>
 
-
-@{
-    ViewData["Title"] = "Danh sách hạng vé";
-}
-
-<h1>@ViewData["Title"]</h1>
+<h1>Danh sách hạng vé</h1>
 <p>
     <a asp-action="Create" class="btn btn-primary">Tạo hạng vé mới</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TicketName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FareClass)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
+            <th>Tên hạng vé</th>
+            <th>Mã hạng vé</th>
+            <th>Mô tả</th>
             <th>Tác vụ</th>
         </tr>
     </thead>
     <tbody>
-
+        
         @foreach (var item in Model)
         {
             await RenderTicketClass(item, 0);
         }
-
+        
     </tbody>
-    
 </table>
 
 @{
-    async Task RenderTicketClass(Airline.ModelsService.Models.Airline.TicketClass item, int level)
+    async Task RenderTicketClass(TicketClass item, int level)
     {
         if (item is null)
         {
