@@ -1,4 +1,4 @@
-using Airline.ModelsService.Models;
+﻿using Airline.ModelsService.Models;
 using Airline.ModelsService.Models.Airline;
 using Bogus.DataSets;
 using System;
@@ -16,12 +16,12 @@ namespace Airline.ModelsService.Models.Airline
         public Ticket Ticket { get; set; }
 
         [Display(Name = "Boarding Time")]
-        public DateTime BoardingTime { get; set; }
+        public TimeSpan? BoardingTime { get; set; }
 
-        [Display(Name = "Gate")]
-        public string Gate { get; set; }
+        [Display(Name = "Cửa lên máy bay")]
+        public string BoardingGate { get; set; }
 
-        [Display(Name = "Seat")]
+        [Display(Name = "Ghế ngồi")]
         public string Seat { get; set; }
     }
 }

@@ -37,18 +37,9 @@ namespace Airline.ModelsService.Models.Airline
         [DataType(DataType.Date)]
         [Display(Name = "Ngày/giờ ")]
         public DateTime Date { get; set; }
-
-        [Display(Name = "Số ghế hạng tiêu chuẩn")]
-        public int? EcoSeat { get; set; }
-
-        [Display(Name = "Số ghế hạng phổ thông đặc biệt")]
-        public int? DeluxeSeat { get; set; }
-
-        [Display(Name = "Số ghế hạng cao cấp")]
-        public int? SkyBossSeat { get; set; }
-
-        [Display(Name = "Số ghế hạng thương gia")]
-        public int? SkyBossBusinessSeat { get; set; }
+        public int? EconomySeat { get; set; }
+        public int? PremiumEconomySeat { get; set; }
+        public int? BusinessSeat { get; set; }
         
         [Column("Status")]
         [Display(Name = "Trạng thái hoạt động")]

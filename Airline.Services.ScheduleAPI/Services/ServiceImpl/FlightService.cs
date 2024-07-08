@@ -71,15 +71,14 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             }
 
             // Set other properties
-            flight.Date = flightDTO.Date;
+            flight.Date = flightDTO.Date.Date;
             flight.FlightNumber = flightDTO.FlightNumber;
             flight.DepartureTime = flightDTO.DepartureTime;
             flight.ArrivalTime = flightDTO.ArrivalTime;
             flight.FlightTime = flightDTO.FlightTime;
-            flight.EcoSeat = flightDTO.EcoSeat;
-            flight.DeluxeSeat = flightDTO.DeluxeSeat;
-            flight.SkyBossSeat = flightDTO.SkyBossSeat;
-            flight.SkyBossBusinessSeat = flightDTO.SkyBossBusinessSeat;
+            flight.EconomySeat = flightDTO.EconomySeat;
+            flight.PremiumEconomySeat = flightDTO.PremiumEconomySeat;
+            flight.BusinessSeat = flightDTO.BusinessSeat;
             flight.Status = (Flight.FlightStatusType)flightDTO.Status;
 
             // Add flight to repository
@@ -139,15 +138,14 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
                 }
 
                 // Set other properties
-                flight.Date = flightDTO.Date;
+                flight.Date = flightDTO.Date.Date;
                 flight.FlightNumber = flightDTO.FlightNumber;
                 flight.DepartureTime = flightDTO.DepartureTime;
                 flight.ArrivalTime = flightDTO.ArrivalTime;
                 flight.FlightTime = flightDTO.FlightTime;
-                flight.EcoSeat = flightDTO.EcoSeat;
-                flight.DeluxeSeat = flightDTO.DeluxeSeat;
-                flight.SkyBossSeat = flightDTO.SkyBossSeat;
-                flight.SkyBossBusinessSeat = flightDTO.SkyBossBusinessSeat;
+                flight.EconomySeat = flightDTO.EconomySeat;
+                flight.PremiumEconomySeat = flightDTO.PremiumEconomySeat;
+                flight.BusinessSeat = flightDTO.BusinessSeat;
                 flight.Status = (Flight.FlightStatusType)flightDTO.Status;
 
                 // Add flight to repository
@@ -206,15 +204,14 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             }
 
             // Update flight properties
-            flight.Date = flightDTO.Date;
+            flight.Date = flightDTO.Date.Date;
             flight.FlightNumber = flightDTO.FlightNumber;
             flight.DepartureTime = flightDTO.DepartureTime;
             flight.ArrivalTime = flightDTO.ArrivalTime;
             flight.FlightTime = flightDTO.FlightTime;
-            flight.EcoSeat = flightDTO.EcoSeat;
-            flight.DeluxeSeat = flightDTO.DeluxeSeat;
-            flight.SkyBossSeat = flightDTO.SkyBossSeat;
-            flight.SkyBossBusinessSeat = flightDTO.SkyBossBusinessSeat;
+            flight.EconomySeat = flightDTO.EconomySeat;
+            flight.PremiumEconomySeat = flightDTO.PremiumEconomySeat;
+            flight.BusinessSeat = flightDTO.BusinessSeat;
             flight.Status = (Flight.FlightStatusType)flightDTO.Status;
 
             // Update flight in repository

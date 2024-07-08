@@ -2,14 +2,14 @@
 
 namespace Airline.ModelsService.Models.Airline
 {
-    public class TicketClass_Baggage
+    public class Ticket_Baggage
     {
-        public int TicketClassID { set; get; }
+        public int TicketID { set; get; }
         public int BaggageID { set; get; }
 
 
-        [ForeignKey("TicketClassID")]
-        public TicketClass TicketClass { set; get; }
+        [ForeignKey("TicketID")]
+        public Ticket Ticket { set; get; }
 
         [ForeignKey("BaggageID")]
         public Baggage Baggage { set; get; }

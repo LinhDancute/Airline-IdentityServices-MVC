@@ -45,5 +45,18 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
             _context.Set<Meal>().Remove(meal);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Meal> GetMealByCodeAsync(string mealCode)
+        {
+            return await _context.Meals.FirstOrDefaultAsync(m => m.MealCode == mealCode);
+        }
+
+        public async Task<List<Meal>> GetMealByCodesAsync(List<string> mealCodes)
+        {
+            return await _context.Meals
+                .Where(m => mealCodes.Contains(m.MealCode))
+                .ToListAsync();
+        }
+
     }
 }

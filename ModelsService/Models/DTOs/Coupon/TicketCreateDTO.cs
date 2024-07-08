@@ -13,7 +13,10 @@ namespace Airline.ModelsService.Models.DTOs.Coupon
         public string Seat { get; set; }
         public string Class { get; set; }
         public string PNR { get; set; }
-        public string MealRequest { get; set; }
+        public List<string> MealRequest { get; set; }
+        public List<string> BaggageType { get; set; }
+        public string USD { get; set; }
+        public string VND { get; set; }
         public TicketStatusType Status { get; set; }
     }
 }

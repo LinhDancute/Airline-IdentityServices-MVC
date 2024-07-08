@@ -11,10 +11,9 @@ namespace Airline.ModelsService.Models.DTOs.Schedule
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
         public float FlightTime { get; set; }
-        public int EcoSeat { get; set; }
-        public int DeluxeSeat { get; set; }
-        public int SkyBossSeat { get; set; }
-        public int SkyBossBusinessSeat { get; set; }
+        public int? EconomySeat { get; set; }
+        public int? PremiumEconomySeat { get; set; }
+        public int? BusinessSeat { get; set; }
         public FlightDTO.FlightStatus Status { get; set; }
     }
 }

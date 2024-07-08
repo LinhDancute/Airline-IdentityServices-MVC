@@ -11,11 +11,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+            options.JsonSerializerOptions.MaxDepth = 64; 
+        });
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,8 +48,11 @@ builder.Services.AddScoped<IBaggageRepository, BaggageRepository>();
 builder.Services.AddScoped<IBaggageService, BaggageService>();
 builder.Services.AddScoped<IUnitPriceRepository, UnitPriceRepository>();
 builder.Services.AddScoped<IUnitPriceService, UnitPriceService>();
-
-
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<IBoardingPassRepository, BoardingPassRepository>();
+builder.Services.AddScoped<IBoardingPassService, BoardingPassService>();
 
 // Register AutoMapper
 builder.Services.ConfigureAutoMapper();
@@ -50,7 +60,7 @@ builder.Services.ConfigureAutoMapper();
 // Add Swagger services
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ScheduleAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CouponAPI", Version = "v1" });
 });
 
 var app = builder.Build();
@@ -61,7 +71,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ScheduleAPI V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CouponAPI V1");
     });
 }
 else

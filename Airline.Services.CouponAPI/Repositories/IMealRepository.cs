@@ -10,5 +10,7 @@ namespace Airline.Services.CouponAPI.Repositories
         Task AddRangeAsync(IEnumerable<Meal> meals);
         Task UpdateAsync(Meal meal);
         Task DeleteAsync(Meal meal);
+        Task<Meal> GetMealByCodeAsync(string mealCode);
+        Task<List<Meal>> GetMealByCodesAsync(List<string> mealCodes);
     }
 }
