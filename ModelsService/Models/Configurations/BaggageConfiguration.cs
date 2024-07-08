@@ -11,19 +11,11 @@ namespace Airline.ModelsService.Models.Configurations
         {
             builder.HasKey(tc => tc.BaggageId);
 
-            //Baggage - Ticket: n-1
-            //Baggage - TicketClass_Baggage: n-1
-
-            builder.HasMany(bpt => bpt.Tickets)
-                .WithOne(tc => tc.Baggage)
-                .HasForeignKey(bpt => bpt.BaggageId)
-                .IsRequired();
-
-            builder.HasMany(bpt => bpt.TicketClass_Baggages)
+            //Ticket - Ticket_Baggage - Baggage: n - 1 - n
+            builder.HasMany(bpt => bpt.Ticket_Baggages)
                 .WithOne(tc => tc.Baggage)
                 .HasForeignKey(bpt => bpt.BaggageID)
                 .IsRequired();
-
         }
     }
 }

@@ -45,5 +45,13 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
             _context.Set<Baggage>().Remove(baggage);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Baggage>> GetByBaggageNameAsync(List<string> baggageNames)
+        {
+            return await _context.Baggages
+                .Where(b => baggageNames.Contains(b.Name))
+                .ToListAsync();
+        }
+
     }
 }

@@ -11,10 +11,10 @@ namespace Airline.ModelsService.Models.Configurations
         {
             builder.HasKey(tc => tc.MealId);
 
-            //TicketClass - Ticket: n-1
-            builder.HasMany(bpt => bpt.Tickets)
+            //Ticket - Ticket_Meal - Meal: n - 1 - n
+            builder.HasMany(bpt => bpt.Ticket_Meals)
                 .WithOne(tc => tc.Meal)
-                .HasForeignKey(bpt => bpt.MealId)
+                .HasForeignKey(bpt => bpt.MealID)
                 .IsRequired();
         }
     }

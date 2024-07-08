@@ -32,10 +32,11 @@ namespace Airline.ModelsService
             modelBuilder.ApplyConfiguration(new TicketConfiguration());                     //ticket
             modelBuilder.ApplyConfiguration(new TicketClassConfiguration());                //ticket class
             modelBuilder.ApplyConfiguration(new InvoiceConfiguration());                    //invoice
-            modelBuilder.ApplyConfiguration(new TicketClass_BaggageConfiguration());        //ticketclass_baggage
             modelBuilder.ApplyConfiguration(new UserConfiguration());                       //user
             modelBuilder.ApplyConfiguration(new MealConfiguration());                       //meal
             modelBuilder.ApplyConfiguration(new BaggageConfiguration());                    //baggage
+            modelBuilder.ApplyConfiguration(new Ticket_BaggageConfiguration());             //ticket_baggage
+            modelBuilder.ApplyConfiguration(new Ticket_MealConfiguration());                //ticket_meal
             //airline
             modelBuilder.Entity<Airline.ModelsService.Models.Airline.Airline>(entity =>
             {
@@ -66,9 +67,9 @@ namespace Airline.ModelsService
         public DbSet<UnitPrice> UnitPrices { get; set; }
         public DbSet<FlightRoute_Airport> FlightRoute_Airports { get; set; }
         public DbSet<FlightRoute_Flight> FlightRoute_Flights { get; set; }
-        public DbSet<TicketClass_Baggage> TicketClass_Baggages { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Baggage> Baggages { get; set; }
-
+        public DbSet<Ticket_Meal> Ticket_Meals { get; set;}
+        public DbSet<Ticket_Baggage> Ticket_Baggages { get;set; }
     }
 }

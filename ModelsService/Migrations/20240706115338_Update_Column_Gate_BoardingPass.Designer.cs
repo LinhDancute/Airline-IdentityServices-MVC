@@ -4,6 +4,7 @@ using Airline.ModelsService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airline.ModelsService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240706115338_Update_Column_Gate_BoardingPass")]
+    partial class Update_Column_Gate_BoardingPass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,7 +127,7 @@ namespace Airline.ModelsService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("BoardingTime")
+                    b.Property<DateTime>("BoardingTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Seat")
@@ -287,6 +290,10 @@ namespace Airline.ModelsService.Migrations
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket", b =>
                 {
                     b.Property<int>("TicketId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BaggageId")
                         .HasColumnType("int");
 
                     b.Property<string>("BaggageType")
@@ -316,6 +323,9 @@ namespace Airline.ModelsService.Migrations
                     b.Property<string>("Itinerary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
 
                     b.Property<string>("MealRequest")
                         .IsRequired()
@@ -357,7 +367,11 @@ namespace Airline.ModelsService.Migrations
 
                     b.HasKey("TicketId");
 
+                    b.HasIndex("BaggageId");
+
                     b.HasIndex("FlightId");
+
+                    b.HasIndex("MealId");
 
                     b.HasIndex("PassengerId");
 
@@ -390,34 +404,19 @@ namespace Airline.ModelsService.Migrations
                     b.ToTable("TicketClasses");
                 });
 
-            modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket_Baggage", b =>
+            modelBuilder.Entity("Airline.ModelsService.Models.Airline.TicketClass_Baggage", b =>
                 {
-                    b.Property<int>("TicketID")
+                    b.Property<int>("TicketClassID")
                         .HasColumnType("int");
 
                     b.Property<int>("BaggageID")
                         .HasColumnType("int");
 
-                    b.HasKey("TicketID", "BaggageID");
+                    b.HasKey("TicketClassID", "BaggageID");
 
                     b.HasIndex("BaggageID");
 
-                    b.ToTable("Ticket_Baggages");
-                });
-
-            modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket_Meal", b =>
-                {
-                    b.Property<int>("TicketID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MealID")
-                        .HasColumnType("int");
-
-                    b.HasKey("TicketID", "MealID");
-
-                    b.HasIndex("MealID");
-
-                    b.ToTable("Ticket_Meals");
+                    b.ToTable("TicketClass_Baggages");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.AppUser", b =>
@@ -774,7 +773,7 @@ namespace Airline.ModelsService.Migrations
                     b.HasOne("Airline.ModelsService.Models.Airline.Ticket", "Ticket")
                         .WithMany("BoardingPasses")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ticket");
@@ -831,9 +830,21 @@ namespace Airline.ModelsService.Migrations
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket", b =>
                 {
+                    b.HasOne("Airline.ModelsService.Models.Airline.Baggage", "Baggage")
+                        .WithMany("Tickets")
+                        .HasForeignKey("BaggageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Airline.ModelsService.Models.Airline.Flight", "Flight")
                         .WithMany("Tickets")
                         .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Airline.ModelsService.Models.Airline.Meal", "Meal")
+                        .WithMany("Tickets")
+                        .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -855,7 +866,11 @@ namespace Airline.ModelsService.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Baggage");
+
                     b.Navigation("Flight");
+
+                    b.Navigation("Meal");
 
                     b.Navigation("Passenger");
 
@@ -864,42 +879,23 @@ namespace Airline.ModelsService.Migrations
                     b.Navigation("UnitPrice");
                 });
 
-            modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket_Baggage", b =>
+            modelBuilder.Entity("Airline.ModelsService.Models.Airline.TicketClass_Baggage", b =>
                 {
                     b.HasOne("Airline.ModelsService.Models.Airline.Baggage", "Baggage")
-                        .WithMany("Ticket_Baggages")
+                        .WithMany("TicketClass_Baggages")
                         .HasForeignKey("BaggageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Airline.ModelsService.Models.Airline.Ticket", "Ticket")
-                        .WithMany("Ticket_Baggages")
-                        .HasForeignKey("TicketID")
+                    b.HasOne("Airline.ModelsService.Models.Airline.TicketClass", "TicketClass")
+                        .WithMany("TicketClass_Baggages")
+                        .HasForeignKey("TicketClassID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Baggage");
 
-                    b.Navigation("Ticket");
-                });
-
-            modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket_Meal", b =>
-                {
-                    b.HasOne("Airline.ModelsService.Models.Airline.Meal", "Meal")
-                        .WithMany("Ticket_Meals")
-                        .HasForeignKey("MealID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Airline.ModelsService.Models.Airline.Ticket", "Ticket")
-                        .WithMany("Ticket_Meals")
-                        .HasForeignKey("TicketID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Meal");
-
-                    b.Navigation("Ticket");
+                    b.Navigation("TicketClass");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Statistical.Invoice", b =>
@@ -986,7 +982,9 @@ namespace Airline.ModelsService.Migrations
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Baggage", b =>
                 {
-                    b.Navigation("Ticket_Baggages");
+                    b.Navigation("TicketClass_Baggages");
+
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Flight", b =>
@@ -1005,20 +1003,18 @@ namespace Airline.ModelsService.Migrations
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Meal", b =>
                 {
-                    b.Navigation("Ticket_Meals");
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket", b =>
                 {
                     b.Navigation("BoardingPasses");
-
-                    b.Navigation("Ticket_Baggages");
-
-                    b.Navigation("Ticket_Meals");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.TicketClass", b =>
                 {
+                    b.Navigation("TicketClass_Baggages");
+
                     b.Navigation("Tickets");
                 });
 
