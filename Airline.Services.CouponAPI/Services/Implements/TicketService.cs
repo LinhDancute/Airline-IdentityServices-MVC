@@ -356,7 +356,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                         boardingPass.BoardingGate = GetRandomGate(6, 11);
                     }
                     else if (flightRoute.Gate == FlightRoute.GateStatusType.InternationalGate)
-                    {
+        {
                         boardingPass.BoardingGate = GetRandomGate(15, 27);
                     }
                 }
