@@ -4,6 +4,7 @@ using Airline.ModelsService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airline.ModelsService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240707110419_Add_TicketMeal_TicketBaggage")]
+    partial class Add_TicketMeal_TicketBaggage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,8 +127,8 @@ namespace Airline.ModelsService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan?>("BoardingTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("BoardingTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Seat")
                         .IsRequired()
@@ -287,6 +290,10 @@ namespace Airline.ModelsService.Migrations
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket", b =>
                 {
                     b.Property<int>("TicketId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BaggageId")
                         .HasColumnType("int");
 
                     b.Property<string>("BaggageType")
@@ -316,6 +323,9 @@ namespace Airline.ModelsService.Migrations
                     b.Property<string>("Itinerary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
 
                     b.Property<string>("MealRequest")
                         .IsRequired()
@@ -357,7 +367,11 @@ namespace Airline.ModelsService.Migrations
 
                     b.HasKey("TicketId");
 
+                    b.HasIndex("BaggageId");
+
                     b.HasIndex("FlightId");
+
+                    b.HasIndex("MealId");
 
                     b.HasIndex("PassengerId");
 
@@ -774,7 +788,7 @@ namespace Airline.ModelsService.Migrations
                     b.HasOne("Airline.ModelsService.Models.Airline.Ticket", "Ticket")
                         .WithMany("BoardingPasses")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ticket");
@@ -831,9 +845,21 @@ namespace Airline.ModelsService.Migrations
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket", b =>
                 {
+                    b.HasOne("Airline.ModelsService.Models.Airline.Baggage", "Baggage")
+                        .WithMany("Tickets")
+                        .HasForeignKey("BaggageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Airline.ModelsService.Models.Airline.Flight", "Flight")
                         .WithMany("Tickets")
                         .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Airline.ModelsService.Models.Airline.Meal", "Meal")
+                        .WithMany("Tickets")
+                        .HasForeignKey("MealId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -855,7 +881,11 @@ namespace Airline.ModelsService.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Baggage");
+
                     b.Navigation("Flight");
+
+                    b.Navigation("Meal");
 
                     b.Navigation("Passenger");
 
@@ -987,6 +1017,8 @@ namespace Airline.ModelsService.Migrations
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Baggage", b =>
                 {
                     b.Navigation("Ticket_Baggages");
+
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Flight", b =>
@@ -1006,6 +1038,8 @@ namespace Airline.ModelsService.Migrations
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Meal", b =>
                 {
                     b.Navigation("Ticket_Meals");
+
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket", b =>

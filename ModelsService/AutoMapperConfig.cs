@@ -56,6 +56,14 @@ namespace Airline.ModelsService
                 config.CreateMap<UnitPrice, UnitPriceDTO>();
                 config.CreateMap<UnitPriceCreateDTO, UnitPrice>();
 
+                //Ticket
+                config.CreateMap<TicketCreateDTO, Ticket>();
+                config.CreateMap<Ticket, TicketCreateDTO>();
+                config.CreateMap<Ticket, TicketDTO>();
+
+                //BoardingPass
+                config.CreateMap<BoardingPass, BoardingPassDTO>();
+                config.CreateMap<BoardingPassDTO, BoardingPass>();
                 // Reverse mappings
                 config.CreateMap<AirportCreateDTO, Airport>().ReverseMap();
                 config.CreateMap<FlightRouteCreateDTO, FlightRoute>().ReverseMap();
@@ -65,6 +73,8 @@ namespace Airline.ModelsService
                 config.CreateMap<MealDTO, Meal>().ReverseMap();
                 config.CreateMap<BaggageDTO,  Baggage>().ReverseMap();
                 config.CreateMap<UnitPriceDTO, UnitPrice>().ReverseMap();
+                config.CreateMap<TicketDTO, Ticket>().ReverseMap();
+                config.CreateMap<BoardingPassDTO, BoardingPass>().ReverseMap();
 
 
             });

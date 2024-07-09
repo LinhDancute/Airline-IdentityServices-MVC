@@ -8,7 +8,6 @@ namespace Airline.ModelsService.Models.Airline
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         public int TicketId { get; set; }
 
         [Display(Name = "Tên hạng vé")]
@@ -40,6 +39,5 @@ namespace Airline.ModelsService.Models.Airline
         }
 
         public ICollection<Ticket>? Tickets { get; } = new List<Ticket>();
-        public ICollection<TicketClass_Baggage>? TicketClass_Baggages { get; set; } = new List<TicketClass_Baggage>();
     }
 }

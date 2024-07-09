@@ -11,8 +11,6 @@ namespace Airline.ModelsService.Models.Airline
         public string? PassengerId { set; get; }
         public int FlightId { get; set; }
         public int PriceId { get; set; }
-        public int MealId { get; set; }
-        public int BaggageId { get; set; }
         public int ClassId { get; set; }
 
         [Display(Name = "Tên hành khách")]
@@ -31,23 +29,36 @@ namespace Airline.ModelsService.Models.Airline
         public DateTime Date { get; set; }
 
         [Display(Name = "Thời gian bay")]
-        public TimeSpan DepartureTime { get; set; }
+        public TimeSpan? DepartureTime { get; set; }
 
         [Display(Name = "Ghế đặt chỗ")]
         public string Seat { get; set; }
 
         [Display(Name = "Hạng vé")]
         public string Class { get; set; }
+
+        [Display(Name = "Mã PNR")]
         public string PNR { get; set; }
+
+        [Display(Name = "Dịch vụ bữa ăn")]
         public string MealRequest { get; set; }
+
+        [Display(Name = "Loại hành lý")]
+        public string BaggageType { get; set; }
+
+        [Display(Name = "Đơn giá USD")]
+        public string USD { get; set; }
+
+        [Display(Name = "Đơn giá VND")]
+        public string VND { get; set; }
         public TicketStatusType Status { get; set; }
         public AppUser? Passenger { set; get; }
         public Flight Flight { get; set; }
         public UnitPrice UnitPrice { get; set; }
         public TicketClass TicketClass { get; set; }
-        public Meal Meal { get; set; }
-        public Baggage Baggage { get; set; }
         public ICollection<BoardingPass>? BoardingPasses { get; } = new List<BoardingPass>();
+        public ICollection<Ticket_Meal>? Ticket_Meals { get; set; } = new List<Ticket_Meal>();
+        public ICollection<Ticket_Baggage>? Ticket_Baggages { get; set; } = new List<Ticket_Baggage>();
     }
 
     public enum TicketStatusType

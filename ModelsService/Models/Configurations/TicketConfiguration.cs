@@ -8,55 +8,56 @@ namespace Airline.ModelsService.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Ticket> builder)
         {
-            // Flight - Ticket : n-1
-            builder.HasOne(f => f.Flight)
-                .WithMany(t => t.Tickets)
-                .HasForeignKey(f => f.FlightId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            builder.HasKey(t => t.TicketId);
 
-            // UnitPrice - Ticket : n-1
-            builder.HasOne(u => u.UnitPrice)
-                .WithMany(t => t.Tickets)
-                .HasForeignKey(pdc => pdc.PriceId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            // Flight - Ticket: n-1
+            builder.HasOne(t => t.Flight)
+                .WithMany(f => f.Tickets)
+                .HasForeignKey(t => t.FlightId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // User - Ticket : n-1
-            builder.HasOne(p => p.Passenger)
-                .WithMany(t => t.Tickets)
-                .HasForeignKey(p => p.PassengerId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            // UnitPrice - Ticket: n-1
+            builder.HasOne(t => t.UnitPrice)
+                .WithMany(u => u.Tickets)
+                .HasForeignKey(t => t.PriceId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // TicketClass - Ticket : n-1
-            builder.HasOne(f => f.TicketClass)
-                .WithMany(t => t.Tickets)
-                .HasForeignKey(f => f.ClassId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            // Passenger - Ticket: n-1
+            builder.HasOne(t => t.Passenger)
+                .WithMany(u => u.Tickets)
+                .HasForeignKey(t => t.PassengerId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Meal - Ticket : n-1
-            builder.HasOne(u => u.Meal)
-                .WithMany(t => t.Tickets)
-                .HasForeignKey(pdc => pdc.MealId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            // TicketClass - Ticket: n-1
+            builder.HasOne(t => t.TicketClass)
+                .WithMany(tc => tc.Tickets)
+                .HasForeignKey(t => t.TicketId)  
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Baggage - Ticket : n-1
-            builder.HasOne(p => p.Baggage)
-                .WithMany(t => t.Tickets)
-                .HasForeignKey(p => p.BaggageId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            // Ticket - Ticket_Meal: 1-n
+            builder.HasMany(t => t.Ticket_Meals)
+                .WithOne(tm => tm.Ticket)
+                .HasForeignKey(tm => tm.TicketID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade); 
 
-            // BoardingPass - Ticket: 1-n
-            builder.HasMany(bp => bp.BoardingPasses)
-                .WithOne(t => t.Ticket)
-                .HasForeignKey(t => t.TicketId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+            // Ticket - Ticket_Baggage: 1-n
+            builder.HasMany(t => t.Ticket_Baggages)
+                .WithOne(tb => tb.Ticket)
+                .HasForeignKey(tb => tb.TicketID)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);  
+
+            // Ticket - BoardingPass: 1-n
+            builder.HasMany(t => t.BoardingPasses)
+                .WithOne(bp => bp.Ticket)
+                .HasForeignKey(bp => bp.TicketId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);  
         }
-
     }
 }

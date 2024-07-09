@@ -4,6 +4,7 @@ using Airline.ModelsService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Airline.ModelsService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240708142105_Remove_BaggageId_MealId_Ticket")]
+    partial class Remove_BaggageId_MealId_Ticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,8 +127,8 @@ namespace Airline.ModelsService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan?>("BoardingTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime?>("BoardingTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Seat")
                         .IsRequired()
@@ -287,6 +290,7 @@ namespace Airline.ModelsService.Migrations
             modelBuilder.Entity("Airline.ModelsService.Models.Airline.Ticket", b =>
                 {
                     b.Property<int>("TicketId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("BaggageType")
@@ -774,7 +778,7 @@ namespace Airline.ModelsService.Migrations
                     b.HasOne("Airline.ModelsService.Models.Airline.Ticket", "Ticket")
                         .WithMany("BoardingPasses")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ticket");
