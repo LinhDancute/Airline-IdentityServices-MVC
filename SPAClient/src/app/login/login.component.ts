@@ -14,25 +14,25 @@ import {Router, RouterLink} from "@angular/router";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  // loginObj:any = {
-  //   "Email": "",
-  //   "Password": ""
-  // };
-  //
-  // http = inject(HttpClient)
-  // constructor(private router: Router) {
-  //
-  // }
-  // onLogin(){
-  //   debugger;
-  //   this.http.post("http://localhost:7002/Login", this.loginObj).subscribe((response:any)=>{
-  //     if (response.result){
-  //       this.loginObj = response;
-  //       alert("Đăng nhập thành công");
-  //       this.router.navigateByUrl("pageContent");
-  //     } else {
-  //       alert("Sai email hoặc mật khẩu");
-  //     }
-  //   })
-  // }
+  loginObj:any = {
+    "email": "",
+    "password": ""
+  };
+
+  http = inject(HttpClient)
+  constructor(private router: Router) {
+
+  }
+  onLogin() {
+    debugger;
+    this.http.post("https://localhost:7002/api/Auth/login", this.loginObj).subscribe((response: any) => {
+      if (response.flag) {
+        alert("Đăng nhập thành công");
+        this.router.navigateByUrl("main");
+      } else {
+        alert("Sai email hoặc mật khẩu");
+      }
+    });
+  }
+
 }

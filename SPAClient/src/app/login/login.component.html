@@ -17,17 +17,18 @@
 
                 <form>
                   <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="email" id="form2Example11" class="form-control"/>
+                    <input type="email" id="form2Example11" name="email" class="form-control" [(ngModel)]="loginObj.email" required/>
                     <label class="form-label" for="form2Example11">Email</label>
                   </div>
 
                   <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="password" id="form2Example22" class="form-control" />
+                    <input type="password" id="form2Example22" name="password" class="form-control" [(ngModel)]="loginObj.password" required/>
                     <label class="form-label" for="form2Example22">Mật khẩu</label>
                   </div>
 
                   <div class="text-center pt-1 mb-5 pb-1">
-                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Đăng nhập</button>
+                    <button data-mdb-button-init data-mdb-ripple-init
+                            class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" (click)="onLogin()">Đăng nhập</button>
                     <a class="text-muted" href="#!">Quên mật khẩu?</a>
                   </div>
 
@@ -35,7 +36,6 @@
                     <p class="mb-0 me-2">Bạn chưa có tài khoản?</p>
                     <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger" [routerLink]="['/register']">Đăng kí</button>
                   </div>
-
                 </form>
 
               </div>
