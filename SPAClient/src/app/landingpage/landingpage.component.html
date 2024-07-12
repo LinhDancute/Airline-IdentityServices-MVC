@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>LinhdanAirlines Reservation</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="../public/favicon.ico" />
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="assets/js/scripts.js"></script>
+</head>
+<style>
+  .nav-item {
+    padding: 0.5rem 0xp;
+  }
+
+  .dropdown-hover:hover > .dropdown-menu {
+    display: inline-block;
+  }
+
+  .dropdown-hover > .dropdown-toggle:active {
+    pointer-events: none;
+  }
+</style>
+<body>
+<!-- Responsive navbar-->
+<div class="container-fluid">
+  <div class="row">
+    <!-- Logo (A) -->
+    <div class="col-12 col-lg-4">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container px-5">
+          <div class="text-center">
+            <a class="navbar-brand" href="#">
+              <img src="assets/images/logoLdA.png" width="430" height="95" alt="">
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="col-12 col-lg-6">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container px-3">
+          <!--First Nav-->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link" style="color:#927200" href="#!">Liên hệ</a></li>
+              <li class="nav-item"><a class="nav-link" href="#!">Privacy</a></li>
+              <li class="nav-item">
+                <a class="nav-link active" style="color: rgb(0, 95, 110);" aria-current="page" [routerLink]="['/login']">ĐĂNG NHẬP|ĐĂNG KÍ</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#!">VIETNAM - Tiếng việt</a></li>
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <!-- Second Nav-->
+            <div class="col">
+              <nav class="navbar navbar-expand-lg navbar-light bg-white" style="padding: 0px;">
+                <div class="container-fluid">
+                  <div class="collapse navbar-collapse" id="navbarExampleOnHover">
+                    <ul class="navbar-nav me-auto ps-lg-0">
+                      <li class="nav-item dropdown dropdown-hover position-static">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           style="font-size: 1.2em; color: black;" data-bs-toggle="dropdown" aria-expanded="false">
+                          Lên kế hoạch
+                        </a>
+                        <!-- Dropdown menu -->
+                        <div class="dropdown-menu w-70 mt-0" aria-labelledby="navbarDropdown" style="border-top-left-radius: 0;
+                                            border-top-right-radius: 0;
+                                            ">
+                          <div class="container">
+                            <div class="row my-4">
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Ưu đãi</a>
+                                  <a href="" class="list-group-item list-group-item-action">Giá vé đặc biệt</a>
+                                  <a href="" class="list-group-item list-group-item-action">Vé máy bay từ Hà Nội đi TP.HCM</a>
+                                  <a href="" class="list-group-item list-group-item-action">Vé máy bay từ TP.HCM đi Hà Nội</a>
+                                  <a href="" class="list-group-item list-group-item-action">Vé máy bay từ TP.HCM đi Đà Nẵng</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Điểm đến</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hà Nội</a>
+                                  <a href="" class="list-group-item list-group-item-action">Thành phố Hồ Chí Minh</a>
+                                  <a href="" class="list-group-item list-group-item-action">Đà Nẵng</a>
+                                  <a href="" class="list-group-item list-group-item-action">Phú Quốc</a>
+                                  <a href="" class="list-group-item list-group-item-action">Nha Trang</a>
+                                  <a href="" class="list-group-item list-group-item-action">Tất cả điểm đến</a>
+
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Lịch bay & Mạng đường bay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Lịch bay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Mạng đường bay</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Trải nghiệm bay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hạng Thương gia</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hạng Phổ thông đặc biệt</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hạng Phổ thông</a>
+                                  <a href="" class="list-group-item list-group-item-action">Giải trí trên chuyến bay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Miua hàng miễn thuế - Lotushop</a>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <!--2-->
+                      <li class="nav-item dropdown dropdown-hover position-static">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           style="font-size: 1.2em; color: black;" data-mdb-toggle="dropdown" aria-expanded="false">
+                          Thông tin hành trình
+                        </a>
+                        <!-- Dropdown menu -->
+                        <div class="dropdown-menu w-90 mt-0" aria-labelledby="navbarDropdown" style="border-top-left-radius: 0;
+                                            border-top-right-radius: 0;
+                                            ">
+                          <div class="container">
+                            <div class="row my-4">
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Hành lý</a>
+                                  <a href="" class="list-group-item list-group-item-action">Tra cứu thông tin hành lý</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hành lý xách tay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hành lý ký gửi miễn cước</a>
+                                  <a href="" class="list-group-item list-group-item-action">Mua thêm hành lý ký gửi</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hành lý đặc biệt</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hành lý hạn chế vận chuyển</a>
+                                  <a href="" class="list-group-item list-group-item-action">Gặp vấn đề với hành lý</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Làm thủ tục</a>
+                                  <a href="" class="list-group-item list-group-item-action">Làm thủ tục trực tuyến</a>
+                                  <a href="" class="list-group-item list-group-item-action">Làm thủ tục tại kiosk</a>
+                                  <a href="" class="list-group-item list-group-item-action">Làm thủ tục qua tổng đài điện thoại</a>
+                                  <a href="" class="list-group-item list-group-item-action">Làm thủ tục tại sân bay</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Thông tin sân bay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Thông tin sân bay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Phòng khách Thương gia</a>
+                                  <a href="" class="list-group-item list-group-item-action">SkyPriority</a>
+                                  <a href="" class="list-group-item list-group-item-action">Bản đồ sân bay</a>
+
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Chuẩn bị cho chuyến bay</a>
+                                  <a href="" class="list-group-item list-group-item-action">Giấy tờ tùy thân</a>
+                                  <a href="" class="list-group-item list-group-item-action">Thị thực</a>
+                                  <a href="" class="list-group-item list-group-item-action">Thông tin xuất nhập cảnh/quá cảnh</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <!--3-->
+                      <li class="nav-item dropdown dropdown-hover position-static">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           style="font-size: 1.2em; color: black;" data-mdb-toggle="dropdown" aria-expanded="false">
+                          Mua vé & Sản phẩm khác
+                        </a>
+                        <!-- Dropdown menu -->
+                        <div class="dropdown-menu w-100 mt-0" aria-labelledby="navbarDropdown" style="border-top-left-radius: 0;
+                                            border-top-right-radius: 0;
+                                            ">
+                          <div class="container">
+                            <div class="row my-4">
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Đặt vé & Quản lý đặt chỗ</a>
+                                  <a href="" class="list-group-item list-group-item-action">Đặt vé</a>
+                                  <a href="" class="list-group-item list-group-item-action">Quản lý đặt chỗ</a>
+                                  <a href="" class="list-group-item list-group-item-action">Làm thủ tục</a>
+                                  <a href="" class="list-group-item list-group-item-action">Tra cứu chuyến bay</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Điều kiện giá</a>
+                                  <a href="" class="list-group-item list-group-item-action">Điều kiện giá vé</a>
+                                  <a href="" class="list-group-item list-group-item-action">Thuế, phí, lệ phí & phụ thu</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Dịch vụ bổ trợ</a>
+                                  <a href="" class="list-group-item list-group-item-action">Sản phẩm kết hợp máy bay và tàu</a>
+                                  <a href="" class="list-group-item list-group-item-action">Mua thêm hành lý ký gửi</a>
+                                  <a href="" class="list-group-item list-group-item-action">Suất ăn cho trước</a>
+                                  <a href="" class="list-group-item list-group-item-action">Chọn trước chỗ ngồi</a>
+                                  <a href="" class="list-group-item list-group-item-action">Nâng hạng</a>
+                                  <a href="" class="list-group-item list-group-item-action">Tất cả dịch vụ bổ trợ</a>
+
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Dịch vụ đặc biệt</a>
+                                  <a href="" class="list-group-item list-group-item-action">Vận chuyển thú cưng</a>
+                                  <a href="" class="list-group-item list-group-item-action">Suất ăn đặc biệt</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hành khách trẻ em</a>
+                                  <a href="" class="list-group-item list-group-item-action">Trẻ em đi một mình</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hành khách khuyết tật</a>
+                                  <a href="" class="list-group-item list-group-item-action">Phụ nữ mang thai</a>
+                                  <a href="" class="list-group-item list-group-item-action">Hành khách cần xác nhận sức khỏe</a>
+                                  <a href="" class="list-group-item list-group-item-action">Phí dịch vụ đặc biệt</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                      <!--4-->
+                      <li class="nav-item dropdown dropdown-hover position-static">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           style="font-size: 1.2em; color: black;" data-mdb-toggle="dropdown" aria-expanded="false">
+                          Lotusmiles
+                        </a>
+                        <!-- Dropdown menu -->
+                        <div class="dropdown-menu w-100 mt-0" aria-labelledby="navbarDropdown" style="border-top-left-radius: 0;
+                                            border-top-right-radius: 0;
+                                            ">
+                          <div class="container">
+                            <div class="row my-4">
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Quyền lợi hội viên</a>
+                                  <a href="" class="list-group-item list-group-item-action">Giới thiệu chương trình</a>
+                                  <a href="" class="list-group-item list-group-item-action">Quyền lợi hạng thẻ</a>
+                                  <a href="" class="list-group-item list-group-item-action">Tiêu chí xét hạng</a>
+                                  <a href="" class="list-group-item list-group-item-action">Tài khoản gia đình</a>
+                                  <a href="" class="list-group-item list-group-item-action">LotuSociety</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Tích lũy dặm</a>
+                                  <a href="" class="list-group-item list-group-item-action">Trên LinhdanAirlines</a>
+                                  <a href="" class="list-group-item list-group-item-action">Trên đối tác hàng không</a>
+                                  <a href="" class="list-group-item list-group-item-action">Trên Đối Tác Ngân Hàng</a>
+                                  <a href="" class="list-group-item list-group-item-action">Yêu cầu cộng dặm</a>
+                                  <a href="" class="list-group-item list-group-item-action">Tiêu và tích</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Sử dụng dặm</a>
+                                  <a href="" class="list-group-item list-group-item-action">Sử dụng dặm tích lũy</a>
+                                  <a href="" class="list-group-item list-group-item-action">Mua vé bằng tiền và dặm</a>
+                                  <a href="" class="list-group-item list-group-item-action">Đổi dặm lấy vé thưởng</a>
+                                  <a href="" class="list-group-item list-group-item-action">Đổi dặm lấy thưởng hành lý</a>
+                                  <a href="" class="list-group-item list-group-item-action">Đổi dặm nâng hạng vé</a>
+                                  <a href="" class="list-group-item list-group-item-action">Sử dụng dặm khác</a>
+                                  <a href="" class="list-group-item list-group-item-action">Quyên góp dặm</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Mua & Chuyển nhượng dặm</a>
+                                  <a href="" class="list-group-item list-group-item-action">Mua dặm xét hạng</a>
+                                  <a href="" class="list-group-item list-group-item-action">Mua & Chuyển nhượng dặm thưởng</a>
+                                </div>
+                              </div>
+                              <div class="col-md-6 col-lg-3">
+                                <div class="list-group list-group-flush">
+                                  <a href="" class="list-group-item list-group-item-action" style="font-weight: bold;">Tin tức & ưu đãi Lotusmiles</a>
+                                  <a href="" class="list-group-item list-group-item-action">Số đẹp Lotus</a>
+                                  <a href="" class="list-group-item list-group-item-action">Bảo hiểm Lotus</a>
+                                  <a href="" class="list-group-item list-group-item-action">LotusMall</a>
+                                  <a href="" class="list-group-item list-group-item-action">Ưu đãi hội viên</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <!-- Left links -->
+                  </div>
+                  <!-- Collapsible wrapper -->
+                </div>
+                <!-- Container wrapper -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
