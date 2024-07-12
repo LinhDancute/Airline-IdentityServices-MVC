@@ -61,5 +61,14 @@ namespace Airline.Services.ScheduleAPI.Repositories.RepositoryImpl
         {
             return await _context.Flights.FirstOrDefaultAsync(predicate);
         }
+
+        public async Task<IEnumerable<Flight>> SearchFlightsAsync(DateTime fromDate, DateTime toDate, string flightSector)
+        {
+            return await _context.Flights
+                .Where(f => f.FlightSector == flightSector &&
+                            f.Date.Date >= fromDate.Date &&
+                            f.Date.Date <= toDate.Date)
+                .ToListAsync();
+        }
     }
 }

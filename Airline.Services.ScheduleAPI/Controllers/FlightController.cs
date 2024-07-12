@@ -136,5 +136,19 @@ namespace Airline.Services.ScheduleAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("search")]
+        public async Task<IActionResult> SearchFlights([FromBody] FlightSearchDTO flightSearchDTO)
+        {
+            try
+            {
+                var flights = await _flightService.SearchFlightsByRouteAsync(flightSearchDTO);
+                return Ok(flights);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

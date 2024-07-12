@@ -14,5 +14,6 @@ namespace Airline.Services.ScheduleAPI.Services
         Task<bool> FlightRouteExistsAsync(int id);
         Task<Airport> GetAirportByAbbreviationAsync(string abbreviation); //Abbreviation - Airport (FlightRoute_Airport - AirportID)
         Task<FlightRoute> GetFlightRouteByIdAsync(int id);
+
     }
 }

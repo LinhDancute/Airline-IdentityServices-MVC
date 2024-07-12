@@ -278,5 +278,22 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             await _flightRepository.UpdateAsync(flight);
         }
 
+        public async Task<IEnumerable<FlightDTO>> SearchFlightsByRouteAsync(FlightSearchDTO flightSearchDTO)
+        {
+            // Check if the flight sector exists
+            var flightRoute = await _flightRouteRepository.FindAsync(fr =>
+                fr.DepartureAddress == flightSearchDTO.DepartureAddress &&
+                fr.ArrivalAddress == flightSearchDTO.ArrivalAddress);
+
+            if (flightRoute == null)
+            {
+                throw new InvalidOperationException($"No flight route found for sector {flightSearchDTO.DepartureAddress}-{flightSearchDTO.ArrivalAddress}.");
+            }
+
+            // Search for flights with the matching flight sector and date range
+            var flights = await _flightRepository.SearchFlightsAsync(flightSearchDTO.FromDate, flightSearchDTO.ToDate, flightRoute.FlightSector);
+            return _mapper.Map<IEnumerable<FlightDTO>>(flights);
+        }
+
     }
 }
