@@ -1,49 +1,58 @@
 @using Airline.WebClient.Models.Airline
 @model List<Meal>
-@{
-    ViewData["Title"] = "Danh sách bữa ăn";
-}
 
-<h2>Danh sách bữa ănx</h2>
-
+<h1>Danh sách bữa ăn</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Tạo bữa ăn mới</a>
 </p>
-
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.First().MealCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().Desciption)
-            </th>
-            <th></th>
+            <th>Mã bữa vé</th>
+            <th>Mô tả</th>
+            <th>Tác vụ</th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MealCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Desciption)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.MealId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.MealId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.MealId">Delete</a>
-                </td>
-            </tr>
+            await RenderMeal(item, 0);
         }
+
     </tbody>
 </table>
+
+@{
+    async Task RenderMeal(Meal item, int level)
+    {
+        if (item is null)
+        {
+            throw new ArgumentNullException(nameof(item));
+        }
+
+        string prefix = string.Concat(Enumerable.Repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", level));
+        <tr>
+            <td>
+                @Html.Raw(prefix)
+                <a asp-action="Edit" asp-route-id="@item.MealId">
+                    @Html.DisplayFor(modelItem => item.MealCode)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Desciption)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.MealId">Chi tiết</a>
+                <a asp-action="Delete" asp-route-id="@item.MealId">Xóa</a>
+            </td>
+        </tr>
+    }
+}
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
