@@ -1,37 +1,38 @@
 import {Component, inject} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginObj:any = {
-    "Email": "",
-    "Password": ""
+    "email": "",
+    "password": ""
   };
 
   http = inject(HttpClient)
   constructor(private router: Router) {
 
   }
-  onLogin(){
+  onLogin() {
     debugger;
-    this.http.post("http://localhost:7002", this.loginObj).subscribe((response:any)=>{
-      if (response.result){
-        this.loginObj = response;
+    this.http.post("https://localhost:7002/api/Auth/login", this.loginObj).subscribe((response: any) => {
+      if (response.flag) {
         alert("Đăng nhập thành công");
-        this.router.navigateByUrl("pageContent");
+        this.router.navigateByUrl("main");
       } else {
         alert("Sai email hoặc mật khẩu");
       }
-    })
+    });
   }
+
 }
