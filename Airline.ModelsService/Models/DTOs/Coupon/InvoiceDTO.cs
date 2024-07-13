@@ -1,23 +1,19 @@
-using System;
+﻿using Airline.ModelsService.Models.Statistical;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Airline.ModelsService.Models.Statistical
+namespace Airline.ModelsService.Models.DTOs.Coupon
 {
-    public class Invoice
+    public class InvoiceDTO
     {
-        [Key]
         public string InvoiceId { get; set; }
         public string? PassengerId { set; get; }
-
-        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
-        public InvoiceStatus Status { get; set; }
+        public InvoiceStatusType Status { get; set; }
         public AppUser? Passenger { set; get; }
         public InvoiceDetail InvoiceDetails { get; set; }
     }
 
-    public enum InvoiceStatus
+    public enum InvoiceStatusType
     {
         Confirmed,
         Cancelled

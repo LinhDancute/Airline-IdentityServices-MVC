@@ -62,6 +62,11 @@ builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<IBoardingPassRepository, BoardingPassRepository>();
 builder.Services.AddScoped<IBoardingPassService, BoardingPassService>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IInvoiceDetailRepository, InvoiceDetailRepository>();
+builder.Services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();
+
 
 // Register AutoMapper
 builder.Services.ConfigureAutoMapper();

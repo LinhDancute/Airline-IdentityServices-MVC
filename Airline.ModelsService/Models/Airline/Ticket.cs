@@ -12,6 +12,7 @@ namespace Airline.ModelsService.Models.Airline
         public int FlightId { get; set; }
         public int PriceId { get; set; }
         public int ClassId { get; set; }
+        public int InvoiceId { get; set; }
 
         [Display(Name = "Tên hành khách")]
         public string PassengerName { get; set; }
@@ -59,6 +60,7 @@ namespace Airline.ModelsService.Models.Airline
         public ICollection<BoardingPass>? BoardingPasses { get; } = new List<BoardingPass>();
         public ICollection<Ticket_Meal>? Ticket_Meals { get; set; } = new List<Ticket_Meal>();
         public ICollection<Ticket_Baggage>? Ticket_Baggages { get; set; } = new List<Ticket_Baggage>();
+        public ICollection<InvoiceDetail>? InvoiceDetails { get; } = new List<InvoiceDetail>();
     }
 
     public enum TicketStatusType

@@ -38,26 +38,33 @@ namespace Airline.ModelsService.Models.Configurations
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Ticket - Ticket_Meal: 1-n
+            // Ticket - Ticket_Meal: n-1
             builder.HasMany(t => t.Ticket_Meals)
                 .WithOne(tm => tm.Ticket)
                 .HasForeignKey(tm => tm.TicketID)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade); 
 
-            // Ticket - Ticket_Baggage: 1-n
+            // Ticket - Ticket_Baggage: n-1
             builder.HasMany(t => t.Ticket_Baggages)
                 .WithOne(tb => tb.Ticket)
                 .HasForeignKey(tb => tb.TicketID)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);  
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Ticket - BoardingPass: 1-n
+            // Ticket - BoardingPass: n-1
             builder.HasMany(t => t.BoardingPasses)
                 .WithOne(bp => bp.Ticket)
                 .HasForeignKey(bp => bp.TicketId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);  
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Ticket - InvoiceDetail: n-1
+            builder.HasMany(t => t.InvoiceDetails)
+                .WithOne(bp => bp.Ticket)
+                .HasForeignKey(bp => bp.TicketId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
