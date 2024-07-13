@@ -1,0 +1,65 @@
+<div *ngFor="let flight of flights" class="basic-flight-card-layout-container">
+  <div class="basic-flight-card-layout-top-section-container row">
+    <div class="basic-flight-card-layout-left-section-container">
+      <div class="basic-flight-card-layout-left-section-row row">
+        <div class="basic-flight-card-layout-left-top-section-container">
+          <!-- Flight Ticket Information -->
+          <div class="ticket">
+            <div class="flight-info">
+              <span>{{ flight.departureTime }}</span>
+              <span class="airport">{{ flight.departureAirport }}</span>
+              <span>Terminal {{ flight.terminal }}</span>
+            </div>
+            <div class="flight-info">
+              <div class="dots"></div>
+              <span class="nonstop">nonstop</span>
+              <div class="dots"></div>
+            </div>
+            <div class="flight-info">
+              <span>{{ flight.arrivalTime }}</span>
+              <span class="airport">{{ flight.arrivalAirport }}</span>
+              <span>Terminal {{ flight.terminal }}</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="basic-flight-card-layout-left-bottom-section-container">
+          <!-- Flight Duration and Details -->
+          <div class="flight-details">
+            <div class="duration">
+              <span class="icon">⏲️</span>
+              <span>Duration {{ flight.duration }}</span>
+            </div>
+            <div class="flight-info">
+              <span class="icon">✈️</span>
+              <span>VN {{ flight.flightNumber }} operated by Vietnam Airlines</span>
+            </div>
+            <div class="itinerary">
+              <a href="#">See itinerary details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="basic-flight-card-layout-right-section-container">
+      <!-- Pricing Options -->
+      <div class="pricing-container">
+        <div class="pricing-option economy">
+          <div>Economy</div>
+          <div>from</div>
+          <div>USD</div>
+          <div class="price">{{ flight.economyPrice }}</div>
+          <div class="dropdown-arrow">▼</div>
+        </div>
+        <div class="pricing-option business">
+          <div class="seats-left">{{ flight.seatsLeft }} seats left</div>
+          <div>Business</div>
+          <div>from</div>
+          <div>USD</div>
+          <div class="price">{{ flight.businessPrice }}</div>
+          <div class="dropdown-arrow">▼</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
