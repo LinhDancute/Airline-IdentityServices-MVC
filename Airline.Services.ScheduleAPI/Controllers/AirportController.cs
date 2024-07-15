@@ -22,7 +22,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // GET: api/airport
         [HttpGet]
-        //[Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<AirportDTO>>> GetAirports()
         {
             try
@@ -38,7 +37,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // GET: api/airport/{id}
         [HttpGet("{id}")]
-        //[Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AirportDTO>> GetAirportById(int id)
         {
             try
@@ -57,7 +55,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // POST: api/airport
         [HttpPost]
-        //[Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AirportDTO>> CreateAirport([FromBody] AirportCreateDTO airportDTO)
         {
             try
@@ -116,7 +113,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // PUT: api/airport/{id}
         [HttpPut("{id}")]
-        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> UpdateAirport(int id, [FromBody] AirportCreateDTO airportDTO)
         {
             try
@@ -135,7 +131,6 @@ namespace Airline.Services.ScheduleAPI.Controllers
 
         // DELETE: api/airport/{id}
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteAirport(int id)
         {
             try
@@ -168,6 +163,20 @@ namespace Airline.Services.ScheduleAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
+        }
+
+        [HttpGet("simplified-names")]
+        public async Task<IActionResult> GetSimplifiedAirportNames()
+        {
+            try
+            {
+                var airportNames = await _airportService.GetSimplifiedAirportNamesAsync();
+                return Ok(airportNames);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

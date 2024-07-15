@@ -61,5 +61,29 @@ namespace Airline.Services.ScheduleAPI.Repositories.RepositoryImpl
         {
             return await _context.Airports.FirstOrDefaultAsync(predicate);
         }
+
+        public async Task<IEnumerable<string>> GetSimplifiedAirportNamesAsync()
+        {
+            var airports = await _context.Airports.ToListAsync();
+
+            var simplifiedNames = airports.Select(a => RemoveSuffix(a.AirportName)).Distinct();
+
+            return simplifiedNames;
+        }
+
+        private string RemoveSuffix(string airportName)
+        {
+            if (airportName.EndsWith(" International Airport", StringComparison.OrdinalIgnoreCase))
+            {
+                return airportName.Replace(" International Airport", "", StringComparison.OrdinalIgnoreCase).Trim();
+            }
+
+            if (airportName.EndsWith(" Airport", StringComparison.OrdinalIgnoreCase))
+            {
+                return airportName.Replace(" Airport", "", StringComparison.OrdinalIgnoreCase).Trim();
+            }
+
+            return airportName;
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace Airline.Services.ScheduleAPI.Services
         Task DeleteFlightAsync(int flightId);
         Task<Flight> GetFlightByIdAsync(int id);
         Task<IEnumerable<FlightDTO>> SearchFlightsByRouteAsync(FlightSearchDTO flightSearchDTO);
+
     }
 }
