@@ -62,12 +62,27 @@ namespace Airline.Services.ScheduleAPI.Repositories.RepositoryImpl
             return await _context.Flights.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<IEnumerable<Flight>> SearchFlightsAsync(DateTime fromDate, DateTime toDate, string flightSector)
+        public async Task<IEnumerable<Flight>> SearchFlightsAsync(DateTime date, string flightSector)
         {
             return await _context.Flights
                 .Where(f => f.FlightSector == flightSector &&
-                            f.Date.Date >= fromDate.Date &&
-                            f.Date.Date <= toDate.Date)
+                            f.Date.Date == date.Date)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<FlightRoute>> FindFlightRoutesAsync(string partialDepartureAddress, string partialArrivalAddress)
+        {
+            var departureAbbreviation = await _context.Airports
+                .Where(a => a.AirportName.Contains(partialDepartureAddress))
+                .Select(a => a.Abbreviation)
+                .FirstOrDefaultAsync();
+
+            var arrivalAbbreviation = await _context.Airports
+                .Where(a => a.AirportName.Contains(partialArrivalAddress))
+                .Select(a => a.Abbreviation)
+                .FirstOrDefaultAsync();
+
+            return await _context.FlightRoutes
+                .Where(fr => fr.DepartureAddress == departureAbbreviation && fr.ArrivalAddress == arrivalAbbreviation)
                 .ToListAsync();
         }
     }

@@ -21,7 +21,7 @@
   <!-- Datepicker JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 </head>
-
+<body>
 <div class="container px-4 px-lg-5">
   <!--Search menu (Nav-Tab)-->
   <nav class="d-flex justify-content-center">
@@ -54,9 +54,8 @@
             </div>
             <hr />
             <span class="title-recent-searches" style="cursor: pointer; font-size: 1.2em;" onclick="openBoxSearchHistory()">
-                            <img src="assets/images/clock.png" style="width: 23px; height: auto;" /> TRA CỨU GẦN ĐÂY
-                        </span>
-
+              <img src="assets/images/clock.png" style="width: 23px; height: auto;" /> TRA CỨU GẦN ĐÂY
+            </span>
             <div class="recent-search-wrap active" id="box-search-history">
               <div class="content-recent-searches">
                 <div class="box-recent-searches">
@@ -74,16 +73,29 @@
                             <div class="row">
                               <div class="col">
                                 <div class="item-flight text-center">
-                                                                    <span class="icon-flight">
-                                                                        <img src="/images/icon-flight-recent-search.png" style="width: 18px; height: auto;">
-                                                                    </span>(Tp. Hồ Chí Minh (SGN), Việt Nam)
+                                  <span class="icon-flight">
+                                    <img src="assets/images/icon-flight-recent-search.png" style="width: 18px; height: auto;">
+                                  </span>
+                                  <input type="text"
+                                         class="form-control"
+                                         list="origin-options"
+                                         id="origin"
+                                         [ngModel]="searchFlightObj.departureAddress"
+                                         aria-describedby="origin-label" />
                                 </div>
                               </div>
                               <div class="col">
                                 <div class="item-flight text-center">
-                                                                    <span class="icon-flight">
-                                                                        <img src="/images/icon-flight-recent-search.png" style="width: 18px; height: auto;">
-                                                                    </span>(Hà Nội (HAN), Việt Nam)
+                                  <span class="icon-flight">
+                                    <img src="assets/images/icon-flight-recent-search.png" style="width: 18px; height: auto;">
+                                  </span>
+
+                                  <input type="text"
+                                         class="form-control"
+                                         list="destination-options"
+                                         id="destination"
+                                         [ngModel]="searchFlightObj.arrivalAddress"
+                                         aria-describedby="destination-label" />
                                 </div>
                               </div>
                             </div>
@@ -98,19 +110,7 @@
                    data-flight-to-1="Hà Nội (HAN), Việt Nam" data-flight-depart-code-1="SGN" data-flight-arrival-code-1="HAN"><img src="" alt="" width="7" height="auto"></a>
               </div>
             </div>
-
           </div>
-          <script type="text/javascript">
-            function openBoxSearchHistory() {
-              var boxSearchHistory = document.getElementById('box-search-history');
-              if (boxSearchHistory.style.display === 'none' || boxSearchHistory.style.display === '') {
-                boxSearchHistory.style.display = 'block';
-              } else {
-                boxSearchHistory.style.display = 'none';
-              }
-            }
-          </script>
-
         </div>
         <div class="row">
           <div class="col-sm">
@@ -122,7 +122,7 @@
                        class="form-control"
                        list="origin-options"
                        id="origin-input"
-                       placeholder="Tp.Hồ Chí Minh(SGN)"
+                       [ngModel]="searchFlightObj.departureAddress"
                        aria-describedby="origin-label" />
                 <datalist id="origin-options"></datalist>
               </div>
@@ -137,7 +137,7 @@
                        class="form-control"
                        list="destination-options"
                        id="destination-input"
-                       placeholder="Đến..."
+                       [ngModel]="searchFlightObj.arrivalAddress"
                        aria-describedby="destination-label" />
                 <datalist id="destination-options"></datalist>
               </div>
@@ -147,14 +147,12 @@
             <div class="mb-2">
               <label for="departure-date" class="form-label" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ngày đi</label>
               <div class="input-group date" id="departure-date">
-                <input type="text"
-                       class="form-control"
-                       placeholder ="mm/dd/yyy">
+                <input type="text" class="form-control" placeholder ="mm/dd/yyy" [ngModel]="searchFlightObj.fromDate">
                 <span class="input-group-append">
-                                    <span class="input-group-text bg-white d-block">
-                                        <i class="bi bi-calendar"></i>
-                                    </span>
-                                </span>
+                  <span class="input-group-text bg-white d-block">
+                      <i class="bi bi-calendar"></i>
+                  </span>
+                </span>
               </div>
             </div>
           </div>
@@ -162,23 +160,15 @@
             <div class="mb-2">
               <label for="return-date" class="form-label">Ngày về</label>
               <div class="input-group date" id="return-date">
-                <input type="text"
-                       class="form-control"
-                       placeholder="mm/dd/yyy">
+                <input type="text" class="form-control" placeholder="mm/dd/yyy" [ngModel]="searchFlightObj.toDate">
                 <span class="input-group-append">
-                                    <span class="input-group-text bg-white d-block">
-                                        <i class="bi bi-calendar-fill"></i>
-                                    </span>
-                                </span>
+                  <span class="input-group-text bg-white d-block">
+                      <i class="bi bi-calendar-fill"></i>
+                  </span>
+                </span>
               </div>
             </div>
           </div>
-          <script type="text/javascript">
-            $(function () {
-              $('#departure-date, #return-date').datepicker();
-            });
-          </script>
-
         </div>
         <br />
         <div class="row">
@@ -240,7 +230,7 @@
             </div>
             <div class="col-sm">
               <div class="mb-2">
-                <button type="button" class="btn btn-primary btn-lg" [routerLink]="['/flight-search']">Tìm chuyến bay</button>
+                <button type="button" class="btn btn-primary btn-lg" (click)="onSearchingFlight()">Tìm chuyến bay</button>
               </div>
             </div>
           </div>
@@ -308,3 +298,20 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  function openBoxSearchHistory() {
+    var boxSearchHistory = document.getElementById('box-search-history');
+    if (boxSearchHistory.style.display === 'none' || boxSearchHistory.style.display === '') {
+      boxSearchHistory.style.display = 'block';
+    } else {
+      boxSearchHistory.style.display = 'none';
+    }
+  }
+</script>
+<script type="text/javascript">
+  $(function () {
+    $('#departure-date, #return-date').datepicker();
+  });
+</script>
+</body>

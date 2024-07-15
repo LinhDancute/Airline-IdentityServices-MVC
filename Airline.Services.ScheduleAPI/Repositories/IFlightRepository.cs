@@ -13,6 +13,8 @@ namespace Airline.Services.ScheduleAPI.Repositories
         Task UpdateAsync(Flight flight);
         Task DeleteAsync(int id);
         Task<bool> FlightExistsAsync(int id);
-        Task<IEnumerable<Flight>> SearchFlightsAsync(DateTime fromDate, DateTime toDate, string flightSector);
+        Task<IEnumerable<Flight>> SearchFlightsAsync(DateTime date, string flightSector);
+        Task<IEnumerable<FlightRoute>> FindFlightRoutesAsync(string partialDepartureAddress, string partialArrivalAddress);
+
     }
 }

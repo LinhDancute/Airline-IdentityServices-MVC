@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import {NgForOf} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-flight-list',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    RouterLink
   ],
   templateUrl: './flight-list.component.html',
   styleUrl: './flight-list.component.css'

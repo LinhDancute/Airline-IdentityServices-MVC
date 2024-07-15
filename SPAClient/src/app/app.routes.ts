@@ -5,6 +5,7 @@ import {RegisterComponent} from "./register/register.component";
 import {MainComponent} from "./main/main.component";
 import {FlightListComponent} from "./flight-list/flight-list.component";
 import {FlightSearchComponent} from "./flight-search/flight-search.component";
+import {FlightBookingDetailComponent} from "./flight-booking-detail/flight-booking-detail.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -19,4 +20,5 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'flight-list', component: FlightListComponent },
+  { path: 'flight-booking-detail', component: FlightBookingDetailComponent}
 ];
