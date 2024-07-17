@@ -1,29 +1,54 @@
-import { Component } from '@angular/core';
-import {NgForOf} from "@angular/common";
-import {RouterLink} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-flight-booking-detail',
+  templateUrl: './flight-booking-detail.component.html',
   standalone: true,
   imports: [
-    NgForOf,
-    RouterLink
+    NgIf
   ],
-  templateUrl: './flight-booking-detail.component.html',
-  styleUrl: './flight-booking-detail.component.css'
+  styleUrls: ['./flight-booking-detail.component.css']
 })
-export class FlightBookingDetailComponent {
-  flights = [
-    {
-      departureTime: '05:00',
-      arrivalTime: '07:15',
-      departureAirport: 'HAN',
-      arrivalAirport: 'SGN',
-      terminal: '1',
-      duration: '2h 15min',
-      flightNumber: '205',
-      economyPrice: '99.10',
-      businessPrice: '147.70',
-      seatsLeft: 8
-    }]
+export class FlightBookingDetailComponent implements OnInit {
+  selectedOneWayFlight: any;
+  selectedRoundTripFlight: any;
+  searchFlightObj: any;
+
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      this.selectedOneWayFlight = navigation.extras.state['selectedOneWayFlight'];
+      this.selectedRoundTripFlight = navigation.extras.state['selectedRoundTripFlight'];
+      this.searchFlightObj = navigation.extras.state['searchFlightObj'];
+    }
+    console.log('received flight search info at check order: ', this.searchFlightObj);
+    console.log('price 1: ', this.selectedOneWayFlight?.price);
+    console.log('price 2: ', this.selectedRoundTripFlight?.price);
+
+  }
+
+  ngOnInit(): void {}
+
+  getPriceDisplay(price: number): string {
+    return price ? price.toFixed(2) : 'N/A';
+  }
+
+  getDayOfWeek(date: string): string {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const day = new Date(date).getDay();
+    return days[day];
+  }
+
+  getTotalPrice(): string {
+    let totalPrice = 0;
+    if (this.selectedOneWayFlight) {
+      totalPrice += this.selectedOneWayFlight.price;
+    }
+    if (this.selectedRoundTripFlight) {
+      totalPrice += this.selectedRoundTripFlight.price;
+    }
+    return totalPrice.toFixed(2);
+  }
 }

@@ -1,72 +1,148 @@
-<div *ngFor="let flight of flights" class="basic-flight-card-layout-container">
-  <div class="basic-flight-card-layout-top-section-container row">
-    <div class="basic-flight-card-layout-left-section-container">
-      <div class="basic-flight-card-layout-left-section-row row">
-        <div class="basic-flight-card-layout-left-top-section-container">
-          <!-- Flight Ticket Information -->
-          <div class="ticket">
-            <div class="flight-info">
-              <span>{{ flight.departureTime }}</span>
-              <span class="airport">{{ flight.departureAirport }}</span>
-              <span>Terminal {{ flight.terminal }}</span>
-            </div>
-            <div class="flight-info">
-              <div class="dots"></div>
-              <span class="nonstop">nonstop</span>
-              <div class="dots"></div>
-            </div>
-            <div class="flight-info">
-              <span>{{ flight.arrivalTime }}</span>
-              <span class="airport">{{ flight.arrivalAirport }}</span>
-              <span>Terminal {{ flight.terminal }}</span>
+<!-- Display flightsOnWay first -->
+<div *ngIf="!showRoundTrip">
+  <div *ngFor="let flight of flightsOneWay" class="basic-flight-card-layout-container">
+    <div class="basic-flight-card-layout-top-section-container row">
+      <div class="basic-flight-card-layout-left-section-container">
+        <div class="basic-flight-card-layout-left-section-row row" style="display: grid; grid-template-columns: 1fr 1fr;">
+          <div class="basic-flight-card-layout-left-top-section-container">
+            <!-- Flight Ticket Information -->
+            <div class="ticket">
+              <div class="flight-info">
+                <span class="flight-sector">{{ flight.flightSector.split('-')[0] }}</span>
+                <span class="time">{{ flight.departureTime.substring(0, 5) }}</span>
+                <span>Terminal 1</span>
+              </div>
+              <div class="flight-info">
+                <span class="nonstop">nonstop</span>
+                <div class="dots"></div>
+              </div>
+              <div class="flight-info">
+                <span class="flight-sector">{{ flight.flightSector.split('-')[1] }}</span>
+                <span class="time">{{ flight.arrivalTime.substring(0, 5) }}</span>
+                <span>Terminal 1</span>
+              </div>
             </div>
           </div>
-
-        </div>
-        <div class="basic-flight-card-layout-left-bottom-section-container">
-          <!-- Flight Duration and Details -->
-          <div class="flight-details">
-            <div class="duration">
-              <span class="icon">⏲️</span>
-              <span>Duration {{ flight.duration }}</span>
-            </div>
-            <div class="flight-info">
-              <span class="icon">✈️</span>
-              <span>VN {{ flight.flightNumber }} operated by Vietnam Airlines</span>
-            </div>
-            <div class="itinerary">
-              <a href="#">See itinerary details</a>
+          <div class="basic-flight-card-layout-left-bottom-section-container">
+            <!-- Flight Duration and Details -->
+            <div class="flight-details">
+              <div class="duration">
+                <span class="icon">⏲️</span>
+                <span>Duration {{ flight.flightTime }}h</span>
+              </div>
+              <div class="flight-info">
+                <span class="icon">✈️</span>
+                <span class="flight-number">{{ flight.flightNumber }}</span>
+                <span>operated by Linhdan Airlines</span>
+              </div>
+              <div class="itinerary">
+                <a href="#">See itinerary details</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="basic-flight-card-layout-right-section-container">
-      <!-- Pricing Options -->
-      <div class="pricing-container">
-        <div class="pricing-option economy">
-          <div>Economy</div>
-          <div>from</div>
-          <div>USD</div>
-          <div class="price">{{ flight.economyPrice }}</div>
-          <div class="dropdown-arrow">▼</div>
-        </div>
-        <div class="pricing-option business">
-          <div class="seats-left">{{ flight.seatsLeft }} seats left</div>
-          <div>Business</div>
-          <div>from</div>
-          <div>USD</div>
-          <div class="price">{{ flight.businessPrice }}</div>
-          <div class="dropdown-arrow">▼</div>
+      <div class="basic-flight-card-layout-right-section-container">
+        <!-- Pricing Options -->
+        <div class="pricing-container">
+          <div class="pricing-option economy" (click)="selectOneWayFlight(flight)" [ngClass]="{'unavailable': flight.economySeat === 0}">
+            <div class="seats-left" *ngIf="flight.economySeat !== null && flight.economySeat <= 10">{{ flight.economySeat }} seats left</div>
+            <div class="class-name">Economy</div>
+            <div>from</div>
+            <div>USD</div>
+            <div class="price" *ngIf="flight.economySeat > 0">{{ flight.randomEconomyPrice }}</div>
+            <div class="price" *ngIf="flight.economySeat === 0">Not available</div>
+            <div class="dropdown-arrow" *ngIf="flight.economySeat > 0">▼</div>
+          </div>
+          <div class="pricing-option business" (click)="selectOneWayFlight(flight)" [ngClass]="{'unavailable': flight.businessSeat === 0}">
+            <div class="seats-left" *ngIf="flight.businessSeat !== null && flight.businessSeat <= 10">{{ flight.businessSeat }} seats left</div>
+            <div class="class-name">Business</div>
+            <div>from</div>
+            <div>USD</div>
+            <div class="price" *ngIf="flight.businessSeat > 0">{{ flight.randomBusinessPrice }}</div>
+            <div class="price" *ngIf="flight.businessSeat === 0">Not available</div>
+            <div class="dropdown-arrow" *ngIf="flight.businessSeat > 0">▼</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="text-center pt-1 mb-5 pb-1">
-  <button data-mdb-button-init data-mdb-ripple-init
-          class="btn btn-primary"
-          type="button" [routerLink]="['/flight-booking-detail']">
+
+<!-- Display flightsRoundTrip after selecting an OnWay flight -->
+<div *ngIf="showRoundTrip">
+  <div *ngFor="let flight of flightsRoundTrip" class="basic-flight-card-layout-container">
+    <div class="basic-flight-card-layout-top-section-container row">
+      <div class="basic-flight-card-layout-left-section-container">
+        <div class="basic-flight-card-layout-left-section-row row" style="display: grid; grid-template-columns: 1fr 1fr;">
+          <div class="basic-flight-card-layout-left-top-section-container">
+            <!-- Flight Ticket Information -->
+            <div class="ticket">
+              <div class="flight-info">
+                <span class="flight-sector">{{ flight.flightSector.split('-')[0] }}</span>
+                <span class="time">{{ flight.departureTime.substring(0, 5) }}</span>
+                <span>Terminal 1</span>
+              </div>
+              <div class="flight-info">
+                <span class="nonstop">nonstop</span>
+                <div class="dots"></div>
+              </div>
+              <div class="flight-info">
+                <span class="flight-sector">{{ flight.flightSector.split('-')[1] }}</span>
+                <span class="time">{{ flight.arrivalTime.substring(0, 5) }}</span>
+                <span>Terminal 1</span>
+              </div>
+            </div>
+          </div>
+          <div class="basic-flight-card-layout-left-bottom-section-container">
+            <!-- Flight Duration and Details -->
+            <div class="flight-details">
+              <div class="duration">
+                <span class="icon">⏲️</span>
+                <span>Duration {{ flight.flightTime }}h</span>
+              </div>
+              <div class="flight-info">
+                <span class="icon">✈️</span>
+                <span class="flight-number">{{ flight.flightNumber }}</span>
+                <span>operated by Linhdan Airlines</span>
+              </div>
+              <div class="itinerary">
+                <a href="#">See itinerary details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="basic-flight-card-layout-right-section-container">
+        <!-- Pricing Options -->
+        <div class="pricing-container">
+          <div class="pricing-option economy" (click)="selectRoundTripFlight(flight)" [ngClass]="{'unavailable': flight.economySeat === 0}">
+            <div class="seats-left" *ngIf="flight.economySeat !== null && flight.economySeat <= 10">{{ flight.economySeat }} seats left</div>
+            <div class="class-name">Economy</div>
+            <div>from</div>
+            <div>USD</div>
+            <div class="price" *ngIf="flight.economySeat > 0">{{ flight.randomEconomyPrice }}</div>
+            <div class="price" *ngIf="flight.economySeat === 0">Not available</div>
+            <div class="dropdown-arrow" *ngIf="flight.economySeat > 0">▼</div>
+          </div>
+          <div class="pricing-option business" (click)="selectRoundTripFlight(flight)" [ngClass]="{'unavailable': flight.businessSeat === 0}">
+            <div class="seats-left" *ngIf="flight.businessSeat !== null && flight.businessSeat <= 10">{{ flight.businessSeat }} seats left</div>
+            <div class="class-name">Business</div>
+            <div>from</div>
+            <div>USD</div>
+            <div class="price" *ngIf="flight.businessSeat > 0">{{ flight.randomBusinessPrice }}</div>
+            <div class="price" *ngIf="flight.businessSeat === 0">Not available</div>
+            <div class="dropdown-arrow" *ngIf="flight.businessSeat > 0">▼</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center pt-1 mb-5 pb-1" *ngIf="selectedOneWayFlight && selectedRoundTripFlight">
+  <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary"
+          type="button" (click)="navigateToBookingDetail()">
     Xác nhận và tiếp tục
   </button>
 </div>
