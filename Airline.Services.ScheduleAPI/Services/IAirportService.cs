@@ -14,5 +14,6 @@ namespace Airline.Services.ScheduleAPI.Services
         Task DeleteAirportAsync(int id);
         Task<bool> AirportExistsAsync(int id);
         Task<AirportDTO> GetAirportByNameAsync(string airportName);
+        Task<IEnumerable<string>> GetSimplifiedAirportNamesAsync();
     }
 }

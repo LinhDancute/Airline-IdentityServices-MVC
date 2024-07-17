@@ -8,7 +8,6 @@ namespace Airline.ModelsService.Models.Airline
     {
         [Key]
         public int FlightId { get; set; }
-
         public int? AirlineId { get; set; }
 
         [Display(Name = "Máy bay")]

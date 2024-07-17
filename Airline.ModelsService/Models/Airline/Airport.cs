@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace Airline.ModelsService.Models.Airline
 {
-
     public class Airport
     {
         [Key]

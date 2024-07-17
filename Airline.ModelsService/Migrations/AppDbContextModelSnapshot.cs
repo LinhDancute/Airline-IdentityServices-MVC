@@ -313,6 +313,9 @@ namespace Airline.ModelsService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Itinerary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -531,81 +534,53 @@ namespace Airline.ModelsService.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("Airline.ModelsService.Models.Statistical.AnnualRevenue", b =>
-                {
-                    b.Property<int>("AnnualRevenueId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnnualRevenueId"));
-
-                    b.Property<decimal>("Revenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TicketByYear")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("AnnualRevenueId");
-
-                    b.ToTable("AnnualRevenues");
-                });
-
             modelBuilder.Entity("Airline.ModelsService.Models.Statistical.Invoice", b =>
                 {
                     b.Property<string>("InvoiceId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CMND")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar");
-
-                    b.Property<DateTime>("InvoiceDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("MonthlyRevenueId")
-                        .HasColumnType("int");
 
                     b.Property<string>("PassengerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("StaffId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("InvoiceId");
-
-                    b.HasIndex("MonthlyRevenueId");
 
                     b.HasIndex("PassengerId");
 
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("Airline.ModelsService.Models.Statistical.MonthlyRevenue", b =>
+            modelBuilder.Entity("Airline.ModelsService.Models.Statistical.InvoiceDetail", b =>
                 {
-                    b.Property<int>("MonthlyRevenueId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("InvoiceId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Itinerary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TicketId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MonthlyRevenueId"));
+                    b.Property<string>("UnitPrice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AnnualRevenueId")
-                        .HasColumnType("int");
+                    b.HasKey("InvoiceId");
 
-                    b.Property<decimal>("Revenue")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasIndex("TicketId");
 
-                    b.Property<long>("TicketByMonth")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("MonthlyRevenueId");
-
-                    b.ToTable("MonthlyRevenues");
+                    b.ToTable("InvoiceDetails");
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Statistical.UnitPrice", b =>
@@ -904,21 +879,31 @@ namespace Airline.ModelsService.Migrations
 
             modelBuilder.Entity("Airline.ModelsService.Models.Statistical.Invoice", b =>
                 {
-                    b.HasOne("Airline.ModelsService.Models.Statistical.MonthlyRevenue", "MonthlyRevenue")
-                        .WithMany("Invoices")
-                        .HasForeignKey("MonthlyRevenueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Airline.ModelsService.Models.AppUser", "Passenger")
                         .WithMany("Invoices")
                         .HasForeignKey("PassengerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MonthlyRevenue");
-
                     b.Navigation("Passenger");
+                });
+
+            modelBuilder.Entity("Airline.ModelsService.Models.Statistical.InvoiceDetail", b =>
+                {
+                    b.HasOne("Airline.ModelsService.Models.Statistical.Invoice", "Invoice")
+                        .WithOne("InvoiceDetails")
+                        .HasForeignKey("Airline.ModelsService.Models.Statistical.InvoiceDetail", "InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Airline.ModelsService.Models.Airline.Ticket", "Ticket")
+                        .WithMany("InvoiceDetails")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1012,6 +997,8 @@ namespace Airline.ModelsService.Migrations
                 {
                     b.Navigation("BoardingPasses");
 
+                    b.Navigation("InvoiceDetails");
+
                     b.Navigation("Ticket_Baggages");
 
                     b.Navigation("Ticket_Meals");
@@ -1029,9 +1016,10 @@ namespace Airline.ModelsService.Migrations
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("Airline.ModelsService.Models.Statistical.MonthlyRevenue", b =>
+            modelBuilder.Entity("Airline.ModelsService.Models.Statistical.Invoice", b =>
                 {
-                    b.Navigation("Invoices");
+                    b.Navigation("InvoiceDetails")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Airline.ModelsService.Models.Statistical.UnitPrice", b =>

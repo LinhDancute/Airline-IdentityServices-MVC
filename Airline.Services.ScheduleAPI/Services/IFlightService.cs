@@ -12,5 +12,7 @@ namespace Airline.Services.ScheduleAPI.Services
         Task CloseFlightAsync(int flightId); //close flight, Staus Active -> Closed
         Task DeleteFlightAsync(int flightId);
         Task<Flight> GetFlightByIdAsync(int id);
+        Task<IEnumerable<FlightDTO>> SearchFlightsByRouteAsync(FlightSearchDTO flightSearchDTO);
+
     }
 }

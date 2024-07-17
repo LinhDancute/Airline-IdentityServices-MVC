@@ -20,6 +20,8 @@ namespace Airline.Services.CouponAPI.Services.Implements
         private readonly ITicketClassRepository _ticketClassRepository;
         private readonly IUnitPriceRepository _unitPriceRepository;
         private readonly IBoardingPassRepository _boardingPassRepository;
+        private readonly IInvoiceDetailRepository _invoiceDetailRepository;
+        private readonly IInvoiceRepository _invoiceRepository;
         private readonly IMapper _mapper;
 
         private static readonly Random _random = new Random();
@@ -33,6 +35,8 @@ namespace Airline.Services.CouponAPI.Services.Implements
                              ITicketClassRepository ticketClassRepository,
                              IUnitPriceRepository unitPriceRepository,
                              IBoardingPassRepository boardingPassRepository,
+                             IInvoiceDetailRepository invoiceDetailRepository,
+                             IInvoiceRepository invoiceRepository,
                              IMapper mapper)
         {
             _ticketRepository = ticketRepository;
@@ -43,6 +47,8 @@ namespace Airline.Services.CouponAPI.Services.Implements
             _ticketClassRepository = ticketClassRepository;
             _unitPriceRepository = unitPriceRepository;
             _boardingPassRepository = boardingPassRepository;
+            _invoiceDetailRepository = invoiceDetailRepository;
+            _invoiceRepository = invoiceRepository;
             _mapper = mapper;
         }
 
@@ -220,6 +226,34 @@ namespace Airline.Services.CouponAPI.Services.Implements
 
             //add BoardingPass
             await _boardingPassRepository.AddAsync(boardingPass);
+
+            //create invoice
+            var invoice = new Invoice
+            {
+                InvoiceId = Guid.NewGuid().ToString(),
+                PassengerId = ticket.PassengerId,
+                Date = DateTime.Now,
+                Status = InvoiceStatus.Confirmed,
+                Passenger = ticket.Passenger
+            };
+
+            //add invoice
+            await _invoiceRepository.AddAsync(invoice);
+
+            //create invoice detail
+            var invoiceDetails = new InvoiceDetail
+            {
+                InvoiceId = invoice.InvoiceId,
+                TicketId = ticket.TicketId,
+                Class = ticket.Class,
+                Itinerary = ticket.Itinerary,
+                UnitPrice = ticket.USD,
+                Ticket = ticket,
+                Invoice = invoice,
+            };
+
+            //add invoice detail
+            await _invoiceDetailRepository.AddAsync(invoiceDetails);
         }
 
 
@@ -363,6 +397,34 @@ namespace Airline.Services.CouponAPI.Services.Implements
 
                 //add BoardingPass
                 await _boardingPassRepository.AddAsync(boardingPass);
+
+                //create invoice
+                var invoice = new Invoice
+                {
+                    InvoiceId = Guid.NewGuid().ToString(),
+                    PassengerId = ticket.PassengerId,
+                    Date = DateTime.Now,
+                    Status = InvoiceStatus.Confirmed,
+                    Passenger = ticket.Passenger
+                };
+
+                //add invoice
+                await _invoiceRepository.AddAsync(invoice);
+
+                //create invoice detail
+                var invoiceDetails = new InvoiceDetail
+                {
+                    InvoiceId = invoice.InvoiceId,
+                    TicketId = ticket.TicketId,
+                    Class = ticket.Class,
+                    Itinerary = ticket.Itinerary,
+                    UnitPrice = ticket.USD,
+                    Ticket = ticket,
+                    Invoice = invoice,
+                };
+
+                //add invoice detail
+                await _invoiceDetailRepository.AddAsync(invoiceDetails);
             }
         }
 

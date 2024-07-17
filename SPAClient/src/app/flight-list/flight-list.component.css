@@ -1,0 +1,178 @@
+.basic-flight-card-layout-container {
+  width: 80%;  /* Giảm kích thước tổng thể của container */
+  max-width: 1000px;  /* Giảm kích thước tối đa của container */
+  margin: 20px auto;  /* Giảm khoảng cách margin */
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  padding-inline-start: 50px;
+  padding-inline-end: 12px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.basic-flight-card-layout-left-section-container,
+.basic-flight-card-layout-right-section-container {
+  padding: 0px;  /* Giảm padding */
+}
+
+.basic-flight-card-layout-left-section-container {
+  flex: 2;
+  border-right: 1px solid #ccc;
+}
+
+.basic-flight-card-layout-right-section-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;  /* Căn giữa nội dung */
+  align-items: center;  /* Căn giữa nội dung */
+}
+.basic-flight-card-layout-left-top-section-container{
+  padding-top: 30px;
+}
+.basic-flight-card-layout-left-bottom-section-container{
+  padding-inline-start: 30px;
+  padding-top: 45px;
+}
+
+
+.ticket, .flight-details, .pricing-container {
+}
+
+.ticket {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline-end: 20px;
+  padding-top: 10px;
+
+}
+
+
+.flight-info {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #005f6a;
+}
+
+.flight-info span {
+  display: block;
+  padding: 2px 0;
+}
+
+.dots {
+  border-bottom: 1px dotted #000;
+  width: 120px;  /* Giảm chiều rộng của các chấm */
+  margin: 0 auto;
+}
+
+.flight-info .flight-number {
+  font-weight: bold;
+  color: #005f6a;
+  margin-right: 4px;
+}
+
+.flight-info .nonstop {
+  font-size: 0.8em; /* Make "nonstop" smaller */
+}
+
+.flight-info .flight-sector{
+  font-size: 1em;
+}
+
+.flight-info .time {
+
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.flight-details .icon {
+  font-size: 1em;  /* Giảm kích thước icon */
+  margin-right: 3px;  /* Giảm khoảng cách margin-right */
+}
+
+.flight-details .duration, .flight-details .flight-info, .flight-details .itinerary {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  margin: 3px 0;  /* Giảm khoảng cách margin */
+}
+
+.flight-details .itinerary a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.flight-details .itinerary a:hover {
+  text-decoration: underline;
+}
+
+.flight-details .airline-icon {
+  width: 15px;  /* Giảm kích thước icon hãng hàng không */
+  height: 15px;  /* Giảm kích thước icon hãng hàng không */
+  margin-left: 3px;  /* Giảm khoảng cách margin-left */
+}
+
+.pricing-container {
+  display: flex;
+  width: 100%;  /* Chiếm toàn bộ chiều rộng */
+}
+
+.pricing-option {
+  font-size: 0.8rem;
+  flex: 1;
+  padding: 20px;  /* Giảm padding */
+  color: white;
+  text-align: center;
+  position: relative;
+  padding-top: 20px;
+}
+
+.pricing-container .class-name{
+  font-weight: bold;
+}
+
+.pricing-option.unavailable {
+  background-color: #D3D3D3;
+  color: white;
+}
+.unavailable {
+  background-color: darkgray;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.economy {
+  background-color: #005f6a;
+}
+
+.business {
+  background-color: #d4a017;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.price {
+  font-size: 1.3rem;  /* Giảm kích thước font chữ */
+  margin-top: 5px;  /* Giảm khoảng cách margin-top */
+  font-weight: bold;
+}
+
+.dropdown-arrow {
+  margin-top: 5px;  /* Giảm khoảng cách margin-top */
+}
+
+.seats-left {
+  position: absolute;
+  top: -5px;  /* Giảm khoảng cách top */
+  right: 5px;  /* Giảm khoảng cách right */
+  background-color: #006400;
+  color: white;
+  padding: 4px 5px;  /* Giảm padding */
+  border-radius: 5px;
+  font-size: 10px;  /* Giảm kích thước font chữ */
+}

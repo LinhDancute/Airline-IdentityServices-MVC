@@ -13,5 +13,6 @@ namespace Airline.Services.ScheduleAPI.Repositories
         Task DeleteAsync(int id);
         Task<bool> AirportExistsAsync(int id);
         Task<Airport> FindAsync(Expression<Func<Airport, bool>> predicate);
+        Task<IEnumerable<string>> GetSimplifiedAirportNamesAsync();
     }
 }

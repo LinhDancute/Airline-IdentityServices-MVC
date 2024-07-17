@@ -45,6 +45,5 @@ namespace Airline.ModelsService.Models.Airline
 
         // N-N relationship with Flight
         public ICollection<FlightRoute_Flight>? FlightRoute_Flights { get; set; }
-
     }
 }

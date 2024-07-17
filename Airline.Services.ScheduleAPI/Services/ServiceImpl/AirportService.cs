@@ -108,5 +108,10 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
         {
             return await _airportRepository.AirportExistsAsync(id);
         }
+
+        public async Task<IEnumerable<string>> GetSimplifiedAirportNamesAsync()
+        {
+            return await _airportRepository.GetSimplifiedAirportNamesAsync();
+        }
     }
 }

@@ -278,5 +278,29 @@ namespace Airline.Services.ScheduleAPI.Services.ServiceImpl
             await _flightRepository.UpdateAsync(flight);
         }
 
+        public async Task<IEnumerable<FlightDTO>> SearchFlightsByRouteAsync(FlightSearchDTO flightSearchDTO)
+        {
+            var flightRoutes = await _flightRepository.FindFlightRoutesAsync(flightSearchDTO.DepartureAddress, flightSearchDTO.ArrivalAddress);
+            if (!flightRoutes.Any())
+            {
+                throw new InvalidOperationException($"No flight route found for sector {flightSearchDTO.DepartureAddress}-{flightSearchDTO.ArrivalAddress}.");
+            }
+
+            var flightRoute = flightRoutes.FirstOrDefault();
+            var flightSector = flightRoute.FlightSector;
+
+            //search on FromDate
+            var flightsOnFromDate = await _flightRepository.SearchFlightsAsync(flightSearchDTO.FromDate, flightSector);
+
+            //reverse the flightSector for return flights
+            var reversedFlightSector = $"{flightRoute.ArrivalAddress}-{flightRoute.DepartureAddress}";
+
+            //search on ToDate (return flights)
+            var flightsOnToDate = await _flightRepository.SearchFlightsAsync(flightSearchDTO.ToDate, reversedFlightSector);
+
+            var combinedFlights = flightsOnFromDate.Concat(flightsOnToDate);
+
+            return _mapper.Map<IEnumerable<FlightDTO>>(combinedFlights);
+        }
     }
 }
