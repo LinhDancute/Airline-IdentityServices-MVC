@@ -57,17 +57,26 @@ namespace Airline.Services.AuthAPI.Controllers
             return Ok(admin);
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDTO users)
+        [HttpPost("register/member")]
+        public async Task<IActionResult> RegisterMember([FromBody] RegisterDTO registerDTO)
         {
-            bool isAdmin = users.IsAdmin;
-
-            var response = await _userAccount.RegisterAccount(users, isAdmin);
-            if (!response.flag)
+            var result = await _userAccount.RegisterMemberAccount(registerDTO);
+            if (result.flag)
             {
-                return BadRequest(response.Message);
+                return Ok(result.Message);
             }
-            return Ok(response);
+            return BadRequest(result.Message);
+        }
+
+        [HttpPost("register/admin")]
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDTO registerDTO)
+        {
+            var result = await _userAccount.RegisterAdminAccount(registerDTO);
+            if (result.flag)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
         }
 
 
@@ -80,6 +89,28 @@ namespace Airline.Services.AuthAPI.Controllers
                 return BadRequest(response.Message);
             }
             return Ok(response);
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetUser(string id)
+        {
+            var result = await _userAccount.GetUser(id);
+            if (result.flag)
+            {
+                return Ok(result.AccountDTO);
+            }
+            return NotFound(result.Message);
+        }
+
+        [HttpGet("admin/{id}")]
+        public async Task<IActionResult> GetAdmin(string id)
+        {
+            var result = await _userAccount.GetAdmin(id);
+            if (result.flag)
+            {
+                return Ok(result.AccountDTO);
+            }
+            return NotFound(result.Message);
         }
     }
 }

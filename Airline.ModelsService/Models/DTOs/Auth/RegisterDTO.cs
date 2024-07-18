@@ -22,6 +22,5 @@ namespace Airline.ModelsService.Models.DTOs.Auth
         [DataType(DataType.Password)]
         [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; } = string.Empty;
-        public bool IsAdmin { get; set; }
     }
 }

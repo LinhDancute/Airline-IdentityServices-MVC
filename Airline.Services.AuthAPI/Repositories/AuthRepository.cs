@@ -72,7 +72,20 @@ namespace Airline.Services.AuthAPI.Repositories
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public async Task<GeneralResponse> RegisterAccount(RegisterDTO users, bool isAdmin = false)
+        //register as Member
+        public async Task<GeneralResponse> RegisterMemberAccount(RegisterDTO users)
+        {
+            return await RegisterAccount(users, "Member");
+        }
+
+        //register as Admin
+        public async Task<GeneralResponse> RegisterAdminAccount(RegisterDTO users)
+        {
+            return await RegisterAccount(users, "Administrator");
+        }
+
+        //register
+        private async Task<GeneralResponse> RegisterAccount(RegisterDTO users, string role)
         {
             if (users == null)
             {
@@ -83,6 +96,7 @@ namespace Airline.Services.AuthAPI.Repositories
             {
                 UserName = users.UserName,
                 Email = users.Email,
+                EmailConfirmed = true
             };
 
             var user = await _userManager.FindByEmailAsync(newUser.Email);
@@ -98,8 +112,6 @@ namespace Airline.Services.AuthAPI.Repositories
                 return new GeneralResponse(false, $"Error creating user: {errorMessage}");
             }
 
-            // Role assignment
-            var role = isAdmin ? "Administrator" : "Member";
             var roleExists = await _roleManager.RoleExistsAsync(role);
             if (!roleExists)
             {
@@ -120,7 +132,6 @@ namespace Airline.Services.AuthAPI.Repositories
 
             return new GeneralResponse(true, $"User registered as {role}");
         }
-
         public async Task<AccountResponse> GetUser(string id)
         {
             var users = new List<AccountDTO>();

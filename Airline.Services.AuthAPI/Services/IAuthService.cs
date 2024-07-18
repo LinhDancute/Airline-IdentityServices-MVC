@@ -5,7 +5,8 @@ namespace Airline.Services.AuthAPI.Services
 {
     public interface IAuthService
     {
-        Task<GeneralResponse> RegisterAccount(RegisterDTO users, bool isAdmin);
+        Task<GeneralResponse> RegisterMemberAccount(RegisterDTO users);
+        Task<GeneralResponse> RegisterAdminAccount(RegisterDTO users);
         Task<LoginResponse> LoginAccount(LoginDTO loginUser);
         Task <AccountResponse> GetAdmin(string id);
         Task<AccountResponse> GetUser(string id);
