@@ -1,0 +1,204 @@
+[
+    {
+      "airlineId": 1,
+      "parentAirlineId": null,
+      "airlineName": "Airbus A320",
+      "iataCode": "320",
+      "icaoCode": "A320",
+      "description": null,
+      "slug": "airbus-a320",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 5,
+      "parentAirlineId": null,
+      "airlineName": "Air Canada",
+      "iataCode": "AC",
+      "icaoCode": "ACA",
+      "description": "Flag carrier and largest airline of Canada.",
+      "slug": "air-canada",
+      "airlineChildren": [
+        {
+          "airlineId": 15,
+          "parentAirlineId": 5,
+          "airlineName": "New Airline Canada",
+          "iataCode": "NA",
+          "icaoCode": "NAC",
+          "description": "Flag carrier and largest airline of Canada.",
+          "slug": "new-airline-canada",
+          "airlineChildren": []
+        }
+      ]
+    },
+    {
+      "airlineId": 6,
+      "parentAirlineId": null,
+      "airlineName": "American Airlines",
+      "iataCode": "AA",
+      "icaoCode": "AAL",
+      "description": "Major American airline headquartered in Fort Worth, Texas.",
+      "slug": "american-airlines",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 7,
+      "parentAirlineId": null,
+      "airlineName": "Delta Air Lines",
+      "iataCode": "DL",
+      "icaoCode": "DAL",
+      "description": "Major American airline headquartered in Atlanta, Georgia.",
+      "slug": "delta-air-lines",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 8,
+      "parentAirlineId": null,
+      "airlineName": "United Airlines",
+      "iataCode": "UA",
+      "icaoCode": "UAL",
+      "description": "Major American airline headquartered in Chicago, Illinois.",
+      "slug": "united-airlines",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 9,
+      "parentAirlineId": null,
+      "airlineName": "Southwest Airlines",
+      "iataCode": "WN",
+      "icaoCode": "SWA",
+      "description": "Major American airline headquartered in Dallas, Texas.",
+      "slug": "southwest-airlines",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 10,
+      "parentAirlineId": null,
+      "airlineName": "British Airways",
+      "iataCode": "BA",
+      "icaoCode": "BAW",
+      "description": "Flag carrier airline of the United Kingdom.",
+      "slug": "british-airways",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 11,
+      "parentAirlineId": null,
+      "airlineName": "Lufthansa",
+      "iataCode": "LH",
+      "icaoCode": "DLH",
+      "description": "German airline and the largest airline in Europe.",
+      "slug": "lufthansa",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 12,
+      "parentAirlineId": null,
+      "airlineName": "Emirates",
+      "iataCode": "EK",
+      "icaoCode": "UAE",
+      "description": "Largest airline in the Middle East, headquartered in Dubai, UAE.",
+      "slug": "emirates",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 13,
+      "parentAirlineId": null,
+      "airlineName": "Singapore Airlines",
+      "iataCode": "SQ",
+      "icaoCode": "SIA",
+      "description": "Flag carrier airline of Singapore.",
+      "slug": "singapore-airlines",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 14,
+      "parentAirlineId": null,
+      "airlineName": "Qantas",
+      "iataCode": "QF",
+      "icaoCode": "QFA",
+      "description": "Flag carrier airline of Australia.",
+      "slug": "qantas",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 15,
+      "parentAirlineId": 5,
+      "airlineName": "New Airline Canada",
+      "iataCode": "NA",
+      "icaoCode": "NAC",
+      "description": "Flag carrier and largest airline of Canada.",
+      "slug": "new-airline-canada",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 16,
+      "parentAirlineId": null,
+      "airlineName": "Air France",
+      "iataCode": "AF",
+      "icaoCode": "AFR",
+      "description": "Flag carrier airline of France.",
+      "slug": "air-france",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 17,
+      "parentAirlineId": null,
+      "airlineName": "Ryanair",
+      "iataCode": "FR",
+      "icaoCode": "RYR",
+      "description": "Low-cost carrier headquartered in Dublin, Ireland.",
+      "slug": "ryanair",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 18,
+      "parentAirlineId": null,
+      "airlineName": "Cathay Pacific",
+      "iataCode": "CX",
+      "icaoCode": "CPA",
+      "description": "Flag carrier airline of Hong Kong.",
+      "slug": "cathay-pacific",
+      "airlineChildren": [
+        {
+          "airlineId": 19,
+          "parentAirlineId": 18,
+          "airlineName": "Cathay Dragon",
+          "iataCode": "KA",
+          "icaoCode": "HDA",
+          "description": "Subsidiary of Cathay Pacific, formerly Dragonair.",
+          "slug": "cathay-dragon",
+          "airlineChildren": []
+        }
+      ]
+    },
+    {
+      "airlineId": 19,
+      "parentAirlineId": 18,
+      "airlineName": "Cathay Dragon",
+      "iataCode": "KA",
+      "icaoCode": "HDA",
+      "description": "Subsidiary of Cathay Pacific, formerly Dragonair.",
+      "slug": "cathay-dragon",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 20,
+      "parentAirlineId": null,
+      "airlineName": "Turkish Airlines",
+      "iataCode": "TK",
+      "icaoCode": "THY",
+      "description": "Flag carrier airline of Turkey.",
+      "slug": "turkish-airlines",
+      "airlineChildren": []
+    },
+    {
+      "airlineId": 21,
+      "parentAirlineId": null,
+      "airlineName": "Etihad Airways",
+      "iataCode": "EY",
+      "icaoCode": "ETD",
+      "description": "Flag carrier airline of the United Arab Emirates.",
+      "slug": "etihad-airways",
+      "airlineChildren": []
+    }
+  ]

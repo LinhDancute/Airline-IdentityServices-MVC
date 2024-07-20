@@ -46,5 +46,17 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
             _context.Set<UnitPrice>().Remove(unitPrice);
             await _context.SaveChangesAsync();
         }
+
+        public decimal ConvertUsdToVnd(decimal usdAmount)
+        {
+            const decimal conversionRate = 25327m; // Updated conversion rate
+            return usdAmount * conversionRate;
+        }
+
+        public async Task<UnitPrice> GetUnitPriceAsync(decimal usd)
+        {
+            return await _context.UnitPrices
+                .SingleOrDefaultAsync(up => up.USD == usd);
+        }
     }
 }

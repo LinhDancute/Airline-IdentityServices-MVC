@@ -1,4 +1,4 @@
-@model IEnumerable<Airline.ModelsService.Models.Statistical.Invoice>
+@model IEnumerable<Airline.WebClient.Models.Statistical.Invoice>
 
 @{
     ViewData["Title"] = "Danh sách hóa đơn";
@@ -12,22 +12,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().CMND)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().MonthlyRevenueId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().InvoiceDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().StaffId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().TotalAmount)
+                @Html.DisplayNameFor(model => model.First().InvoiceId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.First().PassengerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Status)
             </th>
             <th></th>
         </tr>
@@ -37,22 +31,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CMND)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MonthlyRevenueId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InvoiceDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StaffId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                    @Html.DisplayFor(modelItem => item.InvoiceId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PassengerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.InvoiceId">Sửa</a> |

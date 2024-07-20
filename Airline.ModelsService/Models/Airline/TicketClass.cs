@@ -7,8 +7,7 @@ namespace Airline.ModelsService.Models.Airline
     public class TicketClass
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TicketId { get; set; }
+        public int TicketClassId { get; set; }
 
         [Display(Name = "Tên hạng vé")]
         public string TicketName { get; set; }

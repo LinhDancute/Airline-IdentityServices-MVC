@@ -10,5 +10,7 @@ namespace Airline.Services.CouponAPI.Repositories
         Task AddRangeAsync(IEnumerable<TicketClass> ticketClasses);
         Task UpdateAsync(TicketClass ticketClass);
         Task DeleteAsync(TicketClass ticketClass);
+        Task<TicketClass> GetTicketClassByNameAsync(string className);
+        Task<List<TicketClass>> GetTicketClassesByNameAsync(string className);
     }
 }

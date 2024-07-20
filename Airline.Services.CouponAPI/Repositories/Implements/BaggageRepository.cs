@@ -46,11 +46,16 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Baggage>> GetByBaggageNameAsync(List<string> baggageNames)
+        public async Task<List<Baggage>> GetByBaggageNamesAsync(List<string> baggageNames)
         {
             return await _context.Baggages
                 .Where(b => baggageNames.Contains(b.Name))
                 .ToListAsync();
+        }
+
+        public async Task<Baggage> GetBaggageByNameAsync(string Name)
+        {
+            return await _context.Baggages.FirstOrDefaultAsync(b => b.Name == Name);
         }
 
     }

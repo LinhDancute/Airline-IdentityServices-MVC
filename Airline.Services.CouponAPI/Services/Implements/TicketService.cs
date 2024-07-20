@@ -99,21 +99,32 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 throw new Exception($"Passenger with Name {ticketDTO.PassengerName} and Phone Number {ticketDTO.PassengerPhoneNumber} does not exist.");
             }
 
-            // Validate and get Flight by details(Itinerary,FlightNumber,Date,DepartureTime)
+            // Validate and get Flight by details (Itinerary, FlightNumber, Date, DepartureTime)
             var flight = await GetFlightByDetailsAsync(ticketDTO.Itinerary, ticketDTO.FlightNumber, ticketDTO.Date, ticketDTO.DepartureTime);
             if (flight == null)
             {
                 throw new Exception($"Flight with details: Itinerary {ticketDTO.Itinerary}, Flight Number {ticketDTO.FlightNumber}, Date {ticketDTO.Date}, Departure Time {ticketDTO.DepartureTime} does not exist.");
             }
 
+            // Random fare class for ticket with "Economy" or "Business"
+            if (ticketDTO.Class == "Economy" || ticketDTO.Class == "Business")
+            {
+                var matchingClasses = await _ticketClassRepository.GetTicketClassesByNameAsync(ticketDTO.Class);
+                if (matchingClasses == null || !matchingClasses.Any())
+                {
+                    throw new Exception($"No subclasses found for the class {ticketDTO.Class}.");
+                }
+                ticketDTO.Class = matchingClasses.OrderBy(x => Guid.NewGuid()).Select(tc => tc.TicketName).FirstOrDefault();
+            }
+
             // Validate and get TicketClass by ClassName
-            var ticketClass = await GetTicketClassByNameAsync(ticketDTO.Class);
+            var ticketClass = await _ticketClassRepository.GetTicketClassByNameAsync(ticketDTO.Class);
             if (ticketClass == null)
             {
                 throw new Exception($"Ticket class with Name {ticketDTO.Class} does not exist.");
             }
 
-            // Check if ticketDTO.Class contains "Economy", "Business", or "Premium Economy"
+            //update seats count
             if (ticketDTO.Class.Contains("Economy"))
             {
                 flight.EconomySeat -= 1;
@@ -127,23 +138,66 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 flight.PremiumEconomySeat -= 1;
             }
 
-            // Convert USD and VND from string to decimal
             decimal usd = decimal.Parse(ticketDTO.USD);
-            decimal vnd = decimal.Parse(ticketDTO.VND);
+            decimal vnd = string.IsNullOrEmpty(ticketDTO.VND) ? _unitPriceRepository.ConvertUsdToVnd(usd) : decimal.Parse(ticketDTO.VND);
 
-            var unitPrice = await GetUnitPriceAsync(usd, vnd);
+            var unitPrice = await _unitPriceRepository.GetUnitPriceAsync(usd);
             if (unitPrice == null)
             {
-                throw new Exception($"UnitPrice with USD {ticketDTO.USD} and VND {ticketDTO.VND} does not exist.");
+                unitPrice = new UnitPrice
+                {
+                    USD = usd,
+                    VND = _unitPriceRepository.ConvertUsdToVnd(usd),
+                };
+
+                await _unitPriceRepository.AddAsync(unitPrice);
             }
 
             ticket.TicketId = await _ticketRepository.GenerateNextTicketIdAsync();
 
-            // Set foreign key properties
+            //set foreign key properties
             ticket.PassengerId = passenger.Id;
             ticket.FlightId = flight.FlightId;
             ticket.PriceId = unitPrice.PriceId;
-            ticket.ClassId = ticketClass.TicketId;
+            ticket.ClassId = ticketClass.TicketClassId;
+
+            //set baggageType with fareclass
+            if (ticketDTO.BaggageType == null || !ticketDTO.BaggageType.Any())
+            {
+                if (ticketDTO.Class.Contains("Economy"))
+                {
+                    ticketDTO.BaggageType = new List<string> { "Hand baggage", "Baggage calculator", "Free checked baggage" };
+                }
+                else if (ticketDTO.Class.Contains("Business"))
+                {
+                    ticketDTO.BaggageType = new List<string> { "Hand baggage", "Baggage calculator", "Free checked baggage", "Excess baggage", "Baggage claim" };
+                }
+            }
+
+            //set mealRequest with fareclass
+            if (ticketDTO.MealRequest == null || !ticketDTO.MealRequest.Any())
+            {
+                if (ticketDTO.Class.Contains("Business"))
+                {
+                    var allMeals = await _mealRepository.GetAllAsync();
+                    var randomMeals = allMeals.OrderBy(x => Guid.NewGuid()).Take(3).Select(m => m.MealCode).ToList();
+                    ticketDTO.MealRequest = randomMeals;
+                }
+            }
+
+            //random seat with fareclass
+            if (string.IsNullOrEmpty(ticketDTO.Seat))
+            {
+                var random = new Random();
+                if (ticketDTO.Class.Contains("Economy"))
+                {
+                    ticketDTO.Seat = $"{random.Next(15, 25)}{(char)random.Next('A', 'J')}";
+                }
+                else if (ticketDTO.Class.Contains("Business"))
+                {
+                    ticketDTO.Seat = $"{random.Next(2, 7)}{(char)random.Next('A', 'E')}";
+                }
+            }
 
             // Set other properties
             ticket.PassengerName = passenger.UserName;
@@ -158,18 +212,19 @@ namespace Airline.Services.CouponAPI.Services.Implements
             ticket.PNR = GeneratePNR();
             ticket.Status = (TicketStatusType)ticketDTO.Status;
             ticket.BaggageType = string.Join(", ", ticketDTO.BaggageType);
-            ticket.MealRequest = string.Join(", ", ticketDTO.MealRequest);            
+            ticket.MealRequest = string.Join(", ", ticketDTO.MealRequest);
+            ticket.Seat = ticketDTO.Seat;
 
-            //add ticket
-             await _ticketRepository.AddAsync(ticket);
+            // Add ticket
+            await _ticketRepository.AddAsync(ticket);
 
-            //update seat's quantity in Flight
+            // Update seat's quantity in Flight
             await _scheduleRepository.UpdateFlightAsync(flight);
 
-            //add baggages in ticket_baggage
-            foreach (var baggageType in ticketDTO.BaggageType)
+            // Add baggages in ticket_baggage
+            foreach (var baggageType in ticketDTO.BaggageType.Where(b => !string.IsNullOrEmpty(b)))
             {
-                var baggage = await GetBaggageByNameAsync(baggageType);
+                var baggage = await _baggageRepository.GetBaggageByNameAsync(baggageType);
                 if (baggage == null)
                 {
                     throw new Exception($"Baggage with name '{baggageType}' does not exist.");
@@ -184,10 +239,10 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 await _ticketRepository.AddTicket_BaggageAsync(ticket_baggage);
             }
 
-            //add meals in ticket_meal
-            foreach (var mealRequest in ticketDTO.MealRequest)
+            // Add meals in ticket_meal
+            foreach (var mealRequest in ticketDTO.MealRequest.Where(m => !string.IsNullOrEmpty(m)))
             {
-                var meal = await GetMealByCodeAsync(mealRequest);
+                var meal = await _mealRepository.GetMealByCodeAsync(mealRequest);
                 if (meal == null)
                 {
                     throw new Exception($"Meal with code '{mealRequest}' does not exist.");
@@ -202,7 +257,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 await _ticketRepository.AddTicket_MealAsync(ticket_Meal);
             }
 
-            //create BoardingPass
+            // Create BoardingPass
             var boardingPass = new BoardingPass
             {
                 TicketId = ticket.TicketId,
@@ -211,7 +266,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
             };
 
             // Determine BoardingGate based on FlightRoute and GateStatus
-            var flightRoute = await GetFlightRouteBySectorAsync(flight.FlightSector);
+            var flightRoute = await _scheduleRepository.GetByFlightSectorAsync(flight.FlightSector);
             if (flightRoute != null)
             {
                 if (flightRoute.Gate == FlightRoute.GateStatusType.DomesticGate)
@@ -224,10 +279,10 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 }
             }
 
-            //add BoardingPass
+            // Add BoardingPass
             await _boardingPassRepository.AddAsync(boardingPass);
 
-            //create invoice
+            // Create invoice
             var invoice = new Invoice
             {
                 InvoiceId = Guid.NewGuid().ToString(),
@@ -237,10 +292,10 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 Passenger = ticket.Passenger
             };
 
-            //add invoice
+            // Add invoice
             await _invoiceRepository.AddAsync(invoice);
 
-            //create invoice detail
+            // Create invoice detail
             var invoiceDetails = new InvoiceDetail
             {
                 InvoiceId = invoice.InvoiceId,
@@ -252,7 +307,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 Invoice = invoice,
             };
 
-            //add invoice detail
+            // Add invoice detail
             await _invoiceDetailRepository.AddAsync(invoiceDetails);
         }
 
@@ -270,21 +325,32 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     throw new Exception($"Passenger with Name {ticketDTO.PassengerName} and Phone Number {ticketDTO.PassengerPhoneNumber} does not exist.");
                 }
 
-                // Validate and get Flight by details(Itinerary,FlightNumber,Date,DepartureTime)
+                // Validate and get Flight by details (Itinerary, FlightNumber, Date, DepartureTime)
                 var flight = await GetFlightByDetailsAsync(ticketDTO.Itinerary, ticketDTO.FlightNumber, ticketDTO.Date, ticketDTO.DepartureTime);
                 if (flight == null)
                 {
                     throw new Exception($"Flight with details: Itinerary {ticketDTO.Itinerary}, Flight Number {ticketDTO.FlightNumber}, Date {ticketDTO.Date}, Departure Time {ticketDTO.DepartureTime} does not exist.");
                 }
 
+                // Random fare class for ticket with "Economy" or "Business"
+                if (ticketDTO.Class == "Economy" || ticketDTO.Class == "Business")
+                {
+                    var matchingClasses = await _ticketClassRepository.GetTicketClassesByNameAsync(ticketDTO.Class);
+                    if (matchingClasses == null || !matchingClasses.Any())
+                    {
+                        throw new Exception($"No subclasses found for the class {ticketDTO.Class}.");
+                    }
+                    ticketDTO.Class = matchingClasses.OrderBy(x => Guid.NewGuid()).Select(tc => tc.TicketName).FirstOrDefault();
+                }
+
                 // Validate and get TicketClass by ClassName
-                var ticketClass = await GetTicketClassByNameAsync(ticketDTO.Class);
+                var ticketClass = await _ticketClassRepository.GetTicketClassByNameAsync(ticketDTO.Class);
                 if (ticketClass == null)
                 {
                     throw new Exception($"Ticket class with Name {ticketDTO.Class} does not exist.");
                 }
 
-                // Check if ticketDTO.Class contains "Economy", "Business", or "Premium Economy"
+                // Update seat counts based on ticket class
                 if (ticketDTO.Class.Contains("Economy"))
                 {
                     flight.EconomySeat -= 1;
@@ -300,9 +366,9 @@ namespace Airline.Services.CouponAPI.Services.Implements
 
                 // Convert USD and VND from string to decimal
                 decimal usd = decimal.Parse(ticketDTO.USD);
-                decimal vnd = decimal.Parse(ticketDTO.VND);
+                decimal vnd = string.IsNullOrEmpty(ticketDTO.VND) ? _unitPriceRepository.ConvertUsdToVnd(usd) : decimal.Parse(ticketDTO.VND);
 
-                var unitPrice = await GetUnitPriceAsync(usd, vnd);
+                var unitPrice = await _unitPriceRepository.GetUnitPriceAsync(usd);
                 if (unitPrice == null)
                 {
                     throw new Exception($"UnitPrice with USD {ticketDTO.USD} and VND {ticketDTO.VND} does not exist.");
@@ -314,7 +380,44 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 ticket.PassengerId = passenger.Id;
                 ticket.FlightId = flight.FlightId;
                 ticket.PriceId = unitPrice.PriceId;
-                ticket.ClassId = ticketClass.TicketId;
+                ticket.ClassId = ticketClass.TicketClassId;
+
+                // Set default for BaggageType
+                if (ticketDTO.BaggageType == null || !ticketDTO.BaggageType.Any())
+                {
+                    if (ticketDTO.Class.Contains("Economy"))
+                    {
+                        ticketDTO.BaggageType = new List<string> { "Hand baggage", "Baggage calculator", "Free checked baggage" };
+                    }
+                    else if (ticketDTO.Class.Contains("Business"))
+                    {
+                        ticketDTO.BaggageType = new List<string> { "Hand baggage", "Baggage calculator", "Free checked baggage", "Excess baggage", "Baggage claim" };
+                    }
+                }
+
+                // Set default for MealRequest
+                if (ticketDTO.MealRequest == null || !ticketDTO.MealRequest.Any())
+                {
+                    if (ticketDTO.Class.Contains("Business"))
+                    {
+                        var allMeals = await _mealRepository.GetAllAsync();
+                        var randomMeals = allMeals.OrderBy(x => Guid.NewGuid()).Take(3).Select(m => m.MealCode).ToList();
+                        ticketDTO.MealRequest = randomMeals;
+                    }
+                }
+
+                // Random seat assignment based on class
+                if (string.IsNullOrEmpty(ticketDTO.Seat))
+                {
+                    if (ticketDTO.Class.Contains("Economy"))
+                    {
+                        ticketDTO.Seat = $"{new Random().Next(15, 25)}{(char)new Random().Next('A', 'J')}";
+                    }
+                    else if (ticketDTO.Class.Contains("Business"))
+                    {
+                        ticketDTO.Seat = $"{new Random().Next(2, 7)}{(char)new Random().Next('A', 'E')}";
+                    }
+                }
 
                 // Set other properties
                 ticket.PassengerName = passenger.UserName;
@@ -330,17 +433,18 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 ticket.Status = (TicketStatusType)ticketDTO.Status;
                 ticket.BaggageType = string.Join(", ", ticketDTO.BaggageType);
                 ticket.MealRequest = string.Join(", ", ticketDTO.MealRequest);
+                ticket.Seat = ticketDTO.Seat;
 
-                //add ticket
+                // Add ticket
                 await _ticketRepository.AddAsync(ticket);
 
-                //update seat's quantity in Flight
+                // Update seat's quantity in Flight
                 await _scheduleRepository.UpdateFlightAsync(flight);
 
-                //add baggages in ticket_baggage
+                // Add baggages in ticket_baggage
                 foreach (var baggageType in ticketDTO.BaggageType)
                 {
-                    var baggage = await GetBaggageByNameAsync(baggageType);
+                    var baggage = await _baggageRepository.GetBaggageByNameAsync(baggageType);
                     if (baggage == null)
                     {
                         throw new Exception($"Baggage with name '{baggageType}' does not exist.");
@@ -355,10 +459,10 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     await _ticketRepository.AddTicket_BaggageAsync(ticket_baggage);
                 }
 
-                //add meals in ticket_meal
+                // Add meals in ticket_meal
                 foreach (var mealRequest in ticketDTO.MealRequest)
                 {
-                    var meal = await GetMealByCodeAsync(mealRequest);
+                    var meal = await _mealRepository.GetMealByCodeAsync(mealRequest);
                     if (meal == null)
                     {
                         throw new Exception($"Meal with code '{mealRequest}' does not exist.");
@@ -373,7 +477,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     await _ticketRepository.AddTicket_MealAsync(ticket_Meal);
                 }
 
-                //create BoardingPass
+                // Create BoardingPass
                 var boardingPass = new BoardingPass
                 {
                     TicketId = ticket.TicketId,
@@ -382,7 +486,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 };
 
                 // Determine BoardingGate based on FlightRoute and GateStatus
-                var flightRoute = await GetFlightRouteBySectorAsync(flight.FlightSector);
+                var flightRoute = await _scheduleRepository.GetByFlightSectorAsync(flight.FlightSector);
                 if (flightRoute != null)
                 {
                     if (flightRoute.Gate == FlightRoute.GateStatusType.DomesticGate)
@@ -390,15 +494,15 @@ namespace Airline.Services.CouponAPI.Services.Implements
                         boardingPass.BoardingGate = GetRandomGate(6, 11);
                     }
                     else if (flightRoute.Gate == FlightRoute.GateStatusType.InternationalGate)
-        {
+                    {
                         boardingPass.BoardingGate = GetRandomGate(15, 27);
                     }
                 }
 
-                //add BoardingPass
+                // Add BoardingPass
                 await _boardingPassRepository.AddAsync(boardingPass);
 
-                //create invoice
+                // Create invoice
                 var invoice = new Invoice
                 {
                     InvoiceId = Guid.NewGuid().ToString(),
@@ -408,10 +512,10 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     Passenger = ticket.Passenger
                 };
 
-                //add invoice
+                // Add invoice
                 await _invoiceRepository.AddAsync(invoice);
 
-                //create invoice detail
+                // Create invoice detail
                 var invoiceDetails = new InvoiceDetail
                 {
                     InvoiceId = invoice.InvoiceId,
@@ -423,7 +527,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     Invoice = invoice,
                 };
 
-                //add invoice detail
+                // Add invoice detail
                 await _invoiceDetailRepository.AddAsync(invoiceDetails);
             }
         }
@@ -443,33 +547,6 @@ namespace Airline.Services.CouponAPI.Services.Implements
                                                      flight.FlightNumber == flightNumber &&
                                                      flight.Date == date &&
                                                      flight.DepartureTime == departureTime);
-        }
-
-        //get TicketClass's details (Class)
-        private async Task<TicketClass> GetTicketClassByNameAsync(string className)
-        {
-            var classes = await _ticketClassRepository.GetAllAsync();
-            return classes.FirstOrDefault(ticketClass => ticketClass.TicketName == className);
-        }
-
-        //get Baggage's details (BaggageType)
-        private async Task<Baggage> GetBaggageByNameAsync(string Name)
-        {
-            var baggages = await _baggageRepository.GetAllAsync();
-            return baggages.FirstOrDefault(b => b.Name == Name);
-        }
-
-        //get UnitPrice's details (USD, VND)
-        private async Task<UnitPrice> GetUnitPriceAsync(decimal usd, decimal vnd)
-        {
-            var unitPrices = await _unitPriceRepository.GetAllAsync();
-            return unitPrices.FirstOrDefault(u => u.USD == usd && u.VND == vnd);
-        }
-
-        //get Meal's details (MealRequest)
-        private async Task<Meal> GetMealByCodeAsync(string mealCode)
-        {
-            return await _mealRepository.GetMealByCodeAsync(mealCode);
         }
 
         //generate PNR
@@ -494,14 +571,6 @@ namespace Airline.Services.CouponAPI.Services.Implements
         {
             Random random = new Random();
             return random.Next(min, max + 1).ToString();
-        }
-
-        //get flightRoute to check gate (domestic or international)
-        public async Task<FlightRoute> GetFlightRouteBySectorAsync(string flightSector)
-        {
-            var flightRoute = await _scheduleRepository.GetByFlightSectorAsync(flightSector);
-
-            return flightRoute;
         }
     }
 }
