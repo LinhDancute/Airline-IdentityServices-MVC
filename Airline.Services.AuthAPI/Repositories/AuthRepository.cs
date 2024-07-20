@@ -72,7 +72,20 @@ namespace Airline.Services.AuthAPI.Repositories
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public async Task<GeneralResponse> RegisterAccount(RegisterDTO users, bool isAdmin = false)
+        //register as Member
+        public async Task<GeneralResponse> RegisterMemberAccount(RegisterDTO users)
+        {
+            return await RegisterAccount(users, "Member");
+        }
+
+        //register as Admin
+        public async Task<GeneralResponse> RegisterAdminAccount(RegisterDTO users)
+        {
+            return await RegisterAccount(users, "Administrator");
+        }
+
+        //register
+        private async Task<GeneralResponse> RegisterAccount(RegisterDTO users, string role)
         {
             if (users == null)
             {
@@ -83,6 +96,7 @@ namespace Airline.Services.AuthAPI.Repositories
             {
                 UserName = users.UserName,
                 Email = users.Email,
+                EmailConfirmed = true
             };
 
             var user = await _userManager.FindByEmailAsync(newUser.Email);
@@ -98,8 +112,6 @@ namespace Airline.Services.AuthAPI.Repositories
                 return new GeneralResponse(false, $"Error creating user: {errorMessage}");
             }
 
-            // Role assignment
-            var role = isAdmin ? "Administrator" : "Member";
             var roleExists = await _roleManager.RoleExistsAsync(role);
             if (!roleExists)
             {
@@ -120,7 +132,6 @@ namespace Airline.Services.AuthAPI.Repositories
 
             return new GeneralResponse(true, $"User registered as {role}");
         }
-
         public async Task<AccountResponse> GetUser(string id)
         {
             var users = new List<AccountDTO>();
@@ -135,6 +146,7 @@ namespace Airline.Services.AuthAPI.Repositories
                     UserName = aacount.UserName,
                     Email = aacount.Email,
                     HomeAddress = aacount.HomeAddress,
+                    PhoneNumber = aacount.PhoneNumber,
                     BirthDate = aacount.BirthDate,
                     CMND = aacount.CMND,
                 };
@@ -156,18 +168,19 @@ namespace Airline.Services.AuthAPI.Repositories
         {
             var admins = new List<AccountDTO>();
 
-            var aacounts = await _userManager.GetUsersInRoleAsync("Administrator");
-            foreach (var aacount in aacounts)
+            var accounts = await _userManager.GetUsersInRoleAsync("Administrator");
+            foreach (var account in accounts)
             {
-                var roles = await _userManager.GetRolesAsync(aacount);
+                var roles = await _userManager.GetRolesAsync(account);
                 var accountDTO = new AccountDTO
                 {
-                    Id = aacount.Id,
-                    UserName = aacount.UserName,
-                    Email = aacount.Email,
-                    HomeAddress = aacount.HomeAddress,
-                    BirthDate = aacount.BirthDate,
-                    CMND = aacount.CMND,
+                    Id = account.Id,
+                    UserName = account.UserName,
+                    Email = account.Email,
+                    HomeAddress = account.HomeAddress,
+                    PhoneNumber = account.PhoneNumber,
+                    BirthDate = account.BirthDate,
+                    CMND = account.CMND,
                 };
 
                 admins.Add(accountDTO);
@@ -182,5 +195,52 @@ namespace Airline.Services.AuthAPI.Repositories
                 return new AccountResponse(false, "No admin users found.", null);
             }
         }
+
+        //get current user after login success
+        public async Task<AccountResponse> GetCurrentUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return new AccountResponse(false, "User not found.", null);
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var accountDTO = new AccountDTO
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                HomeAddress = user.HomeAddress,
+                BirthDate = user.BirthDate,
+                PhoneNumber = user.PhoneNumber,
+                CMND = user.CMND,
+                Roles = roles.ToList()
+            };
+
+            return new AccountResponse(true, "User found.", new List<AccountDTO> { accountDTO });
+        }
+        public async Task<GeneralResponse> UpdatePhoneNumber(string userId, string newPhoneNumber)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new GeneralResponse(false, "User not found.");
+            }
+
+            user.PhoneNumber = newPhoneNumber;
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (updateResult.Succeeded)
+            {
+                return new GeneralResponse(true, "Phone number updated successfully.");
+            }
+            else
+            {
+                var errorMessage = string.Join(", ", updateResult.Errors.Select(e => e.Description));
+                return new GeneralResponse(false, $"Error updating phone number: {errorMessage}");
+            }
+        }
+
     }
 }

@@ -46,5 +46,20 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
             _context.Set<TicketClass>().Remove(ticketClass);
             await _context.SaveChangesAsync();
         }
+
+        //signle
+        public async Task<TicketClass> GetTicketClassByNameAsync(string className)
+        {
+            return await _context.TicketClasses
+                .FirstOrDefaultAsync(tc => tc.TicketName == className);
+        }
+
+        //list
+        public async Task<List<TicketClass>> GetTicketClassesByNameAsync(string className)
+        {
+            return await _context.TicketClasses
+                .Where(tc => tc.TicketName.Contains(className))
+                .ToListAsync();
+        }
     }
 }

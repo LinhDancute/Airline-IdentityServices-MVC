@@ -10,5 +10,7 @@ namespace Airline.Services.CouponAPI.Repositories
         Task AddRangeAsync(IEnumerable<UnitPrice> unitPrices);
         Task UpdateAsync(UnitPrice unitPrice);
         Task DeleteAsync(UnitPrice unitPrice);
+        Task<UnitPrice> GetUnitPriceAsync(decimal usd);
+        decimal ConvertUsdToVnd(decimal usdAmount);
     }
 }

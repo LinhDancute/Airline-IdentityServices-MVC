@@ -42,7 +42,7 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
                 PassengerId = ticket.Passenger?.Id,
                 FlightId = ticket.Flight.FlightId,
                 PriceId = ticket.UnitPrice.PriceId,
-                ClassId = ticket.TicketClass.TicketId,
+                ClassId = ticket.TicketClass.TicketClassId,
                 PassengerName = ticket.Passenger?.UserName,
                 PassengerPhoneNumber = ticket.Passenger?.PhoneNumber,
                 Itinerary = ticket.Flight.FlightSector,
@@ -57,13 +57,7 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
                 USD = ticket.UnitPrice.USD.ToString(),
                 PNR = ticket.PNR,
                 Status = (TicketStatus)ticket.Status,
-                StatusName = ((TicketStatus)ticket.Status).ToString(),
-                Passenger = ticket.Passenger,
-                Flight = ticket.Flight,
-                UnitPrice = ticket.UnitPrice,
-                TicketClass = ticket.TicketClass,
-                Ticket_Baggages = ticket.Ticket_Baggages,
-                Ticket_Meals = ticket.Ticket_Meals,
+                StatusName = ((TicketStatus)ticket.Status).ToString()
             }).ToList();
         }
 
@@ -129,6 +123,5 @@ namespace Airline.Services.CouponAPI.Repositories.Implements
             int latestId = await GetLatestTicketIdAsync();
             return latestId + 1;
         }
-
     }
 }

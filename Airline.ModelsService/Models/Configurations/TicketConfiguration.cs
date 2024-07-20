@@ -34,7 +34,7 @@ namespace Airline.ModelsService.Models.Configurations
             // TicketClass - Ticket: n-1
             builder.HasOne(t => t.TicketClass)
                 .WithMany(tc => tc.Tickets)
-                .HasForeignKey(t => t.TicketId)  
+                .HasForeignKey(t => t.ClassId)  
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 

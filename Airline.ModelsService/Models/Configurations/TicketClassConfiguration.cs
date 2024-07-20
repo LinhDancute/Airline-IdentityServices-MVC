@@ -9,13 +9,13 @@ namespace Airline.ModelsService.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<TicketClass> builder)
         {
-            builder.HasKey(tc => tc.TicketId);
+            builder.HasKey(tc => tc.TicketClassId);
 
             //TicketClass - Ticket: n-1
 
             builder.HasMany(bpt => bpt.Tickets)
                 .WithOne(tc => tc.TicketClass)
-                .HasForeignKey(bpt => bpt.TicketId)
+                .HasForeignKey(bpt => bpt.ClassId)
                 .IsRequired();
         }
     }

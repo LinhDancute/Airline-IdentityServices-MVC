@@ -10,6 +10,7 @@ namespace Airline.Services.CouponAPI.Repositories
         Task AddRangeAsync(IEnumerable<Baggage> baggages);
         Task UpdateAsync(Baggage baggage);
         Task DeleteAsync(Baggage baggage);
-        Task<List<Baggage>> GetByBaggageNameAsync(List<string> baggageName);
+        Task<List<Baggage>> GetByBaggageNamesAsync(List<string> baggageName);
+        Task<Baggage> GetBaggageByNameAsync(string Name);
     }
 }
