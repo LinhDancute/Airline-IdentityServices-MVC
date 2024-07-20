@@ -350,7 +350,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     throw new Exception($"Ticket class with Name {ticketDTO.Class} does not exist.");
                 }
 
-                // Update seat counts based on ticket class
+                //update seats count
                 if (ticketDTO.Class.Contains("Economy"))
                 {
                     flight.EconomySeat -= 1;
@@ -364,25 +364,30 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     flight.PremiumEconomySeat -= 1;
                 }
 
-                // Convert USD and VND from string to decimal
                 decimal usd = decimal.Parse(ticketDTO.USD);
                 decimal vnd = string.IsNullOrEmpty(ticketDTO.VND) ? _unitPriceRepository.ConvertUsdToVnd(usd) : decimal.Parse(ticketDTO.VND);
 
                 var unitPrice = await _unitPriceRepository.GetUnitPriceAsync(usd);
                 if (unitPrice == null)
                 {
-                    throw new Exception($"UnitPrice with USD {ticketDTO.USD} and VND {ticketDTO.VND} does not exist.");
+                    unitPrice = new UnitPrice
+                    {
+                        USD = usd,
+                        VND = _unitPriceRepository.ConvertUsdToVnd(usd),
+                    };
+
+                    await _unitPriceRepository.AddAsync(unitPrice);
                 }
 
                 ticket.TicketId = await _ticketRepository.GenerateNextTicketIdAsync();
 
-                // Set foreign key properties
+                //set foreign key properties
                 ticket.PassengerId = passenger.Id;
                 ticket.FlightId = flight.FlightId;
                 ticket.PriceId = unitPrice.PriceId;
                 ticket.ClassId = ticketClass.TicketClassId;
 
-                // Set default for BaggageType
+                //set baggageType with fareclass
                 if (ticketDTO.BaggageType == null || !ticketDTO.BaggageType.Any())
                 {
                     if (ticketDTO.Class.Contains("Economy"))
@@ -395,7 +400,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     }
                 }
 
-                // Set default for MealRequest
+                //set mealRequest with fareclass
                 if (ticketDTO.MealRequest == null || !ticketDTO.MealRequest.Any())
                 {
                     if (ticketDTO.Class.Contains("Business"))
@@ -406,16 +411,17 @@ namespace Airline.Services.CouponAPI.Services.Implements
                     }
                 }
 
-                // Random seat assignment based on class
+                //random seat with fareclass
                 if (string.IsNullOrEmpty(ticketDTO.Seat))
                 {
+                    var random = new Random();
                     if (ticketDTO.Class.Contains("Economy"))
                     {
-                        ticketDTO.Seat = $"{new Random().Next(15, 25)}{(char)new Random().Next('A', 'J')}";
+                        ticketDTO.Seat = $"{random.Next(15, 25)}{(char)random.Next('A', 'J')}";
                     }
                     else if (ticketDTO.Class.Contains("Business"))
                     {
-                        ticketDTO.Seat = $"{new Random().Next(2, 7)}{(char)new Random().Next('A', 'E')}";
+                        ticketDTO.Seat = $"{random.Next(2, 7)}{(char)random.Next('A', 'E')}";
                     }
                 }
 
@@ -442,7 +448,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 await _scheduleRepository.UpdateFlightAsync(flight);
 
                 // Add baggages in ticket_baggage
-                foreach (var baggageType in ticketDTO.BaggageType)
+                foreach (var baggageType in ticketDTO.BaggageType.Where(b => !string.IsNullOrEmpty(b)))
                 {
                     var baggage = await _baggageRepository.GetBaggageByNameAsync(baggageType);
                     if (baggage == null)
@@ -460,7 +466,7 @@ namespace Airline.Services.CouponAPI.Services.Implements
                 }
 
                 // Add meals in ticket_meal
-                foreach (var mealRequest in ticketDTO.MealRequest)
+                foreach (var mealRequest in ticketDTO.MealRequest.Where(m => !string.IsNullOrEmpty(m)))
                 {
                     var meal = await _mealRepository.GetMealByCodeAsync(mealRequest);
                     if (meal == null)

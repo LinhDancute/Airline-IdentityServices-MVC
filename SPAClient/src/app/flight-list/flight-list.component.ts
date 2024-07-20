@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-flight-list',
@@ -10,7 +10,8 @@ import {NgClass, NgForOf, NgIf} from "@angular/common";
     RouterLink,
     NgForOf,
     NgIf,
-    NgClass
+    NgClass,
+    CurrencyPipe
   ],
   styleUrls: ['./flight-list.component.css']
 })
@@ -22,6 +23,15 @@ export class FlightListComponent implements OnInit {
   selectedRoundTripFlight: any;
   showRoundTrip: boolean = false;
   searchFlightObj: any;
+
+  // @ts-ignore
+  selectedOneWayFlightSeatClass: string;
+  // @ts-ignore
+  selectedRoundTripFlightSeatClass: string;
+  // @ts-ignore
+  flightSectorOneWay: string;
+  // @ts-ignore
+  flightSectorRoundTrip: string;
 
   economyPrices: { economyPrice: number }[] = [
     { economyPrice: 99.10 },
@@ -49,7 +59,6 @@ export class FlightListComponent implements OnInit {
     { businessPrice: 189.75 }
   ];
 
-  //receive data from page-content (flight-search info)
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -62,22 +71,16 @@ export class FlightListComponent implements OnInit {
           this.assignRandomPrices(this.flightsRoundTrip);
         }
       }
-      // console.log('received one way flights: ', this.flightsOneWay);
-      // console.log('received round-trip flights: ', this.flightsRoundTrip);
-      // console.log('received flight search info: ', this.searchFlightObj);
     });
-
   }
 
   ngOnInit(): void {}
 
-  //get random in list
   getRandomPrice(prices: { price: number }[]): number {
     const randomIndex = Math.floor(Math.random() * prices.length);
     return prices[randomIndex].price;
   }
 
-  //set random prices for seat
   assignRandomPrices(flights: any[]): void {
     flights.forEach(flight => {
       flight.randomEconomyPrice = this.getRandomPrice(this.economyPrices.map(p => ({ price: p.economyPrice })));
@@ -85,30 +88,32 @@ export class FlightListComponent implements OnInit {
     });
   }
 
-  //select one way flight
-  selectOneWayFlight(flight: any): void {
+  selectOneWayFlight(flight: any, seatClass: string): void {
     this.selectedOneWayFlight = flight;
-    this.selectedOneWayFlight.price = flight.randomEconomyPrice;
+    this.selectedOneWayFlight.price = seatClass === 'Economy' ? flight.randomEconomyPrice : flight.randomBusinessPrice;
+    this.selectedOneWayFlightSeatClass = seatClass;
+    this.flightSectorOneWay = flight.flightSector;
     this.showRoundTrip = true;
   }
 
-  //select round trip flight
-  selectRoundTripFlight(flight: any): void {
+  selectRoundTripFlight(flight: any, seatClass: string): void {
     this.selectedRoundTripFlight = flight;
-    this.selectedRoundTripFlight.price = flight.randomEconomyPrice;
+    this.selectedRoundTripFlight.price = seatClass === 'Economy' ? flight.randomEconomyPrice : flight.randomBusinessPrice;
+    this.selectedRoundTripFlightSeatClass = seatClass;
+    this.flightSectorRoundTrip = flight.flightSector;
   }
 
-  //pass data to flight-booking-detail (2 flights have been choosen, flight-search info)
   navigateToBookingDetail(): void {
     this.router.navigate(['/check-order'], {
       state: {
         selectedOneWayFlight: this.selectedOneWayFlight,
         selectedRoundTripFlight: this.selectedRoundTripFlight,
-        searchFlightObj: this.searchFlightObj
+        selectedOneWayFlightSeatClass: this.selectedOneWayFlightSeatClass,
+        selectedRoundTripFlightSeatClass: this.selectedRoundTripFlightSeatClass,
+        searchFlightObj: this.searchFlightObj,
+        flightSectorOneWay: this.flightSectorOneWay,
+        flightSectorRoundTrip: this.flightSectorRoundTrip
       }
     });
-    // console.log('selected one way flight:', this.selectedOnWayFlight);
-    // console.log('selected round trip flight:', this.selectedRoundTripFlight);
-    // console.log('pass flight search info:', this.searchFlightObj);
   }
 }

@@ -1,4 +1,4 @@
-<!-- Display flightsOnWay first -->
+<!-- Display flightsOneWay first -->
 <div *ngIf="!showRoundTrip">
   <div *ngFor="let flight of flightsOneWay" class="basic-flight-card-layout-container">
     <div class="basic-flight-card-layout-top-section-container row">
@@ -45,21 +45,21 @@
       <div class="basic-flight-card-layout-right-section-container">
         <!-- Pricing Options -->
         <div class="pricing-container">
-          <div class="pricing-option economy" (click)="selectOneWayFlight(flight)" [ngClass]="{'unavailable': flight.economySeat === 0}">
+          <div class="pricing-option economy" (click)="selectOneWayFlight(flight, 'Economy')" [ngClass]="{'unavailable': flight.economySeat === 0}" aria-label="Select Economy flight">
             <div class="seats-left" *ngIf="flight.economySeat !== null && flight.economySeat <= 10">{{ flight.economySeat }} seats left</div>
             <div class="class-name">Economy</div>
             <div>from</div>
             <div>USD</div>
-            <div class="price" *ngIf="flight.economySeat > 0">{{ flight.randomEconomyPrice }}</div>
+            <div class="price" *ngIf="flight.economySeat > 0">{{ flight.randomEconomyPrice | currency: 'USD' }}</div>
             <div class="price" *ngIf="flight.economySeat === 0">Not available</div>
             <div class="dropdown-arrow" *ngIf="flight.economySeat > 0">▼</div>
           </div>
-          <div class="pricing-option business" (click)="selectOneWayFlight(flight)" [ngClass]="{'unavailable': flight.businessSeat === 0}">
+          <div class="pricing-option business" (click)="selectOneWayFlight(flight, 'Business')" [ngClass]="{'unavailable': flight.businessSeat === 0}" aria-label="Select Business flight">
             <div class="seats-left" *ngIf="flight.businessSeat !== null && flight.businessSeat <= 10">{{ flight.businessSeat }} seats left</div>
             <div class="class-name">Business</div>
             <div>from</div>
             <div>USD</div>
-            <div class="price" *ngIf="flight.businessSeat > 0">{{ flight.randomBusinessPrice }}</div>
+            <div class="price" *ngIf="flight.businessSeat > 0">{{ flight.randomBusinessPrice | currency: 'USD' }}</div>
             <div class="price" *ngIf="flight.businessSeat === 0">Not available</div>
             <div class="dropdown-arrow" *ngIf="flight.businessSeat > 0">▼</div>
           </div>
@@ -116,21 +116,21 @@
       <div class="basic-flight-card-layout-right-section-container">
         <!-- Pricing Options -->
         <div class="pricing-container">
-          <div class="pricing-option economy" (click)="selectRoundTripFlight(flight)" [ngClass]="{'unavailable': flight.economySeat === 0}">
+          <div class="pricing-option economy" (click)="selectRoundTripFlight(flight, 'Economy')" [ngClass]="{'unavailable': flight.economySeat === 0}" aria-label="Select Economy flight">
             <div class="seats-left" *ngIf="flight.economySeat !== null && flight.economySeat <= 10">{{ flight.economySeat }} seats left</div>
             <div class="class-name">Economy</div>
             <div>from</div>
             <div>USD</div>
-            <div class="price" *ngIf="flight.economySeat > 0">{{ flight.randomEconomyPrice }}</div>
+            <div class="price" *ngIf="flight.economySeat > 0">{{ flight.randomEconomyPrice | currency: 'USD' }}</div>
             <div class="price" *ngIf="flight.economySeat === 0">Not available</div>
             <div class="dropdown-arrow" *ngIf="flight.economySeat > 0">▼</div>
           </div>
-          <div class="pricing-option business" (click)="selectRoundTripFlight(flight)" [ngClass]="{'unavailable': flight.businessSeat === 0}">
+          <div class="pricing-option business" (click)="selectRoundTripFlight(flight, 'Business')" [ngClass]="{'unavailable': flight.businessSeat === 0}" aria-label="Select Business flight">
             <div class="seats-left" *ngIf="flight.businessSeat !== null && flight.businessSeat <= 10">{{ flight.businessSeat }} seats left</div>
             <div class="class-name">Business</div>
             <div>from</div>
             <div>USD</div>
-            <div class="price" *ngIf="flight.businessSeat > 0">{{ flight.randomBusinessPrice }}</div>
+            <div class="price" *ngIf="flight.businessSeat > 0">{{ flight.randomBusinessPrice | currency: 'USD' }}</div>
             <div class="price" *ngIf="flight.businessSeat === 0">Not available</div>
             <div class="dropdown-arrow" *ngIf="flight.businessSeat > 0">▼</div>
           </div>
