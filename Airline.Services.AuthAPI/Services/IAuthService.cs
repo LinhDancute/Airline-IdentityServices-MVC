@@ -10,5 +10,7 @@ namespace Airline.Services.AuthAPI.Services
         Task<LoginResponse> LoginAccount(LoginDTO loginUser);
         Task <AccountResponse> GetAdmin(string id);
         Task<AccountResponse> GetUser(string id);
+        Task<AccountResponse> GetCurrentUser(string id);
+        Task<GeneralResponse> UpdatePhoneNumber(string userId, string newPhoneNumber);
     }
 }

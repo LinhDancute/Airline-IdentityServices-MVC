@@ -112,5 +112,46 @@ namespace Airline.Services.AuthAPI.Controllers
             }
             return NotFound(result.Message);
         }
+
+        [Authorize]
+        [HttpPut("updatePhoneNumber")]
+        public async Task<IActionResult> UpdatePhoneNumber([FromBody] UpdatePhoneNumberDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized("User not found.");
+            }
+
+            var response = await _userAccount.UpdatePhoneNumber(userId, model.PhoneNumber);
+
+            if (response.flag)
+            {
+                return Ok(new { Message = response.Message });
+            }
+            else
+            {
+                return BadRequest(new { Message = response.Message });
+            }
+        }
+
+        [HttpGet("currenUser")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = await _userAccount.GetCurrentUser(userId);
+            if (!response.flag)
+            {
+                return NotFound(response.Message);
+            }
+            return Ok(response.AccountDTO.First());
+        }
     }
 }
+
