@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "Airline.ApiGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airline.ModelsService", "Airline.ModelsService\Airline.ModelsService.csproj", "{917884EB-DB51-4DB7-9062-206B27A1BE9C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{3BA7AEAF-0451-48AF-9B31-F0F6BECE67AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.xUnit", "xUnitTesting\Testing.xUnit.csproj", "{F1132623-E36A-4611-886B-DC7C3CD2E15F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,10 @@ Global
 		{917884EB-DB51-4DB7-9062-206B27A1BE9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{917884EB-DB51-4DB7-9062-206B27A1BE9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{917884EB-DB51-4DB7-9062-206B27A1BE9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1132623-E36A-4611-886B-DC7C3CD2E15F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1132623-E36A-4611-886B-DC7C3CD2E15F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1132623-E36A-4611-886B-DC7C3CD2E15F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1132623-E36A-4611-886B-DC7C3CD2E15F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,7 @@ Global
 		{01AEAD41-0A85-4EFB-8483-466877DD1F12} = {9DA55822-E38D-4F88-83A2-1CED886A16C2}
 		{219711D7-8888-48A0-8A6E-D5FAAF7098B5} = {F8B580CB-078B-45E0-B36C-D8A50AA8968E}
 		{917884EB-DB51-4DB7-9062-206B27A1BE9C} = {EEBAEAA3-F342-4D4A-885D-6E71D4AF1083}
+		{F1132623-E36A-4611-886B-DC7C3CD2E15F} = {3BA7AEAF-0451-48AF-9B31-F0F6BECE67AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {04C187C7-F597-4295-BAA1-2DD64BEA8E58}

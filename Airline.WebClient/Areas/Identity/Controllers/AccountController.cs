@@ -52,7 +52,7 @@ namespace App.Areas.Identity.Controllers
             return View();
         }
 
-        //
+        
         // POST: /Account/Login
         [HttpPost("/login/")]
         [AllowAnonymous]
@@ -63,7 +63,13 @@ namespace App.Areas.Identity.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                 
+                if (_signInManager == null || _userManager == null)
+                {
+                    // Log error or handle missing dependencies appropriately
+                    ModelState.AddModelError(string.Empty, "Internal server error.");
+                    return View(model);
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(model.UserNameOrEmail, model.Password, model.RememberMe, lockoutOnFailure: true);                
                 // Tìm UserName theo Email, đăng nhập lại
                 if ((!result.Succeeded) && AppUtilities.IsValidEmail(model.UserNameOrEmail))
