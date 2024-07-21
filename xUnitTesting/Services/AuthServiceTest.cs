@@ -4,7 +4,7 @@ using Moq;
 using Xunit;
 using static Airline.Services.AuthAPI.Responses.ServiceResponses;
 
-namespace xUnitTesting.Services
+namespace Testing.xUnit.Services
 {
     public class AuthServiceTest
     {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Moq;
 using Xunit;
 
-namespace xUnitTesting.Repositories
+namespace Testing.xUnit.Repositories
 {
     public class AuthRepositoryTest
     {
