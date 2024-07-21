@@ -7,7 +7,7 @@ using System.Security.Claims;
 using Xunit;
 using static Airline.Services.AuthAPI.Responses.ServiceResponses;
 
-namespace xUnitTesting.Controllers
+namespace Testing.xUnit.Controllers
 {
     public class AuthControllerTest 
     {

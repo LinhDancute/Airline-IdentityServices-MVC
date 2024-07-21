@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Airline.Services.AuthAPI\Airline.Services.AuthAPI.csproj" />
+    <ProjectReference Include="..\Airline.Services.CouponAPI\Airline.Services.CouponAPI.csproj" />
+    <ProjectReference Include="..\Airline.WebClient\Airline.WebClient.csproj" />
   </ItemGroup>
 
 </Project>
