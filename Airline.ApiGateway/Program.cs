@@ -6,35 +6,58 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//add Ocelot configuration
+// Add Ocelot configuration
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 builder.Services.AddOcelot();
 
-//JWT
+builder.Services.AddLogging(config =>
+{
+    config.AddConsole();
+    config.AddDebug();
+});
+
+// JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateIssuerSigningKey = true,
         ValidateLifetime = true,
-        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        ValidAudience = builder.Configuration["JWT:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!))
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCors("AllowAll");
+
+// Use Ocelot middleware
+app.UseOcelot().Wait();
+
 app.MapGet("/", () => "Hello World!");
 app.MapControllers();
-
-//use Ocelot middleware
-app.UseOcelot().Wait();
 
 app.Run();
