@@ -49,6 +49,7 @@ export class LoginComponent {
   }
 
   onLogin() {
+    debugger;
     this.http.post("https://localhost:7002/api/Auth/login", this.loginObj).subscribe((response: any) => {
       if (response.token) {
         const token = response.token;
@@ -57,7 +58,7 @@ export class LoginComponent {
 
         // Use the token to fetch the user data
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        this.http.get("https://localhost:7002/api/Auth/currenUser", { headers }).subscribe((userResponse: any) => {
+        this.http.get("https://localhost:7002/api/Auth/currentUser", { headers }).subscribe((userResponse: any) => {
           console.log("User data:", userResponse);
 
           // Navigate to flight-booking-detail with state

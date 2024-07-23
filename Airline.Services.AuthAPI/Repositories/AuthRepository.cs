@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Airline.ModelsService.Models;
 using Airline.ModelsService.Models.DTOs.Auth;
-
+using Microsoft.Extensions.Configuration;
 
 namespace Airline.Services.AuthAPI.Repositories
 {
@@ -17,6 +17,7 @@ namespace Airline.Services.AuthAPI.Repositories
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+
         public AuthRepository(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;
@@ -68,23 +69,20 @@ namespace Airline.Services.AuthAPI.Repositories
                 claims: userClaims,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: credentials
-                );
+            );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        //register as Member
         public async Task<GeneralResponse> RegisterMemberAccount(RegisterDTO users)
         {
             return await RegisterAccount(users, "Member");
         }
 
-        //register as Admin
         public async Task<GeneralResponse> RegisterAdminAccount(RegisterDTO users)
         {
             return await RegisterAccount(users, "Administrator");
         }
 
-        //register
         private async Task<GeneralResponse> RegisterAccount(RegisterDTO users, string role)
         {
             if (users == null)
@@ -132,23 +130,24 @@ namespace Airline.Services.AuthAPI.Repositories
 
             return new GeneralResponse(true, $"User registered as {role}");
         }
+
         public async Task<AccountResponse> GetUser(string id)
         {
             var users = new List<AccountDTO>();
 
-            var aacounts = await _userManager.GetUsersInRoleAsync("Member");
-            foreach (var aacount in aacounts)
+            var accounts = await _userManager.GetUsersInRoleAsync("Member");
+            foreach (var account in accounts)
             {
-                var roles = await _userManager.GetRolesAsync(aacount);
+                var roles = await _userManager.GetRolesAsync(account);
                 var accountDTO = new AccountDTO
                 {
-                    Id = aacount.Id,
-                    UserName = aacount.UserName,
-                    Email = aacount.Email,
-                    HomeAddress = aacount.HomeAddress,
-                    PhoneNumber = aacount.PhoneNumber,
-                    BirthDate = aacount.BirthDate,
-                    CMND = aacount.CMND,
+                    Id = account.Id,
+                    UserName = account.UserName,
+                    Email = account.Email,
+                    HomeAddress = account.HomeAddress,
+                    PhoneNumber = account.PhoneNumber,
+                    BirthDate = account.BirthDate,
+                    CMND = account.CMND,
                 };
 
                 users.Add(accountDTO);
@@ -156,11 +155,11 @@ namespace Airline.Services.AuthAPI.Repositories
 
             if (users.Any())
             {
-                return new AccountResponse(true, "users found.", users);
+                return new AccountResponse(true, "Users found.", users);
             }
             else
             {
-                return new AccountResponse(false, "No users found.", null);
+                return new AccountResponse(false, "No users found.", new List<AccountDTO>());
             }
         }
 
@@ -192,17 +191,16 @@ namespace Airline.Services.AuthAPI.Repositories
             }
             else
             {
-                return new AccountResponse(false, "No admin users found.", null);
+                return new AccountResponse(false, "No admin users found.", new List<AccountDTO>());
             }
         }
 
-        //get current user after login success
         public async Task<AccountResponse> GetCurrentUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
-                return new AccountResponse(false, "User not found.", null);
+                return new AccountResponse(false, "User not found.", new List<AccountDTO>());
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -220,6 +218,7 @@ namespace Airline.Services.AuthAPI.Repositories
 
             return new AccountResponse(true, "User found.", new List<AccountDTO> { accountDTO });
         }
+
         public async Task<GeneralResponse> UpdatePhoneNumber(string userId, string newPhoneNumber)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -241,6 +240,5 @@ namespace Airline.Services.AuthAPI.Repositories
                 return new GeneralResponse(false, $"Error updating phone number: {errorMessage}");
             }
         }
-
     }
 }

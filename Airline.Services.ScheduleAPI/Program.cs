@@ -40,6 +40,26 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ScheduleAPI", Version = "v1" });
 });
 
+var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
+
+//builder.Services.AddAuthentication(x =>
+//{
+//    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//})
+//    .AddJwtBearer(x => {
+//        x.RequireHttpsMetadata = false;
+//        x.SaveToken = true;
+//        x.Authority = "https://localhost:7006/";
+//        x.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuerSigningKey = true,
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+//            ValidateIssuer = false,
+//            ValidateAudience = false
+//        };
+//    });
+
 // Register repositories and services
 builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
 builder.Services.AddScoped<IAirlineService, AirlineService>();

@@ -2,6 +2,9 @@
 {
     public class SD
     {
+        //auth
+        public static string AuthAPIBase {  get; set; }
+
         //schedule
         public static string AirlineAPIBase { get; set; }
         public static string AirportAPIBase { get; set; }
@@ -21,5 +24,7 @@
         {
             GET, POST, PUT, PATCH, DELETE
         }
+
+        public static string SessionToken = "JWTToken";
     }
 }

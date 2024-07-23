@@ -1,6 +1,5 @@
 using Airline.WebClient.Models.DTOs.Coupon;
 using Airline.WebClient.Models.Airline;
-using Airline.WebClient.Models.DTOs.Coupon;
 using Airline.WebClient.Models.DTOs.Schedule;
 using AutoMapper;
 using Airline.WebClient.Models.Statistical;
