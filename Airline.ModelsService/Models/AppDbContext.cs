@@ -54,7 +54,7 @@ namespace Airline.ModelsService
                     .IsRequired();
             });
         }
-
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Airline.ModelsService.Models.Airline.Airline> Airlines { get; set; }
         public DbSet<Airport> Airports { get; set; }

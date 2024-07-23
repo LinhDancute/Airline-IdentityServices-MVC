@@ -1,6 +1,6 @@
-﻿using Airline.ModelsService.Models.DTOs.Auth;
+﻿using Airline.WebClient.Models.DTOs.Auth;
 
-namespace Airline.Services.AuthAPI.Responses
+namespace Airline.WebClient.Services.Responses
 {
     public class ServiceResponses
     {

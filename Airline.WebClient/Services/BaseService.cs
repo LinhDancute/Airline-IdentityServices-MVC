@@ -195,5 +195,91 @@ namespace Airline.WebClient.Services
                 return new ResponseDTO { IsSuccess = false, Message = $"Unexpected error: {ex.Message}" };
             }
         }
+
+        public async Task<ResponseDTO> SendAsyncAuthAPI(RequestDTO requestDTO)
+        {
+            try
+            {
+                HttpClient clientAuthAPI = _httpClientFactory.CreateClient("Airline.Services.AuthAPI");
+
+                HttpRequestMessage messageAuthAPI = new HttpRequestMessage
+                {
+                    RequestUri = new Uri(clientAuthAPI.BaseAddress, requestDTO.ApiUrl),
+                };
+
+                if (requestDTO.Data != null)
+                {
+                    messageAuthAPI.Content = new StringContent(JsonConvert.SerializeObject(requestDTO.Data), Encoding.UTF8, "application/json");
+                }
+
+                switch (requestDTO.ApiType)
+                {
+                    case ApiType.POST:
+                        messageAuthAPI.Method = HttpMethod.Post;
+                        break;
+                    case ApiType.DELETE:
+                        messageAuthAPI.Method = HttpMethod.Delete;
+                        break;
+                    case ApiType.PUT:
+                        messageAuthAPI.Method = HttpMethod.Put;
+                        break;
+                    default:
+                        messageAuthAPI.Method = HttpMethod.Get;
+                        break;
+                }
+
+                Console.WriteLine($"Base:Request URL: {clientAuthAPI.BaseAddress}");
+                Console.WriteLine($"URL:Request URL: {requestDTO.ApiUrl}");
+                Console.WriteLine($"Request URL: {messageAuthAPI.RequestUri}");
+
+                HttpResponseMessage apiResponseAuthAPI = await clientAuthAPI.SendAsync(messageAuthAPI);
+
+                if (apiResponseAuthAPI.IsSuccessStatusCode)
+                {
+                    var apiContentScheduleAPI = await apiResponseAuthAPI.Content.ReadAsStringAsync();
+
+                    try
+                    {
+                        var apiResponseAuthAPIDto = JsonConvert.DeserializeObject<object>(apiContentScheduleAPI);
+                        return new ResponseDTO { IsSuccess = true, Result = apiResponseAuthAPIDto };
+                    }
+                    catch (JsonSerializationException)
+                    {
+                        return new ResponseDTO { IsSuccess = true, Result = JsonConvert.DeserializeObject<object>(apiContentScheduleAPI) };
+                    }
+                }
+                else
+                {
+                    // Log the detailed response for debugging
+                    var errorContentAuthAPI = await apiResponseAuthAPI.Content.ReadAsStringAsync();
+                    Console.WriteLine($"HTTP Error: {apiResponseAuthAPI.StatusCode}, Content: {errorContentAuthAPI}");
+                    switch (apiResponseAuthAPI.StatusCode)
+                    {
+                        case HttpStatusCode.NotFound:
+                            return new ResponseDTO { IsSuccess = false, Message = "Not Found" };
+                        case HttpStatusCode.Forbidden:
+                            return new ResponseDTO { IsSuccess = false, Message = "Access Denied" };
+                        case HttpStatusCode.Unauthorized:
+                            return new ResponseDTO { IsSuccess = false, Message = "Unauthorized" };
+                        case HttpStatusCode.InternalServerError:
+                            return new ResponseDTO { IsSuccess = false, Message = "Internal Server Error" };
+                        default:
+                            return new ResponseDTO { IsSuccess = false, Message = $"HTTP Error: {apiResponseAuthAPI.StatusCode}" };
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                return new ResponseDTO { IsSuccess = false, Message = $"HTTP request error: {ex.Message}" };
+            }
+            catch (TaskCanceledException ex)
+            {
+                return new ResponseDTO { IsSuccess = false, Message = $"Request timed out: {ex.Message}" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO { IsSuccess = false, Message = $"Unexpected error: {ex.Message}" };
+            }
+        }
     }
 }

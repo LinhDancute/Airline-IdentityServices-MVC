@@ -1,8 +1,12 @@
 ﻿using Airline.Duende.IdentityServer;
+using Airline.Duende.IdentityServer.IDbInitializer;
 using Airline.ModelsService;
 using Airline.ModelsService.Models;
+using Duende.IdentityServer.AspNetIdentity;
+using Duende_IdentityServer_UI;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,16 +42,20 @@ builder.Services.AddMvc().AddViewOptions(options =>
 builder.Services.AddIdentityServer(options =>
 {
     options.Events.RaiseErrorEvents = true;
-    options.Events.RaiseFailureEvents = true;
     options.Events.RaiseInformationEvents = true;
+    options.Events.RaiseFailureEvents = true;
     options.Events.RaiseSuccessEvents = true;
     options.EmitStaticAudienceClaim = true;
 })
-.AddDeveloperSigningCredential()
 .AddInMemoryIdentityResources(Config.IdentityResources)
 .AddInMemoryApiScopes(Config.ApiScopes)
 .AddInMemoryClients(Config.Clients)
-.AddTestUsers(Duende_IdentityServer_UI.TestUsers.Users);
+.AddAspNetIdentity<AppUser>()
+.AddTestUsers(TestUsers.Users);
+
+
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -60,6 +68,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+SeedDatabase();
 
 app.UseRouting();
 app.UseIdentityServer();
@@ -72,3 +81,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}
