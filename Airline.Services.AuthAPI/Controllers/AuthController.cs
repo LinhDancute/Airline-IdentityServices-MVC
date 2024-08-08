@@ -57,9 +57,33 @@ namespace Airline.Services.AuthAPI.Controllers
             return Ok(admin);
         }
 
+        [HttpGet("user")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetUser()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            var user = await _userAccount.GetUser(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            return Ok(user);
+        }
+
         [HttpPost("register/member")]
         public async Task<IActionResult> RegisterMember([FromBody] RegisterDTO registerDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _userAccount.RegisterMemberAccount(registerDTO);
             if (result.flag)
             {
@@ -71,6 +95,11 @@ namespace Airline.Services.AuthAPI.Controllers
         [HttpPost("register/admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDTO registerDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _userAccount.RegisterAdminAccount(registerDTO);
             if (result.flag)
             {
@@ -79,10 +108,14 @@ namespace Airline.Services.AuthAPI.Controllers
             return BadRequest(result.Message);
         }
 
-
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var response = await _userAccount.LoginAccount(loginDTO);
             if (!response.flag)
             {

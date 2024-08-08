@@ -103,6 +103,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 
+builder.Services.AddAuthorization();
+
+
 builder.Services.AddScoped<IAuthService, AuthRepository>();
 
 var app = builder.Build();

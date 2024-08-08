@@ -79,8 +79,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.Configure<SecurityStampValidatorOptions>(options =>
 {
-    // Trên 30 giây truy cập lại sẽ nạp lại thông tin User (Role)
-    // SecurityStamp trong bảng User đổi -> nạp lại thông tinn Security
     options.ValidationInterval = TimeSpan.FromSeconds(5);
 });
 
@@ -184,6 +182,14 @@ builder.Services.AddHttpClient("Airline.Services.ScheduleAPI", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Airline.Services.ScheduleAPI"]);
     client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ViewManageMenu", policy =>
+    {
+        policy.RequireRole("Administrator");
+    });
 });
 
 builder.Services.AddAuthorization(options =>

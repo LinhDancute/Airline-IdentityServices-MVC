@@ -25,7 +25,7 @@ namespace Airline.Services.AuthAPI.Repositories
             _configuration = configuration;
         }
 
-        public async Task<ServiceResponses.LoginResponse> LoginAccount(LoginDTO loginDTO)
+        public async Task<LoginResponse> LoginAccount(LoginDTO loginDTO)
         {
             if (loginDTO == null)
             {
