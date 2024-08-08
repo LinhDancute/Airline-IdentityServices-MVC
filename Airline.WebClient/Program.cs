@@ -16,11 +16,19 @@ using Airline.WebClient.Services;
 using Airline.WebClient.Services.IServices.Airline;
 using Airline.WebClient.Services.Airline;
 using Microsoft.AspNetCore.DataProtection;
+using App.Services;
+using Airline.WebClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Enable PII (Personally Identifiable Information) logging for identity model
 IdentityModelEventSource.ShowPII = true;
+
+// Load appsettings.json configurations
+IConfiguration configuration = new ConfigurationBuilder()
+               .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+               .AddJsonFile("appsettings.json")
+               .Build();
 
 // Add services to the container
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -54,6 +62,14 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.SignIn.RequireConfirmedAccount = true;
 });
 
+builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+{
+    options.ValidationInterval = TimeSpan.FromSeconds(5);
+});
+
+var mailSetting = builder.Configuration.GetSection("MailSettings");
+builder.Services.Configure<MailSettings>(mailSetting);
+builder.Services.AddSingleton<IEmailSender, SendMailService>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/login/";
@@ -66,58 +82,78 @@ builder.Services.Configure<SecurityStampValidatorOptions>(options =>
     options.ValidationInterval = TimeSpan.FromSeconds(5);
 });
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = "oidc";
-})
-.AddCookie(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-    options.LoginPath = "/Auth/Login";
-    options.AccessDeniedPath = "/Auth/AccessDenied";
-    options.SlidingExpiration = true;
-})
-.AddOpenIdConnect("oidc", options =>
-{
-    options.Authority = "https://localhost:7006"; 
-    options.ClientId = "airline_webclient";
-    options.ClientSecret = "secret";
-    options.ResponseType = "code";
-    options.GetClaimsFromUserInfoEndpoint = true;
-    options.SaveTokens = true;
+builder.Services.AddAuthentication().AddCookie()
+                .AddGoogle(options =>
+                {
+                    var gconfig = configuration.GetSection("Authentication:Google");
+                    options.ClientId = gconfig["ClientId"];
+                    options.ClientSecret = gconfig["ClientSecret"];
+                    options.CorrelationCookie.SameSite = SameSiteMode.Lax;
+                    options.CallbackPath = "/dang-nhap-tu-google";
+                });
 
-    options.TokenValidationParameters.NameClaimType = "name";
-    options.TokenValidationParameters.RoleClaimType = "role";
-    options.Scope.Add("airline");
-    options.Scope.Add("offline_access");
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = "oidc";
+//})
+//.AddCookie(options =>
+//{
+//    options.Cookie.HttpOnly = true;
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+//    options.LoginPath = "/Auth/Login";
+//    options.AccessDeniedPath = "/Auth/AccessDenied";
+//    options.SlidingExpiration = true;
+//})
+//.AddOpenIdConnect("oidc", options =>
+//{
+//    options.Authority = "https://localhost:7006"; 
+//    options.ClientId = "airline_webclient";
+//    options.ClientSecret = "secret";
+//    options.ResponseType = "code";
+//    options.GetClaimsFromUserInfoEndpoint = true;
+//    options.SaveTokens = true;
 
-
-    options.Events = new OpenIdConnectEvents
-    {
-        OnRemoteFailure = context =>
-        {
-            context.Response.Redirect("/");
-            context.HandleResponse();
-            return Task.CompletedTask;
-        }
-    };
-});
+//    options.TokenValidationParameters.NameClaimType = "name";
+//    options.TokenValidationParameters.RoleClaimType = "role";
+//    options.Scope.Add("airline");
+//    options.Scope.Add("offline_access");
 
 
+//    options.Events = new OpenIdConnectEvents
+//    {
+//        OnTicketReceived = context =>
+//        {
+//            // Redirect to AuthController after successful login
+//            var returnUrl = context.Properties.RedirectUri ?? "~/";
+//            context.HandleResponse();
+//            context.Response.Redirect(returnUrl);
+//            return Task.CompletedTask;
+//        },
+//        OnRemoteFailure = context =>
+//        {
+//            context.Response.Redirect("/");
+//            context.HandleResponse();
+//            return Task.CompletedTask;
+//        }
+//    };
+//});
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+
+
+//builder.Services.AddSession(options =>
+//{
+//    options.IdleTimeout = TimeSpan.FromMinutes(30);
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.IsEssential = true;
+//});
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.MinimumSameSitePolicy = SameSiteMode.Strict;
 });
+
+builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<ITicketClassService, TicketClassService>();
@@ -130,11 +166,11 @@ builder.Services.AddScoped<IBaggageService, BaggageService>();
 builder.Services.AddScoped<IMealService, MealService>();
 builder.Services.AddScoped<IUnitPriceService, UnitPriceService>();
 
-builder.Services.AddHttpClient("Airline.Services.AuthAPI", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Airline.Services.AuthAPI"]);
-    client.DefaultRequestHeaders.Add("Accept", "application/json");
-});
+//builder.Services.AddHttpClient("Airline.Services.AuthAPI", client =>
+//{
+//    client.BaseAddress = new Uri(builder.Configuration["ServiceUrls:Airline.Services.AuthAPI"]);
+//    client.DefaultRequestHeaders.Add("Accept", "application/json");
+//});
 
 builder.Services.AddHttpClient("Airline.Services.CouponAPI", client =>
 {
@@ -156,11 +192,24 @@ builder.Services.AddAuthorization(options =>
     });
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ViewManageMenu", policy =>
+    {
+        policy.RequireRole("Administrator");
+    });
+});
+
+builder.Services.AddMvc().AddViewOptions(options =>
+{
+    options.HtmlHelperOptions.ClientValidationEnabled = false;
+});
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
-
+builder.Services.ConfigureMapper();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline

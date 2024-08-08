@@ -28,11 +28,10 @@ namespace Airline.WebClient.Controllers
         [Authorize]
         public async Task<IActionResult> Login()
         {
-            var props = new AuthenticationProperties
-            {
-                RedirectUri = Url.Action("Index", "Home")
-            };
-            return Challenge(props, OpenIdConnectDefaults.AuthenticationScheme);
+            //var accessToken = await HttpContext.GetTokenAsync("access_token");
+            //return RedirectToAction(nameof(Index), "Home");
+            LoginDTO obj = new();
+            return View(obj);
         }
 
         [HttpPost]
@@ -40,7 +39,7 @@ namespace Airline.WebClient.Controllers
         public async Task<IActionResult> Login(LoginDTO obj)
         {
             var response = await _authService.LoginAccount(obj);
-            if (response != null && response.IsSuccess)
+            if (response != null && response.flag)
             {
                 var model = response;
 

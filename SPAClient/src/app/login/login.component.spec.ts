@@ -54,7 +54,7 @@ describe('LoginComponent', () => {
     expect(loginReq.request.body).toEqual(mockLoginObj);
     loginReq.flush(mockLoginResponse);
 
-    const userReq = httpTestingController.expectOne('https://localhost:7002/api/Auth/currenUser');
+    const userReq = httpTestingController.expectOne('https://localhost:7002/api/Auth/currentUser');
     expect(userReq.request.method).toBe('GET');
     expect(userReq.request.headers.get('Authorization')).toEqual(`Bearer ${mockToken}`);
     userReq.flush(mockUser);

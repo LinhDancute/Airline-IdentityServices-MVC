@@ -50,23 +50,23 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
 
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(x => {
-        x.RequireHttpsMetadata = false;
-        x.SaveToken = true;
-        x.Authority = "https://localhost:7006/";
-        x.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
+//builder.Services.AddAuthentication(x =>
+//{
+//    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//})
+//    .AddJwtBearer(x => {
+//        x.RequireHttpsMetadata = false;
+//        x.SaveToken = true;
+//        x.Authority = "https://localhost:7006/";
+//        x.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuerSigningKey = true,
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+//            ValidateIssuer = false,
+//            ValidateAudience = false
+//        };
+//    });
 
 // Register repositories and services
 builder.Services.AddScoped<ITicketClassRepository, TicketClassRepository>();

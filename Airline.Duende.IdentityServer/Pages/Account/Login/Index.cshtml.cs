@@ -106,49 +106,62 @@ public class Index : PageModel
 
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync
-                (Input.Username, Input.Password, Input.RememberLogin, lockoutOnFailure: false);
+            var userEmail = await _userManager.FindByEmailAsync(Input.Username);
+            if (userEmail == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                await BuildModelAsync(Input.ReturnUrl);
+                return Page();
+            }
 
-            // validate username/password against in-memory store
+            // Check if the email is confirmed
+            if (!await _userManager.IsEmailConfirmedAsync(userEmail))
+            {
+                ModelState.AddModelError(string.Empty, "You must have a confirmed email to log in.");
+                await BuildModelAsync(Input.ReturnUrl);
+                return Page();
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(userEmail, Input.Password, Input.RememberLogin, lockoutOnFailure: false);
+
             if (result.Succeeded)
             {
-                var user = _appDbContext.AppUsers.FirstOrDefault(u => u.UserName.ToLower() == Input.Username.ToLower());
-                await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
+                var user_db = _appDbContext.AppUsers.FirstOrDefault(u => u.Email.ToLower() == Input.Username.ToLower());
+                if (user_db == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User not found in the database.");
+                    await BuildModelAsync(Input.ReturnUrl);
+                    return Page();
+                }
 
-                // only set explicit expiration here if user chooses "remember me". 
-                // otherwise we rely upon expiration configured in cookie middleware.
+                await _events.RaiseAsync(new UserLoginSuccessEvent(user_db.Email, user_db.Id, user_db.UserName, clientId: context?.Client.ClientId));
+
                 var props = new AuthenticationProperties();
                 if (LoginOptions.AllowRememberLogin && Input.RememberLogin)
                 {
                     props.IsPersistent = true;
                     props.ExpiresUtc = DateTimeOffset.UtcNow.Add(LoginOptions.RememberMeLoginDuration);
-                };
+                }
 
-                // issue authentication cookie with subject ID and username
-                var isuser = new IdentityServerUser(user.Id)
+                var isuser = new IdentityServerUser(user_db.Id)
                 {
-                    DisplayName = user.UserName
+                    DisplayName = user_db.UserName
                 };
 
-                await HttpContext.SignInAsync(isuser, props);
+                //await HttpContext.SignInAsync(isuser, props);
 
                 if (context != null)
                 {
-                    // This "can't happen", because if the ReturnUrl was null, then the context would be null
                     ArgumentNullException.ThrowIfNull(Input.ReturnUrl, nameof(Input.ReturnUrl));
 
                     if (context.IsNativeClient())
                     {
-                        // The client is native, so this change in how to
-                        // return the response is for better UX for the end user.
                         return this.LoadingPage(Input.ReturnUrl);
                     }
 
-                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                     return Redirect(Input.ReturnUrl ?? "~/");
                 }
 
-                // request for a local page
                 if (Url.IsLocalUrl(Input.ReturnUrl))
                 {
                     return Redirect(Input.ReturnUrl);
@@ -159,18 +172,16 @@ public class Index : PageModel
                 }
                 else
                 {
-                    // user might have clicked on a malicious link - should be logged
                     throw new ArgumentException("invalid return URL");
                 }
             }
 
             const string error = "invalid credentials";
-            await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, error, clientId:context?.Client.ClientId));
+            await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, error, clientId: context?.Client.ClientId));
             Telemetry.Metrics.UserLoginFailure(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider, error);
             ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
         }
 
-        // something went wrong, show form with error
         await BuildModelAsync(Input.ReturnUrl);
         return Page();
     }
