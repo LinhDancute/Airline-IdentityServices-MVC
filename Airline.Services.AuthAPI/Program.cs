@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -44,6 +44,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Configure CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowOrigin",
@@ -54,25 +55,25 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
-// Add DbContext and Identity
+// Configure DbContext and Identity
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
         throw new InvalidOperationException("Connection string not found")));
 
-//Add Identity & JWT authentication
-//Identity
+// Add Identity & JWT authentication
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddSignInManager()
     .AddRoles<IdentityRole>();
-//JWT
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
+})
+.AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
@@ -100,13 +101,11 @@ builder.Services.AddAuthentication(options =>
 //        };
 //    });
 
-builder.Services.AddAuthorization();
-
 
 builder.Services.AddAuthorization();
 
-
-builder.Services.AddScoped<IAuthService, AuthRepository>();
+// Register services
+builder.Services.AddScoped<IAuthService, AuthRepository>(); 
 
 var app = builder.Build();
 

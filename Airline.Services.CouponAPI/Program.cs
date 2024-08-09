@@ -12,6 +12,10 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Stripe;
+using Airline.ModelsService.Models.Payment;
+using AirlineInvoiceService = Airline.Services.CouponAPI.Services.Implements.InvoiceService;
+using StripeInvoiceService = Stripe.InvoiceService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +24,10 @@ builder.Services.AddControllers()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-            options.JsonSerializerOptions.MaxDepth = 64; 
+            options.JsonSerializerOptions.MaxDepth = 64;
         });
+
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 builder.Services.AddCors(options =>
 {
@@ -82,7 +88,7 @@ builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<IBoardingPassRepository, BoardingPassRepository>();
 builder.Services.AddScoped<IBoardingPassService, BoardingPassService>();
-builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<IInvoiceService, AirlineInvoiceService>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IInvoiceDetailRepository, InvoiceDetailRepository>();
 builder.Services.AddScoped<IInvoiceDetailService, InvoiceDetailService>();

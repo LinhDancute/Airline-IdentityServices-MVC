@@ -19,28 +19,9 @@ namespace Airline.Services.AuthAPI.Controllers
             _userAccount = userAccount;
         }
 
-        [HttpGet("user")]
-        [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> GetUser()
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null)
-            {
-                return Unauthorized("User is not authenticated.");
-            }
-
-            var user = await _userAccount.GetUser(userId);
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
-
-            return Ok(user);
-        }
-
         [HttpGet("admin")]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> GetAdmin()
+        public async Task<IActionResult> GetAllAdmin()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
@@ -59,7 +40,7 @@ namespace Airline.Services.AuthAPI.Controllers
 
         [HttpGet("user")]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> GetUser()
+        public async Task<IActionResult> GetAllUser()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userId == null)
