@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Application</title>
-  <script src="https://js.stripe.com/v3/"></script>
-</head>
-<body>
-
+<app-landingpage></app-landingpage>
 <div class="your-flights-container">
   <span>Your flights</span>
 </div>
@@ -153,7 +144,7 @@
         <a href="#" class="ml-2">Dangerous goods policy</a>
       </div>
       <div class="d-flex justify-content-end mt-3">
-        <button class="btn btn-custom btn-guest" (click)="createTickets()">CONTINUE PAYMENT</button>
+        <button class="btn btn-custom btn-guest" (click)="paymentProcessing()">CONTINUE PAYMENT</button>
       </div>
     </div>
   </div>
@@ -183,5 +174,5 @@
   </div>
 </ng-template>
 
-</body>
-</html>
+<app-footer></app-footer>
+

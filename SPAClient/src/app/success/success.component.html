@@ -1,0 +1,18 @@
+<app-landingpage></app-landingpage>
+<div class="status">
+  <div *ngIf="paymentStatus === 'Succeeded'" class="container">
+    <h1>Payment Successful</h1>
+    <p>Your payment has been processed successfully.</p>
+  </div>
+
+  <div *ngIf="paymentStatus === 'Cancelled'" class="paypal-container">
+    <h1>Payment Failed</h1>
+    <div class="amount">Total amount to pay: ${{amount}}</div>
+    <div class="info">Please do not refresh the browser while the transaction is processing.</div>
+    <div class="back">Cancel</div>
+  </div>
+  <div class="d-flex justify-content-end mt-3 button-container">
+    <button class="btn btn-custom btn-booked-tickets-history" (click)="navigateToBookedTicketsHistory()">BOOKED TICKETS HISTORY</button>
+  </div>
+</div>
+<app-footer></app-footer>

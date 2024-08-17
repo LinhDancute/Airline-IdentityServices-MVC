@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {LandingpageComponent} from "../landingpage/landingpage.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-page-content',
@@ -10,7 +12,9 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    LandingpageComponent,
+    FooterComponent
   ],
   styleUrls: ['./page-content.component.css']
 })
@@ -67,7 +71,7 @@ export class PageContentComponent implements OnInit {
             }
           });
 
-          this.router.navigateByUrl('/flight-search', {
+          this.router.navigateByUrl('/flight-list', {
             //pass response data as state to flight-list
             state: {
               flightsOneWay: this.flightsOneWay,

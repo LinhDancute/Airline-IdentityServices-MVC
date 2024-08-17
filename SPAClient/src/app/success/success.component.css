@@ -1,0 +1,44 @@
+.container {
+  padding: 10px;
+  background-color: #C6EDC3;
+  width: 80%;
+  max-width: 1000px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  font-size: 0.8rem;
+}
+
+.paypal-container {
+  padding: 10px;
+  background-color: #FF817E;
+  width: 80%;
+  max-width: 1000px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  font-size: 0.8rem;
+}
+
+.status {
+  padding-bottom: 200px;
+}
+
+.button-container {
+  width: 80%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.btn-custom {
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.btn-booked-tickets-history {
+  color: #005f6b;
+  border: 2px solid #005f6b;
+  font-size: 1rem;
+}

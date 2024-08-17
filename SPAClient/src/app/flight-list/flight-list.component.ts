@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {LandingpageComponent} from "../landingpage/landingpage.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-flight-list',
@@ -11,7 +13,9 @@ import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
     NgForOf,
     NgIf,
     NgClass,
-    CurrencyPipe
+    CurrencyPipe,
+    LandingpageComponent,
+    FooterComponent
   ],
   styleUrls: ['./flight-list.component.css']
 })
@@ -104,7 +108,7 @@ export class FlightListComponent implements OnInit {
   }
 
   navigateToBookingDetail(): void {
-    this.router.navigate(['/check-order'], {
+    this.router.navigate(['/flight-booking-detail'], {
       state: {
         selectedOneWayFlight: this.selectedOneWayFlight,
         selectedRoundTripFlight: this.selectedRoundTripFlight,

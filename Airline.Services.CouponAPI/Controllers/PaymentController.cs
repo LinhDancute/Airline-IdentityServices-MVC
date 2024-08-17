@@ -40,7 +40,7 @@ namespace Airline.Services.CouponAPI.Controllers
                 },
             },
                 Mode = "payment",
-                SuccessUrl = "http://localhost:4200/success?session_id={CHECKOUT_SESSION_ID}",
+                SuccessUrl = $"http://localhost:4200/success?session_id={{CHECKOUT_SESSION_ID}}",
                 CancelUrl = "http://localhost:4200/cancel",
             };
 
@@ -49,5 +49,30 @@ namespace Airline.Services.CouponAPI.Controllers
 
             return Ok(new { id = session.Id });
         }
+
+        [HttpGet("verify/{sessionId}")]
+        public async Task<ActionResult> VerifyPayment(string sessionId)
+        {
+            try
+            {
+                var service = new SessionService();
+                var session = await service.GetAsync(sessionId);
+
+                if (session.PaymentStatus == "paid")
+                {
+                    return Ok(new { success = true, message = "Payment verified successfully." });
+                }
+                else
+                {
+                    return Ok(new { success = false, message = "Payment not completed." });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error verifying payment: {ex.Message}");
+                return StatusCode(500, "An error occurred while verifying the payment.");
+            }
+        }
+
     }
 }
